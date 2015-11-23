@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SortAlgGame.Model.Module
+namespace SortAlgGame.Model.Statements
 {
     abstract class Statement
     {
@@ -14,6 +14,7 @@ namespace SortAlgGame.Model.Module
         }
 
         protected PlayerProgramm programm;
+
         public Statement(PlayerProgramm programm)
         {
             this.programm = programm;
@@ -24,10 +25,10 @@ namespace SortAlgGame.Model.Module
         protected void swap(int i, int j)
         {
             DataSet dataSet = programm.Stack.Peek();
-
             int tmp = dataSet.A[i];
             dataSet.A[i] = dataSet.A[j];
             dataSet.A[j] = tmp;
+            
         }
     }
 }

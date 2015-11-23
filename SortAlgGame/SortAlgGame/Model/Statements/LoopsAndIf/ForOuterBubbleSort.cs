@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SortAlgGame.Model.Module.LoopsAndIf
+namespace SortAlgGame.Model.Statements.LoopsAndIf
 {
     class ForOuterBubbleSort : loopBased
     {
@@ -24,6 +24,7 @@ namespace SortAlgGame.Model.Module.LoopsAndIf
                 //DataSet Aktualisieren
                 actDataSet.N = n;
                 // TODO: Log Eintrag
+                // TODO: runtime
                 innerStatement.execute();
             }
         }

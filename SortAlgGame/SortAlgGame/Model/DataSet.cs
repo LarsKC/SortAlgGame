@@ -12,28 +12,28 @@ namespace SortAlgGame.Model
         public int I
         {
             get { return i; }
-            set { this.i = value; }
+            set { i = value; }
         }
 
         private int j;
         public int J
         {
             get { return j; }
-            set { this.j = value; }
+            set { j = value; }
         }
 
-        public int n; 
+        private int n; 
         public int N
         {
             get { return n; }
-            set { this.n = value; }
+            set { n = value; }
         }
 
         private int[] a; 
         public int[] A
         {
             get { return a; }
-            set { this.a = (int[])value.Clone(); } 
+            set { a = value; } 
         }
 
         private int min;
@@ -50,8 +50,34 @@ namespace SortAlgGame.Model
             set { pivot = value; }
         }
 
+        private int left;
+        public int Left
+        {
+            get { return left; }
+            set { left = value; }
+        }
+
+        private int right;
+        public int Right
+        {
+            get { return right; }
+            set { right = value; }
+        }
+
         //Konstruktor
-        public DataSet(int i, int j, int n, int[] a, int min, int pivot)
+        public DataSet(int[] a)
+        {
+            this.i = 0;
+            this.j = 0;
+            this.n = 0;
+            this.a = a;
+            this.min = 0;
+            this.pivot = 0;
+            this.left = 0;
+            this.right = 0;
+        }
+
+        public DataSet(int i, int j, int n, int[] a, int min, int pivot, int left, int right)
         {
             this.i = i;
             this.j = j;
@@ -59,6 +85,8 @@ namespace SortAlgGame.Model
             this.a = a;
             this.min = min;
             this.pivot = pivot;
+            this.left = left;
+            this.right = right;
         }
 
         public DataSet(DataSet dataSet)
@@ -69,6 +97,8 @@ namespace SortAlgGame.Model
             this.a = dataSet.A;
             this.min = dataSet.Min;
             this.pivot = dataSet.Pivot;
+            this.left = dataSet.Left;
+            this.right = dataSet.Right;
         }
   
     }

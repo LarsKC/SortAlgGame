@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SortAlgGame.Model.Module
+namespace SortAlgGame.Model.Statements
 {
     abstract class loopBased : Statement
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SortAlgGame.Model.Module;
+using SortAlgGame.Model.Statements;
 
 namespace SortAlgGame.Model
 {
@@ -37,13 +37,27 @@ namespace SortAlgGame.Model
             set { stm = value; }
         }
 
-        private int runTime;
+        private int runtime;
         public int Runtime
         {
-            get { return runTime; }
-            set { runTime = value; }
+            get { return runtime; }
+            set { runtime = value; }
+        }
+
+        //Konstruktor
+        public PlayerProgramm()
+        {
+            //empty
         }
 
         //Methoden
+        public void initData(int[] a)
+        {
+            DataSet dataSet = new DataSet(a);
+            this.stack = new Stack<DataSet>();
+            this.stack.Push(dataSet);
+            this.log.AddLast(new Tuple<Statement, DataSet>(stm, dataSet));
+            this.curLogSet = log.First;
+        }
     }
 }
