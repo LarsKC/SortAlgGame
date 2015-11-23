@@ -14,3 +14,5 @@ D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGam
 D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.csproj.GenerateResource.Cache
 D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.exe
 D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.pdb
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.exe
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.pdb

@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Model\DataSet.cs" />
     <Compile Include="Model\Statements\loopBased.cs" />
+    <Compile Include="Model\Statements\LoopsAndIf\ForInnerBubbleSort.cs" />
     <Compile Include="Model\Statements\LoopsAndIf\ForOuterBubbleSort.cs" />
     <Compile Include="Model\Statements\Statement.cs" />
     <Compile Include="Model\PlayerProgramm.cs" />
