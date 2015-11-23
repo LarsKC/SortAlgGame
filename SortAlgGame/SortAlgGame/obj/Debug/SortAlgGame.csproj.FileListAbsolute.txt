@@ -1,0 +1,16 @@
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\bin\Debug\Resources\icon.png
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.xml
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.exe
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.pdb
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.csprojResolveAssemblyReference.cache
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SurfaceWindow1.baml
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\App.baml
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SurfaceWindow1.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\App.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame_Content.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame_MarkupCompile.cache
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.g.resources
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.Properties.Resources.resources
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.csproj.GenerateResource.Cache
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.exe
+D:\Dokumente\Schule-Ausb-Studium\FH Luebeck\7Bachelor Arbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.pdb
