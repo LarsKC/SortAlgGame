@@ -9,7 +9,7 @@ namespace SortAlgGame.Model
     class Game
     {
         const int MIN = 0, MAX = 10000;
-        const int[] RUNS = {10, 100, 1000, 100000};
+        readonly int[] RUNS = {10, 100, 1000, 100000};
 
         PlayerProgramm player1;
         PlayerProgramm player2;

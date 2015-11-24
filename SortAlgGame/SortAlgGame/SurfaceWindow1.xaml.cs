@@ -15,6 +15,8 @@ using Microsoft.Surface;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using Microsoft.Surface.Presentation.Input;
+using SortAlgGame.ViewModel;
+using SortAlgGame.Views;
 
 namespace SortAlgGame
 {
@@ -29,6 +31,7 @@ namespace SortAlgGame
         public SurfaceWindow1()
         {
             InitializeComponent();
+            DataContext = new BaseViewModel();
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();

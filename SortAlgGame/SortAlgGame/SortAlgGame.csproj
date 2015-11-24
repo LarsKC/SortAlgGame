@@ -56,6 +56,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\Hauptmenue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MenueErklaerung.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SurfaceWindow1.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -64,6 +72,17 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\HauptmenueViewModel.cs" />
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MenueErklaerungViewModel.cs" />
+    <Compile Include="Views\Hauptmenue.xaml.cs">
+      <DependentUpon>Hauptmenue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MenueErklaerung.xaml.cs">
+      <DependentUpon>MenueErklaerung.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BubbleSort.cs" />
     <Compile Include="Model\DataSet.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\Statements\loopBased.cs" />
