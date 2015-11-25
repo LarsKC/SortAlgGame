@@ -17,18 +17,11 @@ namespace SortAlgGame.Views
     /// <summary>
     /// Interaktionslogik für Hauptmenue.xaml
     /// </summary>
-    public partial class Hauptmenue : Page
+    public partial class Hauptmenue : UserControl
     {
         public Hauptmenue()
         {
             InitializeComponent();
-            DataContext = new Hauptmenue();
-        }
-
-        private void BtnErklClick(object sender, RoutedEventArgs e)
-        {
-            MenueErklaerung erkl = new MenueErklaerung();
-            this.NavigationService.Navigate(erkl);
         }
     }
 }

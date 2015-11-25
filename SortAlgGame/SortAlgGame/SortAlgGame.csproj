@@ -56,11 +56,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\MenueErklaerungen.xaml.cs">
+      <DependentUpon>MenueErklaerungen.xaml</DependentUpon>
+    </Compile>
     <Page Include="Views\Hauptmenue.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MenueErklaerung.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -76,11 +75,9 @@
     <Compile Include="ViewModel\HauptmenueViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\MenueErklaerungViewModel.cs" />
+    <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="Views\Hauptmenue.xaml.cs">
       <DependentUpon>Hauptmenue.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MenueErklaerung.xaml.cs">
-      <DependentUpon>MenueErklaerung.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BubbleSort.cs" />
     <Compile Include="Model\DataSet.cs" />
@@ -95,6 +92,10 @@
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MenueErklaerungen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

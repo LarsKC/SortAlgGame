@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace SortAlgGame.Views
 {
     /// <summary>
-    /// Interaktionslogik für MenueErklaerung.xaml
+    /// Interaktionslogik für MenueErklaerungen.xaml
     /// </summary>
-    public partial class MenueErklaerung : Page
+    public partial class MenueErklaerungen : UserControl
     {
-        public MenueErklaerung()
+        public MenueErklaerungen()
         {
             InitializeComponent();
-        }
-
-        private void btnHauptMmenueClick(object sender, RoutedEventArgs e)
-        {
-            Hauptmenue hauptmenue = new Hauptmenue();
-            this.NavigationService.Navigate(hauptmenue);
         }
     }
 }

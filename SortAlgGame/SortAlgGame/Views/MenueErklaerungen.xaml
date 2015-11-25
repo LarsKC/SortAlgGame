@@ -1,12 +1,11 @@
-﻿<Page x:Class="SortAlgGame.Views.MenueErklaerung"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="300"
-	Title="MenueErklaerung" xmlns:my="http://schemas.microsoft.com/surface/2008">
-
+﻿<UserControl x:Class="SortAlgGame.Views.MenueErklaerungen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:my="http://schemas.microsoft.com/surface/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel Height="154" HorizontalAlignment="Center" Margin="0,0,0,0" Name="stackPanel1" VerticalAlignment="Center" Width="200">
             <my:SurfaceButton Content="Bubblesort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnBubble" VerticalAlignment="Top" Width="200" />
@@ -14,6 +13,7 @@
             <my:SurfaceButton Content="Selectionsort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnSelection" VerticalAlignment="Top" Width="200" />
             <my:SurfaceButton Content="Quicksort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnQuick" VerticalAlignment="Top" Width="200" />
         </StackPanel>
-        <my:SurfaceButton Content="Hauptmenü" Height="25" HorizontalAlignment="Left" Margin="10,0,0,0" Name="btnHauptmenue" VerticalAlignment="Bottom" Width="200" Click="btnHauptMmenueClick" />
+        <my:SurfaceButton Content="Hauptmenü" Height="25" HorizontalAlignment="Left" Margin="10,0,0,0" Name="btnHauptmenue" VerticalAlignment="Bottom" Width="200" />
+
     </Grid>
-</Page>
+</UserControl>

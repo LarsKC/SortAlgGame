@@ -7,5 +7,6 @@ namespace SortAlgGame.ViewModel
 {
     class HauptmenueViewModel : BaseViewModel
     {
+
     }
 }

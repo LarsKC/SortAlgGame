@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Input;
 
 namespace SortAlgGame.ViewModel
 {
@@ -22,21 +23,18 @@ namespace SortAlgGame.ViewModel
                 if (currentView != value)
                 {
                     currentView = value;
+                    NotifyPropertyChanged("CurrentView");
                 }
             }
         }
 
         //TODO: Methoden zum switchen der View
-        public void changeToErklaerung()
+        public ICommand changeToHauptmenue
         {
-            currentView = new MenueErklaerungViewModel();
+            get
+            {
+                return new RelayCommand(action => CurrentView = new HauptmenueViewModel());
+            }
         }
-
-        public void changeToHauptmenue()
-        {
-            currentView = new HauptmenueViewModel();
-        }
-
-
     }
 }
