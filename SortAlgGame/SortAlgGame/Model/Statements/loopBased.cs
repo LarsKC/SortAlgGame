@@ -6,26 +6,35 @@ using System.Text;
 namespace SortAlgGame.Model.Statements
 {
     abstract class loopBased : Statement
-    {
-        //Variablen mit Get und Set Accessor
-        protected string footer;
-        public string Footer
+    {  
+        //Variablen
+        private LinkedList<Statement> _stmList;
+        private Statement _parent;
+
+        //Accessor
+        public LinkedList<Statement> StmList
         {
-            get { return footer; }
+            get { return _stmList; }
+        }
+        public Statement Parent
+        {
+            get { return _parent; }
         }
 
-        protected Statement innerStatement;
-        public Statement InnerStatement
-        {
-            get { return innerStatement; }
-            set { innerStatement = value; }
-        }
-
-        public loopBased(PlayerProgramm programm)
+        //Konstruktoren
+        public loopBased(PlayerProgramm programm, Statement parent)
             : base(programm)
         {
-            footer = "}";
+            _parent = parent;
+            _stmList = new LinkedList<Statement>();
+            //TODO Blank Statement for adding module zur stmList hinzufügen?!
+            indent = _parent.Indent +1;
         }
 
+        //Methoden
+        public void addStm(Statement stm)
+        {
+            _stmList.AddLast(stm);
+        }
     }
 }

@@ -7,6 +7,8 @@ namespace SortAlgGame.Model.Statements
 {
     abstract class Statement
     {
+#region Old
+        /*//Old
         protected string header;
         public string Header
         {
@@ -21,14 +23,28 @@ namespace SortAlgGame.Model.Statements
         }
 
         public abstract void execute();
+        */
+#endregion
+        
+        //Var
+        protected int indent;
+        protected string content;
+        protected PlayerProgramm programm;
 
-        protected void swap(int i, int j)
+        //Accessore
+        public int Indent
         {
-            DataSet dataSet = programm.Stack.Peek();
-            int tmp = dataSet.A[i];
-            dataSet.A[i] = dataSet.A[j];
-            dataSet.A[j] = tmp;
-            
+            get { return indent; }
         }
+
+        //Konstruktoren
+        public Statement(PlayerProgramm programm)
+        {
+            this.programm = programm;
+        }
+
+        //Methods
+        public abstract void toString();
+        public abstract void execute();
     }
 }

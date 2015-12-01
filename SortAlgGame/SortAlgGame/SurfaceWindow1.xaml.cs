@@ -31,7 +31,7 @@ namespace SortAlgGame
         public SurfaceWindow1()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            //DataContext = new MainViewModel();
 
             // Add handlers for window availability events
             AddWindowAvailabilityHandlers();

@@ -8,8 +8,6 @@ namespace SortAlgGame.Model
 {
     class Game
     {
-        const int MIN = 0, MAX = 10000;
-        readonly int[] RUNS = {10, 100, 1000, 100000};
 
         PlayerProgramm player1;
         PlayerProgramm player2;
@@ -36,7 +34,7 @@ namespace SortAlgGame.Model
 
         public void evaluateGame()
         {
-            foreach (int i in RUNS)
+            foreach (int i in Config.RUNS)
             {
                 int[] testArray = getRndArray(i);
                 player1.initData(testArray);
@@ -45,7 +43,7 @@ namespace SortAlgGame.Model
                 player2.Stm.execute();
                 runtimePlayer1.Add(i, player1.Runtime);
                 runtimePlayer2.Add(i, player2.Runtime);
-                if (i == RUNS[1])
+                if (i == Config.RUNS[1])
                 {
                     logPlayer1 = new LinkedList<Tuple<Statement,DataSet>>(player1.Log);
                     logPlayer2 = new LinkedList<Tuple<Statement, DataSet>>(player2.Log);
@@ -65,7 +63,7 @@ namespace SortAlgGame.Model
             int[] array = new int[length];
             foreach (int i in array)
             {
-                array[i] = rnd.Next(MIN, MAX+1);
+                array[i] = rnd.Next(Config.MIN, Config.MAX+1);
             }
             return array;
         }

@@ -7,74 +7,76 @@ namespace SortAlgGame.Model
 {
     class DataSet
     {
-        //Variablen mit Get und Set Accessor
+        //Variablen
         private int i;
+        private int j;
+        private int n;
+        private int[] a;
+        private int min;
+        private int pivot;
+        private int left;
+        private int right;
+
+        //Accessor
         public int I
         {
             get { return i; }
             set { i = value; }
         }
 
-        private int j;
         public int J
         {
             get { return j; }
             set { j = value; }
         }
 
-        private int n; 
         public int N
         {
             get { return n; }
             set { n = value; }
         }
 
-        private int[] a; 
         public int[] A
         {
             get { return a; }
-            set { a = value; } 
+            set { a = value; }
         }
 
-        private int min;
         public int Min
         {
             get { return min; }
             set { n = value; }
         }
 
-        private int pivot;
         public int Pivot
         {
             get { return pivot; }
             set { pivot = value; }
         }
 
-        private int left;
         public int Left
         {
             get { return left; }
             set { left = value; }
         }
 
-        private int right;
         public int Right
         {
             get { return right; }
             set { right = value; }
         }
 
-        //Konstruktor
+        //Konstruktoren
         public DataSet(int[] a)
         {
-            this.i = 0;
-            this.j = 0;
-            this.n = 0;
+            this.i = Config.NOTUSED;
+            this.j = Config.NOTUSED;
+            this.n = Config.NOTUSED;
             this.a = a;
-            this.min = 0;
-            this.pivot = 0;
-            this.left = 0;
-            this.right = 0;
+            this.min = Config.NOTUSED;
+            this.pivot = Config.NOTUSED;
+            this.left = Config.NOTUSED;
+            this.right = Config.NOTUSED;
         }
 
         public DataSet(int i, int j, int n, int[] a, int min, int pivot, int left, int right)
@@ -100,6 +102,5 @@ namespace SortAlgGame.Model
             this.left = dataSet.Left;
             this.right = dataSet.Right;
         }
-  
     }
 }

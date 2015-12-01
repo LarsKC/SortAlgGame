@@ -36,5 +36,13 @@ namespace SortAlgGame.ViewModel
                 return new RelayCommand(action => CurrentView = new HauptmenueViewModel());
             }
         }
+
+        public ICommand changeToErklaerung
+        {
+            get
+            {
+                return new RelayCommand(action => CurrentView = new MenueErklaerungViewModel());
+            }
+        }
     }
 }

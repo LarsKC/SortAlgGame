@@ -7,10 +7,10 @@ namespace SortAlgGame.Model.Statements.LoopsAndIf
 {
     class ForOuterBubbleSort : loopBased
     {
-        public ForOuterBubbleSort(PlayerProgramm programm)
-            : base(programm)
+        public ForOuterBubbleSort(PlayerProgramm programm, Statement parent)
+            : base(programm, parent)
         {
-            header = "for( i=a.size; i>1; i--) {";
+            content = "for( i=a.size; i>1; i--) {";
         }
 
         public override void execute()
@@ -25,10 +25,16 @@ namespace SortAlgGame.Model.Statements.LoopsAndIf
                 actDataSet.N = n;
                 // TODO: Log Eintrag
                 // TODO: runtime
-                innerStatement.execute();
+                foreach( Statement x in StmList)
+                {
+                    x.execute();
+                }
             }
         }
 
-         
+        public override void toString()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
