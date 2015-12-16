@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:s="http://schemas.microsoft.com/surface/2008"
              xmlns:root="clr-namespace:SortAlgGame"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -27,20 +28,26 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Rectangle Height="2" Fill="#FF1A69E5" Margin="0,0,0,0"></Rectangle>
-            <Label Content="I" Width="16" Height="16" FontSize="5" MinHeight="16"  HorizontalAlignment="Left" Margin="0,0,0,0"></Label>
             <StackPanel Orientation="Horizontal">
-                <Button Content="Back" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonBack" VerticalAlignment="Bottom" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-                <Button Content="Play" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonPlay" VerticalAlignment="Bottom" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-                <Button Content="Pause" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonPause" VerticalAlignment="Bottom" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-                <Button Content="Forward" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonForward" VerticalAlignment="Bottom" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
+                <Rectangle Width="5" Height="20" Margin="4,0,0,0" Fill="#FF1A69E5" VerticalAlignment="Bottom"/>
+                <Rectangle Width="5" Height="40" Margin="4,0,0,0" Fill="#FF1A69E5" VerticalAlignment="Bottom"/>
+                <Rectangle Width="5" Height="9" Margin="4,0,0,0" Fill="#FF1A69E5" VerticalAlignment="Bottom"/>
+                <Rectangle Width="5" Height="21" Margin="4,0,0,0" Fill="#FF1A69E5" VerticalAlignment="Bottom"/>
+                <Rectangle Width="5" Height="26" Margin="4,0,0,0" Fill="#FF1A69E5" VerticalAlignment="Bottom"/>
+            </StackPanel>
+            <Rectangle Height="10" Fill="#FF1A69E5" Margin="0,0,0,0"></Rectangle>
+            <StackPanel Orientation="Horizontal">
+                <s:SurfaceButton Content="Back" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonBack" VerticalAlignment="Bottom"/>
+                <s:SurfaceButton Content="Play" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonPlay" VerticalAlignment="Bottom"/>
+                <s:SurfaceButton Content="Pause" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonPause" VerticalAlignment="Bottom"/>
+                <s:SurfaceButton Content="Forward" Grid.Row="1" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="buttonForward" VerticalAlignment="Bottom"/>
             </StackPanel>
         </StackPanel>
         <!--Content Unten Links -->
         <ScrollViewer Grid.Row="1">
-            <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Name="textBlock1" VerticalAlignment="Top" Text="blaaaa Hier DataBinding ergaenzen"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,0,0,0" Name="textBlock1" VerticalAlignment="Top" Text="Beschreibung"/>
         </ScrollViewer>
-        <Button Grid.Row="2" Content="Hauptmenü" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="button1" VerticalAlignment="Bottom" Width="75" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
+        <s:SurfaceButton Grid.Row="2" Content="Hauptmenü" Height="23" HorizontalAlignment="Left" Margin="0,0,0,0" Name="button1" VerticalAlignment="Bottom" Width="75" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
         <!--Conten Rechts -->
         <ListBox Grid.Column="1" Grid.RowSpan="2" ItemsSource="{Binding Items}"><!-- TODO Binding ergänzen-->
             <ListBox.ItemTemplate>

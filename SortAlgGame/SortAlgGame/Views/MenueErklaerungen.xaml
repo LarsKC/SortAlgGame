@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <StackPanel Height="154" HorizontalAlignment="Center" Margin="0,0,0,0" Name="stackPanel1" VerticalAlignment="Center" Width="200">
-            <my:SurfaceButton Content="Bubblesort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnBubble" VerticalAlignment="Top" Width="200" />
+            <my:SurfaceButton Content="Bubblesort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnBubble" VerticalAlignment="Top" Width="200" Command="{Binding DataContext.changeToBubble, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
             <my:SurfaceButton Content="Insertionsort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnInsertion" VerticalAlignment="Top" Width="200" />
             <my:SurfaceButton Content="Selectionsort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnSelection" VerticalAlignment="Top" Width="200" />
             <my:SurfaceButton Content="Quicksort" Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" Name="btnQuick" VerticalAlignment="Top" Width="200" />

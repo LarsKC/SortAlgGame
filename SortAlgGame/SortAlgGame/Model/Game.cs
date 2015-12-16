@@ -8,74 +8,81 @@ namespace SortAlgGame.Model
 {
     class Game
     {
+        #region Variablen
+        private Player _player1;
+        private Player _player2;
+        private Player _winner;
+        private Random _rnd;
+        private DateTime _startTime;
+        private int[][] _testArrays;
+        private bool _playerRdy;
+        #endregion
 
-        PlayerProgramm player1;
-        PlayerProgramm player2;
-        PlayerProgramm winner;
-        Dictionary<int, int> runtimePlayer1;
-        Dictionary<int, int> runtimePlayer2;
-        DateTime startTime;
-        DateTime finPlayer1;
-        DateTime finPlayer2;
-        TimeSpan tsPlayer1;
-        TimeSpan tspPlayer2;
-        LinkedList<Tuple<Statement, DataSet>> logPlayer1;
-        LinkedList<Tuple<Statement, DataSet>> logPlayer2;
-        Random rnd;
+        #region Accessor
+        public Player Player1
+        {
+            get { return _player1; }
+        }
 
+        public Player Player2
+        {
+            get { return _player2; }
+        }
+
+        public bool PlayerRdy
+        {
+            get { return _playerRdy; }
+            set { _playerRdy = value; }
+        }
+        #endregion
+
+        #region Konstruktoren
         public Game()
         {
-            this.player1 = new PlayerProgramm();
-            this.player2 = new PlayerProgramm();
-            this.winner = null;
-            this.rnd = new Random();
-            this.startTime = DateTime.Now;
-        }
-
-        public void evaluateGame()
-        {
-            foreach (int i in Config.RUNS)
+            _player1 = new Player();
+            _player2 = new Player();
+            _rnd = new Random();
+            _playerRdy = false;
+            _startTime = DateTime.Now;
+            _testArrays = new int[Config.RUNS.Length][];
+            for (int i = 0; i < _testArrays.Length; i++ )
             {
-                int[] testArray = getRndArray(i);
-                player1.initData(testArray);
-                player2.initData(testArray);
-                player1.Stm.execute();
-                player2.Stm.execute();
-                runtimePlayer1.Add(i, player1.Runtime);
-                runtimePlayer2.Add(i, player2.Runtime);
-                if (i == Config.RUNS[1])
-                {
-                    logPlayer1 = new LinkedList<Tuple<Statement,DataSet>>(player1.Log);
-                    logPlayer2 = new LinkedList<Tuple<Statement, DataSet>>(player2.Log);
-                }
-
-
+                _testArrays[i] = getRndArray(Config.RUNS[i]);
             }
-            tsPlayer1 = finPlayer1 - startTime;
-            tspPlayer2 = finPlayer2 - startTime;
-
-
-            
         }
+        #endregion
 
+        #region Methods
         public int[] getRndArray(int length)
         {
             int[] array = new int[length];
             foreach (int i in array)
             {
-                array[i] = rnd.Next(Config.MIN, Config.MAX+1);
+                array[i] = _rnd.Next(Config.MIN, Config.MAX + 1);
             }
             return array;
         }
 
-        public void stopTimePlayer1()
+        public void run()
         {
-            this.finPlayer1 = DateTime.Now;
+            for (int i = 0; i < _testArrays.Length; i++)
+            {
+                if (i == 0)
+                {
+                    _player1.init(_testArrays[i]);
+                    _player1.Stm.execute(true);
+                    _player2.init(_testArrays[i]);
+                    _player2.Stm.execute(true);
+                }
+                else
+                {
+                    _player1.resetStack(_testArrays[i]);
+                    _player1.Stm.execute(false);
+                    _player2.resetStack(_testArrays[i]);
+                    _player2.Stm.execute(false);
+                }
+            }
         }
-
-        public void stopTimePlayer2()
-        {
-            this.finPlayer2 = DateTime.Now;
-        }
+        #endregion
     }
 }

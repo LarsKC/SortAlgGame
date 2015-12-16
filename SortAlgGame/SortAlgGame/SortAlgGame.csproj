@@ -57,13 +57,55 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Config.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Statements\AddBrick.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocALength.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocIToJ.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocIToMin.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocJToMin.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocLeft.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocPivot.cs" />
+    <Compile Include="Model\Statements\Allocations\AllocRight.cs" />
+    <Compile Include="Model\Statements\Allocations\DecJ.cs" />
+    <Compile Include="Model\Statements\Allocations\IncI.cs" />
+    <Compile Include="Model\Statements\BaseStatement.cs" />
+    <Compile Include="Model\Statements\Conditions\IfAiGreaterAiInc.cs" />
+    <Compile Include="Model\Statements\Conditions\IfAjLessAmin.cs" />
+    <Compile Include="Model\Statements\Conditions\IfIEqualsJ.cs" />
+    <Compile Include="Model\Statements\Conditions\IfILessJ.cs" />
+    <Compile Include="Model\Statements\Conditions\IfILessRight.cs" />
+    <Compile Include="Model\Statements\Conditions\IfINotEqualsMin.cs" />
+    <Compile Include="Model\Statements\Conditions\IfLeftLessJ.cs" />
+    <Compile Include="Model\Statements\ListStm.cs" />
+    <Compile Include="Model\Statements\Loops\ForInSelection.cs" />
+    <Compile Include="Model\Statements\Loops\ForInsertion.cs" />
+    <Compile Include="Model\Statements\LoopEnd.cs" />
+    <Compile Include="Model\Statements\Loops\WhileAiLessPivot.cs" />
+    <Compile Include="Model\Statements\Loops\WhileAjGreaterPivot.cs" />
+    <Compile Include="Model\Statements\Loops\WhileILessEqualsJ.cs" />
+    <Compile Include="Model\Statements\Loops\WhileJGreaterNull.cs" />
+    <Compile Include="Model\Statements\MethodCalls\CallSortLeft.cs" />
+    <Compile Include="Model\Statements\MethodCalls\CallSortRight.cs" />
+    <Compile Include="Model\Statements\MethodCalls\SwapAiWithAiInc.cs" />
+    <Compile Include="Model\Statements\MethodCalls\SwapAiWithAj.cs" />
+    <Compile Include="Model\Statements\MethodCalls\SwapAjWithAjDec.cs" />
+    <Compile Include="Model\Statements\MethodCalls\SwapAminWithAi.cs" />
+    <Compile Include="ViewModel\BubbleSortVM.cs" />
+    <Compile Include="ViewModel\GameVM.cs" />
     <Compile Include="Views\Erklaerung.xaml.cs">
       <DependentUpon>Erklaerung.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GameV.xaml.cs">
+      <DependentUpon>GameV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MenueErklaerungen.xaml.cs">
       <DependentUpon>MenueErklaerungen.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\Erklaerung.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -90,12 +132,9 @@
     <Compile Include="Model\BubbleSort.cs" />
     <Compile Include="Model\DataSet.cs" />
     <Compile Include="Model\Game.cs" />
-    <Compile Include="Model\Statements\loopBased.cs" />
-    <Compile Include="Model\Statements\LoopsAndIf\ForInnerBubbleSort.cs" />
-    <Compile Include="Model\Statements\LoopsAndIf\ForOuterBubbleSort.cs" />
-    <Compile Include="Model\Statements\LoopsAndIf\ForSelectioSort.cs" />
+    <Compile Include="Model\Statements\Loops\ForInBubble.cs" />
+    <Compile Include="Model\Statements\Loops\ForOutBubble.cs" />
     <Compile Include="Model\Statements\Statement.cs" />
-    <Compile Include="Model\PlayerProgramm.cs" />
     <Compile Include="SurfaceWindow1.xaml.cs">
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -67,6 +67,17 @@ namespace SortAlgGame.Model
         }
 
         //Konstruktoren
+        public DataSet()
+        {
+            this.i = Config.NOTUSED;
+            this.j = Config.NOTUSED;
+            this.n = Config.NOTUSED;
+            this.a = null;
+            this.min = Config.NOTUSED;
+            this.pivot = Config.NOTUSED;
+            this.left = Config.NOTUSED;
+            this.right = Config.NOTUSED;
+        }
         public DataSet(int[] a)
         {
             this.i = Config.NOTUSED;

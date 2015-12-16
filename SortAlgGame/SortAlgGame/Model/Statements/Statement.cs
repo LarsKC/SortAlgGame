@@ -6,45 +6,52 @@ using System.Text;
 namespace SortAlgGame.Model.Statements
 {
     abstract class Statement
-    {
-#region Old
-        /*//Old
-        protected string header;
-        public string Header
-        {
-            get { return header; }
-        }
-
-        protected PlayerProgramm programm;
-
-        public Statement(PlayerProgramm programm)
-        {
-            this.programm = programm;
-        }
-
-        public abstract void execute();
-        */
-#endregion
-        
+    { 
         //Var
-        protected int indent;
+        protected int indent = 0;
         protected string content;
-        protected PlayerProgramm programm;
-
+        protected Player player;
+        protected Statement parent;
         //Accessore
         public int Indent
         {
             get { return indent; }
+            set 
+            {
+                int dif;
+                if ((dif = value - indent) > 0)
+                {
+                    for (int i = 0; i < dif; i++)
+                    {
+                        content = "    " + content;
+                    }
+                    indent = value;
+                }
+            }
         }
 
-        //Konstruktoren
-        public Statement(PlayerProgramm programm)
+        public string Content
         {
-            this.programm = programm;
+            get { return content; }
         }
 
-        //Methods
-        public abstract void toString();
-        public abstract void execute();
+        public Statement Parent
+        {
+            get { return parent;}
+            set { parent = value;}
+        }
+
+        public Player Player
+        {
+            get { return player; }
+        }
+        //Konstruktoren
+        public Statement(Player player, Statement parent)
+        {
+            this.player = player;
+            this.parent = parent;
+        }
+
+        public abstract void execute(bool buildLog);
     }
 }

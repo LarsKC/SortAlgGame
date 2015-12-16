@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SortAlgGame.Model.Statements.LoopsAndIf
+namespace SortAlgGame.ViewModel
 {
-    class ForSelectioSort
+    class BubbleSortVM : BaseViewModel
     {
     }
 }

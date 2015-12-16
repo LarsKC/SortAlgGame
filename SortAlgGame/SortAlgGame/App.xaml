@@ -13,6 +13,12 @@
             <DataTemplate DataType="{x:Type vm:MenueErklaerungViewModel}">
                 <views:MenueErklaerungen />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:GameVM}">
+                <views:GameV />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:BubbleSortVM}">
+                <views:Erklaerung />
+            </DataTemplate>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Microsoft.Surface.Presentation.Generic;v2.0.0.0;31bf3856ad364e35;component/themes\styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
