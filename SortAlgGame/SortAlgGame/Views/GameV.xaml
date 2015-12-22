@@ -76,8 +76,7 @@
                 PreviewTouchDown="sourceList_PreviewTouchDown"
                 s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"
-                s:SurfaceDragDrop.DragCompleted="OnDragCompleted"/>
+                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
             <s:SurfaceListBox 
                 Tag="targetListP1"
                 Name="surfaceList2"
@@ -94,8 +93,7 @@
                 s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
                 s:SurfaceDragDrop.Drop="OnDropTargetDrop"
-                PreviewTouchDown="sourceList_PreviewTouchDown"
-                s:SurfaceDragDrop.DragCompleted="OnDragCompleted"/>
+                PreviewTouchDown="sourceList_PreviewTouchDown"/>
             <Image Tag="delete1" Height="50" Name="image1" Stretch="Fill" Width="50" Source="/Resources/icon.png"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1">
@@ -115,8 +113,7 @@
                 PreviewTouchDown="sourceList_PreviewTouchDown"
                 s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"
-                s:SurfaceDragDrop.DragCompleted="OnDragCompleted"/>
+                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
             <s:SurfaceListBox 
                 Tag="targetListP2"
                 Name="surfaceList4"
@@ -133,8 +130,7 @@
                 PreviewTouchDown="sourceList_PreviewTouchDown"
                 s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"
-                s:SurfaceDragDrop.DragCompleted="OnDragCompleted"/>
+                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1">
             <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton1" Width="200" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>

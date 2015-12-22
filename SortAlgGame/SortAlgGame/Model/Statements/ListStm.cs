@@ -35,10 +35,11 @@ namespace SortAlgGame.Model.Statements
                     indent = value;
                 }
 
-                foreach (Statement x in StmList)
+                for (int i = 0; i < StmList.Count -1; i++)
                 {
-                    x.Indent = this.Indent + 1;
+                    StmList.ElementAt<Statement>(i).Indent = this.Indent + 1;
                 }
+                StmList.Last.Value.Indent = this.Indent;
             }
         }
 
@@ -60,16 +61,18 @@ namespace SortAlgGame.Model.Statements
             }
         }
 
-        public void addStm(Statement stm)
+        public void addBeforeStm(Statement pos, Statement stm)
         {
-            stm.Parent = this;
-            stmList.AddBefore(stmList.Last.Previous, stm);
-            stm.Indent = this.Indent + 1;
-            if (stm is ListStm)
+            if (pos == null)
             {
-                (stm as ListStm).StmList.Last.Value.Indent = stm.Indent;
-                (stm as ListStm).StmList.Last.Previous.Value.Indent = stm.Indent + 1;
+                StmList.AddBefore(StmList.Last.Previous, stm);
             }
+            else
+            {
+                StmList.AddBefore(StmList.Find(pos), stm);
+            }
+            stm.Parent = this;
+            stm.Indent = this.Indent + 1;
         }
 
         //TODO !!!
@@ -81,12 +84,33 @@ namespace SortAlgGame.Model.Statements
             {
                 for (int i = 0; i < (stm as ListStm).StmList.Count - 2; i++ )
                 {
+
                     (stm as ListStm).StmList.ElementAt<Statement>(0).Indent = this.Indent + 1;
-                    this.StmList.AddBefore(this.StmList.Find(stm), (stm as ListStm).StmList.ElementAt<Statement>(0));
+                    this.addBeforeStm(stm, (stm as ListStm).StmList.ElementAt<Statement>(0));
                     (stm as ListStm).StmList.Remove((stm as ListStm).StmList.ElementAt<Statement>(0));
                 }
             }
             stmList.Remove(stm);
+        }
+
+        public bool stmListContains(Statement stm, ListStm listStm)
+        {
+            if (stm == listStm)
+                return true;
+
+            foreach (Statement x in listStm.StmList)
+            {
+                if (x is ListStm)
+                {
+                    if (stmListContains(stm, x as ListStm))
+                        return true;
+                }
+                else if(x == stm)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

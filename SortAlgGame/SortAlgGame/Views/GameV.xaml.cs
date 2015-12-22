@@ -82,21 +82,19 @@ namespace SortAlgGame.Views
         //Wird immer dann ausgelöst, wenn das Drag Object über ein Element gezogen wird, welches ein DragEnterEvent auslösen kann.
         private void OnDropTargetDragEnter(object sender, SurfaceDragDropEventArgs e)
         {
-            if (sender is SurfaceListBox)
-            {
-                FrameworkElement dragSourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
-                FrameworkElement target = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
-                if (target == null)
-                {
-                    target = sender as SurfaceListBox;
-                }
+            FrameworkElement target = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
+            FrameworkElement targetList = getFrameworkElement<SurfaceListBox>(e.OriginalSource as FrameworkElement);
+            FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
 
-                if (dragSourceList != null && target != null)
+            if (targetList != null && sourceList != null && targetList.Tag != null && sourceList.Tag != null)
+            {
+                if (target == null && !(this.DataContext as GameVM).canDrop(e.Cursor.Data, (targetList as SurfaceListBox).ItemsSource, sourceList.Tag.ToString(), targetList.Tag.ToString()))
                 {
-                    if (!(this.DataContext as GameVM).canDrop( e.Cursor.Data, target.DataContext, dragSourceList.Tag.ToString(), (sender as SurfaceListBox).Tag.ToString()))
-                    {
-                        e.Effects = DragDropEffects.None;
-                    }
+                    e.Effects = DragDropEffects.None;
+                }
+                else if (target != null && !(this.DataContext as GameVM).canDrop(e.Cursor.Data, (target as SurfaceListBoxItem).DataContext, sourceList.Tag.ToString(), targetList.Tag.ToString()))
+                {
+                    e.Effects = DragDropEffects.None;
                 }
             }
             else
@@ -110,7 +108,6 @@ namespace SortAlgGame.Views
         {
             e.Effects = e.Cursor.AllowedEffects;
         }
-
 
         private void OnTargetChanged(object sender, TargetChangedEventArgs e)
         {
@@ -163,11 +160,11 @@ namespace SortAlgGame.Views
                             {
                                 case "sourceListP1":
                                 case "sourceListP2":
-                                    (this.DataContext as GameVM).addToTargetList(e.Cursor.Data, (targetItem as SurfaceListBoxItem).DataContext, (sender as SurfaceListBox).ItemsSource);
+                                    (this.DataContext as GameVM).addToTargetList(e.Cursor.Data, (targetItem as SurfaceListBoxItem).DataContext, (sourceList as SurfaceListBox).ItemsSource);
                                     break;
                                 case "targetListP1":
                                 case "targetListP2":
-                                    (this.DataContext as GameVM).sortStm(e.Cursor.Data, targetItem.DataContext, (sender as SurfaceListBox).ItemsSource);
+                                    (this.DataContext as GameVM).sortStm(e.Cursor.Data, targetItem.DataContext);
                                     break;
                                 default:
                                     //Nothing
@@ -180,53 +177,6 @@ namespace SortAlgGame.Views
                         break;
                 }
             }
-        }
-
-        private void OnDragCompleted(object sender, SurfaceDragCompletedEventArgs e)
-        {
-            if (e.Cursor.Effects == DragDropEffects.Move && sender is SurfaceListBox && (sender as SurfaceListBox).Tag != null)
-            {
-                switch((sender as SurfaceListBox).Tag.ToString())
-                {
-                    case "sourceListP1":
-                    case "sourceListP2":
-                        FrameworkElement cursorSrcList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
-                        (this.DataContext as GameVM).removeFromSourceList(e.Cursor.Data, (cursorSrcList as SurfaceListBox).ItemsSource);
-                        //(this.DataContext as GameVM).removeFromTargetList(e.Cursor.Data, (sender as SurfaceListBox).ItemsSource);
-                        break;
-                    case "targetListP1":
-                    case "targetListP2":
-                        FrameworkElement cursorTargetList = getFrameworkElement<SurfaceListBox>(e.Cursor.CurrentTarget);
-                        if (cursorTargetList is SurfaceListBox && cursorTargetList.Tag != null)
-                        {
-                            switch (cursorTargetList.Tag.ToString())
-                            {
-                                case "sourceListP1":
-                                case "sourceListP2":
-                                    (this.DataContext as GameVM).removeFromTargetList(e.Cursor.Data, (sender as SurfaceListBox).ItemsSource);
-                                    //(this.DataContext as GameVM).removeFromSourceList(e.Cursor.Data, (cursorSrcList as SurfaceListBox).ItemsSource);
-                                    break;
-                                case "targetListP1":
-                                case "targetListP2":
-                                    //Nothing
-                                    /*FrameworkElement dropTargetList = getFrameworkElement<SurfaceListBoxItem>(e.Cursor.CurrentTarget as FrameworkElement);
-                                    if(dropTargetList != null)
-                                    {
-                                       (this.DataContext as GameVM).sortStm(e.Cursor.Data, (dropTargetList as SurfaceListBoxItem).DataContext, (cursorTargetList as SurfaceListBox).ItemsSource);
-                                       
-                                    }*/
-                                    break;
-                                default:
-                                    //Nothing
-                                    break;
-                            }
-                        }
-                        break;
-                    default:
-                        //Nothing
-                        break;
-                }
-            }
-        }
+        } 
     }
 }

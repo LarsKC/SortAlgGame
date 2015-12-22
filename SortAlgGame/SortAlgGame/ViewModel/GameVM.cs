@@ -47,6 +47,11 @@ namespace SortAlgGame.ViewModel
             {
                 return _targetItemsP1;
             }
+            set
+            {
+                _targetItemsP1 = value;
+                NotifyPropertyChanged("TargetItemsP1");
+            }
         }
 
         public ObservableCollection<Statement> SourceItemsP2
@@ -63,6 +68,11 @@ namespace SortAlgGame.ViewModel
             get
             {
                 return _targetItemsP2;
+            }
+            set
+            {
+                _targetItemsP2 = value;
+                NotifyPropertyChanged("TargetItemsP2");
             }
         }
 
@@ -135,33 +145,67 @@ namespace SortAlgGame.ViewModel
 
         public bool canDrop(Object cursorData, Object targetData, String sourceTag, String targetTag)
         {
-            //Bedingung für jeden Drop
-            if(!dragableObject(cursorData))
+            if (!(cursorData is Statement && (targetData is Statement || targetData is ObservableCollection<Statement>)))
             {
                 return false;
             }
 
-            //Drop Erlaubnis auf einen AddBrick in der TargetListe die dem Spieler gehört
-            if(targetData is AddBrick && (targetData as Statement).Player == (cursorData as Statement).Player && sourceTag != targetTag)
+            if (targetData is Statement)
             {
-                return true;
-            }
-
-            //Drop Erlaubnis innerhalb einer TargetListe zum sortieren der Statements
-            if( (sourceTag == "targetListP1" || sourceTag == "targetListP2") && sourceTag == targetTag && targetData is Statement && !(targetData is LoopEnd)  && !(targetData is BaseStatement))
-            {
-                if ((cursorData is ListStm && (cursorData as ListStm).StmList.Find(targetData as Statement) == null) || !(cursorData is ListStm))
+                if ((cursorData as Statement).Player != (targetData as Statement).Player)
                 {
-                    return true;
+                    return false;
+                }
+            }
+            else
+            {
+                if ((cursorData as Statement).Player != (targetData as ObservableCollection<Statement>).First<Statement>().Player)
+                {
+                    return false;
                 }
             }
 
-            //Drop Erlaubnis zum Zurücklegen eines Bereits zur TargetList hinzugefügten Blocks
-            if(targetData is ObservableCollection<Statement> && (targetData as ObservableCollection<Statement>).First<Statement>().Player == (cursorData as Statement).Player && (targetTag == "sourceListP1" || targetTag == "sourceListP2") && sourceTag != "sourceListP1" && sourceTag != "sourceListP2")
+            switch (sourceTag)
             {
-                return true;
+                case "targetListP1":
+                case "targetListP2":
+                    switch (targetTag)
+                    {
+                        case "targetListP1":
+                        case "targetListP2":
+                            //Sortieren der TargetListe
+                            if(!(targetData is LoopEnd) && !(targetData is BaseStatement) && targetData is Statement)
+                            {
+                                if((cursorData is ListStm && !(cursorData as ListStm).stmListContains(targetData as Statement, cursorData as ListStm)))
+                                {
+                                    return true;
+                                }
+                                else if(!(cursorData is ListStm))
+                                {
+                                    return true;
+                                }
+                            }
+                            break;
+                        case "sourceListP1":
+                        case "sourceListP2":
+                            //Zurücklegen eines Code Blocks
+                            return true;
+                        default:
+                            //Nothing
+                            break;
+                    }
+                    break;
+                case "sourceListP1":
+                case "sourceListP2":
+                    if((targetTag == "targetListP1" || targetTag == "targetListP2") && targetData is AddBrick)
+                    {
+                        return true;
+                    }
+                    break;
+                default:
+                    //Nothing
+                    break;
             }
-
             return false;
         }
 
@@ -174,22 +218,54 @@ namespace SortAlgGame.ViewModel
             return false;
         }
 
-        public void addToTargetList(Object cursorData, Object targetStm, System.Collections.IEnumerable targetList)
+        public void updateTargetList(Statement stm)
         {
-            if (cursorData is Statement && targetStm is Statement && targetList is ObservableCollection<Statement>)
+            if (stm.Player == _game.Player1)
             {
-                //Liste für die View aktualisieren
-                int index = (targetList as ObservableCollection<Statement>).IndexOf(targetStm as Statement);
-                (targetList as ObservableCollection<Statement>).Insert(index, cursorData as Statement);
-                //Model Datenschachtelung aktualisieren
-                (targetStm as Statement).Parent.addStm(cursorData as Statement);
-                if (cursorData is ListStm)
+                TargetItemsP1 = getActualStmNesting(_game.Player1.Stm);
+            }
+            else if (stm.Player == _game.Player2)
+            {
+                TargetItemsP2 = getActualStmNesting(_game.Player2.Stm);
+            }
+        }
+
+        public ObservableCollection<Statement> getActualStmNesting(Statement baseStm)
+        {
+            ObservableCollection<Statement> itemList = new ObservableCollection<Statement>();
+            itemList.Add(baseStm);
+            if (baseStm is ListStm)
+            {
+                foreach (Statement x in (baseStm as ListStm).StmList)
                 {
-                    (targetList as ObservableCollection<Statement>).Insert(index + 1, (cursorData as ListStm).StmList.Last.Previous.Value);
-                    (targetList as ObservableCollection<Statement>).Insert(index + 2, (cursorData as ListStm).StmList.Last.Value);
+                    if (x is ListStm)
+                    {
+                        concatCollection(itemList, getActualStmNesting(x));
+                    }
+                    else
+                    {
+                        itemList.Add(x);
+                    }
                 }
+            }
+            return itemList;
+        }
 
+        public void concatCollection(ObservableCollection<Statement> first, ObservableCollection<Statement> second)
+        {
+            foreach (Statement x in second)
+            {
+                first.Add(x);
+            }
+        }
 
+        public void addToTargetList(Object cursorData, Object targetStm, System.Collections.IEnumerable sourceList)
+        {
+            if (cursorData is Statement && targetStm is Statement && sourceList is ObservableCollection<Statement>)
+            {
+                (targetStm as Statement).Parent.addBeforeStm(null, cursorData as Statement);
+                (sourceList as ObservableCollection<Statement>).Remove(cursorData as Statement);
+                updateTargetList(cursorData as Statement);
             }
         }
 
@@ -198,92 +274,22 @@ namespace SortAlgGame.ViewModel
             if (cursorData is Statement && target is ObservableCollection<Statement>)
             {
                 //CursorDaten zur Zielliste Hinzufügen
-                (target as ObservableCollection<Statement>).Add(cursorData as Statement);
-            }
-        }
-
-        public void removeFromSourceList(object cursorData, System.Collections.IEnumerable dragSourceList)
-        {
-            if (cursorData is Statement && dragSourceList is ObservableCollection<Statement>)
-            {
-                (dragSourceList as ObservableCollection<Statement>).Remove(cursorData as Statement);
-            }
-        }
-
-        public void removeFromTargetList(object cursorData, object source)
-        {
-            if (cursorData is Statement && source is ObservableCollection<Statement>)
-            {
-                //Von View entfernen
-                (source as ObservableCollection<Statement>).Remove(cursorData as Statement);
-                if (cursorData is ListStm)
-                {
-                    for (int i = 0; i < 2; i++)
-                    {
-                        (source as ObservableCollection<Statement>).Remove((cursorData as ListStm).StmList.Last<Statement>());
-                    }
-
-                }
-                //Statements aus der Schachtelung entfernen
+                (target as ObservableCollection<Statement>).Insert(0, cursorData as Statement);
+                //Model Statement Schachtelung aktualisieren
                 (cursorData as Statement).Parent.removeStm(cursorData as Statement);
+                //TargetList aktualisieren
+                updateTargetList(cursorData as Statement);
             }
         }
 
-        public void sortStm(object cursorData, object targetData, System.Collections.IEnumerable targetList)
+        public void sortStm(object cursorData, object targetData)
         {
-            if (cursorData is Statement && targetData is Statement && targetList is ObservableCollection<Statement> && cursorData != targetData)
+            if (cursorData is Statement && targetData is Statement &&cursorData != targetData)
             {
-                //ViewSortieren
-                if (cursorData is ListStm)
-                {
-                    removeItemsFromViewList(targetList as ObservableCollection<Statement>, (cursorData as ListStm).StmList);
-                }
-                (targetList as ObservableCollection<Statement>).Remove(cursorData as Statement);
-                int index = (targetList as ObservableCollection<Statement>).IndexOf(targetData as Statement);
-                (targetList as ObservableCollection<Statement>).Insert(index, cursorData as Statement);
-                //Model Sortieren TODO: Indent berechnen!!!!
-                (targetData as Statement).Parent.StmList.AddBefore((targetData as Statement).Parent.StmList.Find(targetData as Statement), cursorData as Statement);
                 (cursorData as Statement).Parent.StmList.Remove(cursorData as Statement);
-                (cursorData as Statement).Parent = (targetData as Statement).Parent;
-                (cursorData as Statement).Indent = (cursorData as Statement).Parent.Indent + 1;
-                if (cursorData is ListStm)
-                {
-                    addItemsToViewList(targetList as ObservableCollection<Statement>, index, (cursorData as ListStm).StmList);
-                }
+                (targetData as Statement).Parent.addBeforeStm(targetData as Statement, cursorData as Statement);
+                updateTargetList(cursorData as Statement);
             }
-        }
-
-        public void removeItemsFromViewList(ObservableCollection<Statement> targetList, LinkedList<Statement> stmList)
-        {
-            foreach (Statement x in stmList)
-            {
-                if (x is ListStm)
-                {
-                    targetList.Remove(x);
-                    removeItemsFromViewList(targetList, (x as ListStm).StmList);
-                }
-                else
-                {
-                    targetList.Remove(x);
-                }
-            }
-        }
-
-        public void addItemsToViewList(ObservableCollection<Statement> targetList, int index , LinkedList<Statement> stmList)
-        {
-            foreach (Statement x in stmList)
-            {
-                if (x is ListStm)
-                {
-                    targetList.Insert(++index, x);
-                    addItemsToViewList(targetList, index,  (x as ListStm).StmList);
-                }
-                else
-                {
-                    targetList.Insert(++index, x);
-                }
-            }
-
         }
 
         public void stopPlayer1()
