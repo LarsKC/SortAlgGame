@@ -60,5 +60,13 @@ namespace SortAlgGame.ViewModel
                 return new RelayCommand(action => CurrentView = new BubbleSortVM());
             }
         }
+
+        public ICommand printExecute
+        {
+            get
+            {
+                return new RelayCommand(action => (currentView as GameVM).printExecute());
+            }
+        }
     }
 }

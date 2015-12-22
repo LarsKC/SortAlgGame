@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class DecJ : Statement
     {
-        public DecJ(Player player, Statement parent)
+        public DecJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "j--;";

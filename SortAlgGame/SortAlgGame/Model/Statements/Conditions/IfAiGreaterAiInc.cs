@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfAiGreaterAiInc : ListStm
     {
-        public IfAiGreaterAiInc(Player player, Statement parent)
+        public IfAiGreaterAiInc(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (a[i] > a[i+1]) {";

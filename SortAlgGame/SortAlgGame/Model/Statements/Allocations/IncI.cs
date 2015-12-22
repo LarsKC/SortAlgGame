@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class IncI : Statement
     {
-        public IncI(Player player, Statement parent)
+        public IncI(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "i++;";

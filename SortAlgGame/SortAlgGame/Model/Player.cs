@@ -74,6 +74,7 @@ namespace SortAlgGame.Model
             return _endTime - startTime;
         }
 
+
         #endregion
     }
 }

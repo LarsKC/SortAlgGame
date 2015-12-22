@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class WhileJGreaterNull : ListStm
     {
-        public WhileJGreaterNull(Player player, Statement parent)
+        public WhileJGreaterNull(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "while (j > 0 && a[j-1] > a[i]) {";

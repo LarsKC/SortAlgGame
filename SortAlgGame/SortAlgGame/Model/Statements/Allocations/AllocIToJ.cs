@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocIToJ : Statement
     {
-        public AllocIToJ(Player player, Statement parent)
+        public AllocIToJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "j = i;";

@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAiWithAiInc : Statement
     {
-        public SwapAiWithAiInc(Player player, Statement parent)
+        public SwapAiWithAiInc(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "swap(a, i, i+1);";

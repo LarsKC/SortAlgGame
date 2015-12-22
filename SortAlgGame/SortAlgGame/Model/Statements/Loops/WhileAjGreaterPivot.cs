@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class WhileAjGreaterPivot : ListStm
     {
-        public WhileAjGreaterPivot(Player player, Statement parent)
+        public WhileAjGreaterPivot(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "while (a[j] > pivot) {";

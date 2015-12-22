@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfIEqualsJ : ListStm
     {
-        public IfIEqualsJ(Player player, Statement parent)
+        public IfIEqualsJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (i == j) {";
@@ -27,6 +27,7 @@ namespace SortAlgGame.Model.Statements.Conditions
             {
                 //TODO ExceptonHandling
             }
-        }
+        }
+
     }
 }

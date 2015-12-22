@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfILessRight : ListStm
     {
-        public IfILessRight(Player player, Statement parent)
+        public IfILessRight(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (i < right) {";

@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAjWithAjDec : Statement
     {
-        public SwapAjWithAjDec(Player player, Statement parent)
+        public SwapAjWithAjDec(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "swap (a, j, j-1);";

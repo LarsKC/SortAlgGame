@@ -11,20 +11,26 @@ namespace SortAlgGame.Model.Statements
         protected int indent = 0;
         protected string content;
         protected Player player;
-        protected Statement parent;
+        protected ListStm parent;
         //Accessore
-        public int Indent
+        public virtual int Indent
         {
             get { return indent; }
             set 
             {
-                int dif;
-                if ((dif = value - indent) > 0)
+                int dif = value - indent;
+
+                if (dif > 0)
                 {
                     for (int i = 0; i < dif; i++)
                     {
                         content = "    " + content;
                     }
+                    indent = value;
+                }
+                else if (dif < 0)
+                {
+                    content = content.Substring(dif*(-1)*4);
                     indent = value;
                 }
             }
@@ -35,7 +41,7 @@ namespace SortAlgGame.Model.Statements
             get { return content; }
         }
 
-        public Statement Parent
+        public ListStm Parent
         {
             get { return parent;}
             set { parent = value;}
@@ -46,12 +52,12 @@ namespace SortAlgGame.Model.Statements
             get { return player; }
         }
         //Konstruktoren
-        public Statement(Player player, Statement parent)
+        public Statement(Player player, ListStm parent)
         {
             this.player = player;
             this.parent = parent;
         }
-
+        //Methods
         public abstract void execute(bool buildLog);
     }
 }

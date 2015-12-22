@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class ForOutBubble : ListStm
     {
-        public ForOutBubble(Player player, Statement parent)
+        public ForOutBubble(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "for (int n = right+1; n > 1; n--) {";

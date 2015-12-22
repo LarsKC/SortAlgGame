@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfINotEqualsMin : ListStm
     {
-        public IfINotEqualsMin(Player player, Statement parent)
+        public IfINotEqualsMin(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (i != min) {";

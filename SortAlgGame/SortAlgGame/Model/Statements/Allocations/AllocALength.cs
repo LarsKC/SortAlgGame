@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocALength : Statement
     {
-        public AllocALength(Player player, Statement parent)
+        public AllocALength(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "int n = right +1;";

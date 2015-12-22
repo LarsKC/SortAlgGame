@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class ForInSelection : ListStm
     {
-        public ForInSelection(Player player, Statement parent)
+        public ForInSelection(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "for (int j= i+1; j < n; j++) {";

@@ -8,7 +8,7 @@ namespace SortAlgGame.Model.Statements
 {
     class BaseStatement : ListStm
     {
-        public BaseStatement(Player player, Statement parent)
+        public BaseStatement(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "public sort(int[] a, int left, int right) {";
@@ -20,11 +20,8 @@ namespace SortAlgGame.Model.Statements
             DataSet actDataSet = player.Stack.Peek();
             actDataSet.Left = (actDataSet.Left == Config.NOTUSED) ? 0 : actDataSet.Left;
             actDataSet.Right = (actDataSet.Right == Config.NOTUSED) ? actDataSet.A.Length-1 : actDataSet.Right;
-            
-            foreach (Statement x in stmList)
-            {
-                x.execute(buildLog);
-            }
+
+            executeList(buildLog);
         }
     }
 }

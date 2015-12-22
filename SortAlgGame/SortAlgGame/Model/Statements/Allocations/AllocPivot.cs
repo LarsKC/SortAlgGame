@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocPivot : Statement
     {
-        public AllocPivot(Player player, Statement parent)
+        public AllocPivot(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "int pivot = a[(int)((left+right)/2)];";

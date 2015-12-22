@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfLeftLessJ : ListStm
     {
-        public IfLeftLessJ(Player player, Statement parent)
+        public IfLeftLessJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (left < j) {";

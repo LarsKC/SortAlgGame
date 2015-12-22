@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocLeft : Statement
     {
-        public AllocLeft(Player player, Statement parent)
+        public AllocLeft(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "int i = left";

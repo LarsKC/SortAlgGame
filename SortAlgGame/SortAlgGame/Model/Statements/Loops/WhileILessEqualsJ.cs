@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class WhileILessEqualsJ : ListStm
     {
-        public WhileILessEqualsJ(Player player, Statement parent)
+        public WhileILessEqualsJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "while(i <= j) {";

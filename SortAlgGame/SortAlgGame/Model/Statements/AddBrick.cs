@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements
 {
     class AddBrick : Statement
     {
-        public AddBrick(Player player, Statement parent)
+        public AddBrick(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "+++++++++";

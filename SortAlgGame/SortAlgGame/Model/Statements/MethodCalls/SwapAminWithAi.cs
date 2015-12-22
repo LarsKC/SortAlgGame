@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAminWithAi : Statement
     {
-        public SwapAminWithAi(Player player, Statement parent)
+        public SwapAminWithAi(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "swap (a, min, i);";

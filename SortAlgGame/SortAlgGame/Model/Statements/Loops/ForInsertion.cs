@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Loops
 {
     class ForInsertion : ListStm
     {
-        public ForInsertion(Player player, Statement parent)
+        public ForInsertion(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "for (int i = left+1; i < n; i++) {";

@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class CallSortLeft : Statement
     {
-        public CallSortLeft(Player player, Statement parent)
+        public CallSortLeft(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "sort(a, left, J);";

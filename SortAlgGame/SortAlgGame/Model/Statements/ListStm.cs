@@ -14,7 +14,36 @@ namespace SortAlgGame.Model.Statements
             get { return stmList; }
         }
 
-        public ListStm(Player player, Statement parent)
+        public override int Indent
+        {
+            get { return indent; }
+            set
+            {
+                int dif = value - indent;
+
+                if (dif > 0)
+                {
+                    for (int i = 0; i < dif; i++)
+                    {
+                        content = "    " + content;
+                    }
+                    indent = value;
+                }
+                else if (dif < 0)
+                {
+                    content = content.Substring(dif*(-1)*4);
+                    indent = value;
+                }
+
+                foreach (Statement x in StmList)
+                {
+                    x.Indent = this.Indent + 1;
+                }
+            }
+        }
+
+
+        public ListStm(Player player, ListStm parent)
             : base(player, parent)
         {
             stmList = new LinkedList<Statement>();
@@ -43,9 +72,20 @@ namespace SortAlgGame.Model.Statements
             }
         }
 
-        public void remove(Statement stm)
+        //TODO !!!
+        public void removeStm(Statement stm)
         {
             stm.Parent = null;
+            stm.Indent = 0;
+            if (stm is ListStm)
+            {
+                for (int i = 0; i < (stm as ListStm).StmList.Count - 2; i++ )
+                {
+                    (stm as ListStm).StmList.ElementAt<Statement>(0).Indent = this.Indent + 1;
+                    this.StmList.AddBefore(this.StmList.Find(stm), (stm as ListStm).StmList.ElementAt<Statement>(0));
+                    (stm as ListStm).StmList.Remove((stm as ListStm).StmList.ElementAt<Statement>(0));
+                }
+            }
             stmList.Remove(stm);
         }
     }

@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfAjLessAmin : ListStm
     {
-        public IfAjLessAmin(Player player, Statement parent)
+        public IfAjLessAmin(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (a[j] < a[min]) {";

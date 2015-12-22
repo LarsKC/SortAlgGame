@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements
 {
     class LoopEnd : Statement
     {
-        public LoopEnd(Player player, Statement parent)
+        public LoopEnd(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "}";

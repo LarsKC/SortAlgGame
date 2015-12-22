@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class ForInBubble : ListStm
     {
-        public ForInBubble(Player player, Statement parent)
+        public ForInBubble(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "for (int i = left; i > n-1; i++) {";

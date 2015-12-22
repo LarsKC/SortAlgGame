@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfILessJ : ListStm
     {
-        public IfILessJ(Player player, Statement parent)
+        public IfILessJ(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "if (i < j) {";

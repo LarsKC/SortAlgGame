@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocIToMin : Statement
     {
-        public AllocIToMin(Player player, Statement parent)
+        public AllocIToMin(Player player, ListStm parent)
             : base(player, parent)
         {
             content = "min = i;";
