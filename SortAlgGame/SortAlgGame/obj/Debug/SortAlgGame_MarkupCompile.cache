@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\App.xaml
-5-1292108158
+998518364
 2-259798666
-56-1756624536
+64-1272954170
 152103913890
-Views\Erklaerung.xaml;Views\GameV.xaml;Views\Hauptmenue.xaml;SurfaceWindow1.xaml;Views\MenueErklaerungen.xaml;
+Views\BubbleSort.xaml;Views\GameV.xaml;Views\Hauptmenue.xaml;SurfaceWindow1.xaml;Views\InsertionSort.xaml;Views\MenueErklaerungen.xaml;Views\QuickSort.xaml;Views\Result.xaml;Views\SelectionSort.xaml;
 
 False
 

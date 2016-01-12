@@ -38,7 +38,24 @@ namespace SortAlgGame.Views
             return frame;
         }
 
-        private void sourceList_PreviewTouchDown(object sender, TouchEventArgs e)
+        public bool dropable(SurfaceListBoxItem target, SurfaceListBox targetList, SurfaceListBox sourceList, SurfaceDragCursor cursor)
+        {
+            if (targetList != null && sourceList != null && targetList.Tag != null && sourceList.Tag != null)
+            {
+                if (target == null && !(this.DataContext as GameVM).canDrop(cursor.Data, targetList.ItemsSource, sourceList.Tag.ToString(), targetList.Tag.ToString()))
+                {
+                    return false;
+                }
+                else if (target != null && !(this.DataContext as GameVM).canDrop(cursor.Data, target.DataContext, sourceList.Tag.ToString(), targetList.Tag.ToString()))
+                {
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private void OnTouchDown(object sender, TouchEventArgs e)
         {
             FrameworkElement source = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
             //Wurde kein Ziehbares Obeject gefunden -> return
@@ -80,31 +97,19 @@ namespace SortAlgGame.Views
         }
 
         //Wird immer dann ausgelöst, wenn das Drag Object über ein Element gezogen wird, welches ein DragEnterEvent auslösen kann.
-        private void OnDropTargetDragEnter(object sender, SurfaceDragDropEventArgs e)
+        private void OnDragEnter(object sender, SurfaceDragDropEventArgs e)
         {
             FrameworkElement target = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
             FrameworkElement targetList = getFrameworkElement<SurfaceListBox>(e.OriginalSource as FrameworkElement);
             FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
 
-            if (targetList != null && sourceList != null && targetList.Tag != null && sourceList.Tag != null)
-            {
-                if (target == null && !(this.DataContext as GameVM).canDrop(e.Cursor.Data, (targetList as SurfaceListBox).ItemsSource, sourceList.Tag.ToString(), targetList.Tag.ToString()))
-                {
-                    e.Effects = DragDropEffects.None;
-                }
-                else if (target != null && !(this.DataContext as GameVM).canDrop(e.Cursor.Data, (target as SurfaceListBoxItem).DataContext, sourceList.Tag.ToString(), targetList.Tag.ToString()))
-                {
-                    e.Effects = DragDropEffects.None;
-                }
-            }
-            else
+            if (!dropable(target as SurfaceListBoxItem, targetList as SurfaceListBox, sourceList as SurfaceListBox, e.Cursor as SurfaceDragCursor))
             {
                 e.Effects = DragDropEffects.None;
             }
         }
 
-
-        private void OnDropTargetDragLeave(object sender, SurfaceDragDropEventArgs e)
+        private void OnDragLeave(object sender, SurfaceDragDropEventArgs e)
         {
             e.Effects = e.Cursor.AllowedEffects;
         }
@@ -113,33 +118,12 @@ namespace SortAlgGame.Views
         {
             FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
             FrameworkElement targetList = getFrameworkElement<SurfaceListBox>(e.Cursor.CurrentTarget);
-            FrameworkElement targetItem = getFrameworkElement<SurfaceListBoxItem>(e.Cursor.CurrentTarget);
+            FrameworkElement target = getFrameworkElement<SurfaceListBoxItem>(e.Cursor.CurrentTarget);
 
-
-            if (sourceList == null || sourceList.Tag == null)
-            {
-                e.Cursor.Visual.Tag = "CannotDrop";
-                return;
-            }
-
-            if (targetList != null && targetList.Tag != null)
-            {
-                if (targetList.Tag.ToString() == "sourceListP1" || targetList.Tag.ToString() == "sourceListP2")
-                {
-                    e.Cursor.Visual.Tag = (this.DataContext as GameVM).canDrop(e.Cursor.Data, (targetList as SurfaceListBox).ItemsSource, sourceList.Tag.ToString(), targetList.Tag.ToString()) ? "CanDrop" : "CannotDrop";
-                }
-                else if (targetItem != null)
-                {
-                    e.Cursor.Visual.Tag = (this.DataContext as GameVM).canDrop(e.Cursor.Data, targetItem.DataContext, sourceList.Tag.ToString(), targetList.Tag.ToString()) ? "CanDrop" : "CannotDrop";
-                }
-            }
-            else
-            {
-                e.Cursor.Visual.Tag = "CannotDrop";
-            }
+            e.Cursor.Visual.Tag = (dropable(target as SurfaceListBoxItem, targetList as SurfaceListBox, sourceList as SurfaceListBox, e.Cursor)) ? "CanDrop" : "CannotDrop";
         }
 
-        private void OnDropTargetDrop(object sender, SurfaceDragDropEventArgs e)
+        private void OnDrop(object sender, SurfaceDragDropEventArgs e)
         {
             if (sender is SurfaceListBox && (sender as SurfaceListBox).Tag != null)
             {

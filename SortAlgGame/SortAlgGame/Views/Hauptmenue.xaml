@@ -8,9 +8,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            <StackPanel Height="80" HorizontalAlignment="Center" Margin="0,0,0,0" Name="stackPanel1" VerticalAlignment="Center" Width="200">
+           <StackPanel HorizontalAlignment="Center" Name="stackPanel1" VerticalAlignment="Center" Width="200">
                 <my:SurfaceButton Content="Erklärungen" Height="25" Name="surfaceButton1" Width="200" Command="{Binding DataContext.changeToErklaerung, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
                 <my:SurfaceButton Content="Spiel starten" Height="25" Name="surfaceButton2" Width="200" Command="{Binding DataContext.changeToGame, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-            </StackPanel>
+                <my:SurfaceButton Content="BlaaTest" Height="25" Name="test" Width="200" Command="{Binding DataContext.changeToResult, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

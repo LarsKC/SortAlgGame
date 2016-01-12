@@ -10,15 +10,15 @@ namespace SortAlgGame.Model.Statements.Allocations
         public AllocPivot(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "int pivot = a[(int)((left+right)/2)];";
+            content = "pivot = a[(int)((left+right)/2)];";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
             actDataSet.Pivot = actDataSet.A[(int)((actDataSet.Left + actDataSet.Right)/2)];
-            //TODO LOG + RUNTIME
-            if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+            if (buildLog) updateLog();
+            return null;
         }
     }
 }

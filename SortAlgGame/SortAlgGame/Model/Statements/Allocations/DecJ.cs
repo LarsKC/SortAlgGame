@@ -13,18 +13,13 @@ namespace SortAlgGame.Model.Statements.Allocations
             content = "j--;";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.J != Config.NOTUSED)
-            {
-                actDataSet.J--;
-                if(buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
-            }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            if (actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
+            actDataSet.J--;
+            if(buildLog) updateLog();
+            return null;
         }
     }
 }

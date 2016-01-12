@@ -63,7 +63,7 @@ namespace SortAlgGame.Model
             return array;
         }
 
-        public void run()
+        /*public void run()
         {
             for (int i = 0; i < _testArrays.Length; i++)
             {
@@ -82,7 +82,7 @@ namespace SortAlgGame.Model
                     _player2.Stm.execute(false);
                 }
             }
-        }
+        }*/
         #endregion
     }
 }

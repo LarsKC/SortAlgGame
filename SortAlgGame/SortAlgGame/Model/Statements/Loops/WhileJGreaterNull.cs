@@ -10,23 +10,33 @@ namespace SortAlgGame.Model.Statements.Loops
         public WhileJGreaterNull(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "while (j > 0 && a[j-1] > a[i]) {";
+            content = "while (j > 0 && a[j-1] > a[j]) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.J != Config.NOTUSED && actDataSet.I != Config.NOTUSED)
+            if (actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            try
             {
-                while (actDataSet.J > 0 && actDataSet.A[actDataSet.J - 1] > actDataSet.A[actDataSet.I])
+                while (actDataSet.J > 0 && actDataSet.A[actDataSet.J - 1] > actDataSet.A[actDataSet.J])
                 {
-                    executeList(buildLog);
+                    if (buildLog) updateLog();
+                    tmpError = executeList(buildLog);
+                    if (tmpError != null) return tmpError;
+                    actDataSet = player.Stack.Peek();
                 }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

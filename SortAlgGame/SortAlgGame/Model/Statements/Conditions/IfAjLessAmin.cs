@@ -13,20 +13,27 @@ namespace SortAlgGame.Model.Statements.Conditions
             content = "if (a[j] < a[min]) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.J != Config.NOTUSED && actDataSet.Min != Config.NOTUSED)
+            if (actDataSet.J == Config.NOTUSED || actDataSet.Min == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            if (buildLog) updateLog();
+            try
             {
                 if (actDataSet.A[actDataSet.J] < actDataSet.A[actDataSet.Min])
                 {
-                    executeList(buildLog);
+                    tmpError = executeList(buildLog);
                 }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
+            updateDataSets();
+            return tmpError;
         }
     }
 }

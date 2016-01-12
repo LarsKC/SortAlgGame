@@ -6,7 +6,7 @@ using System.Text;
 namespace SortAlgGame.Model.Statements
 {
     abstract class Statement
-    { 
+    {
         //Var
         protected int indent = 0;
         protected string content;
@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements
         public virtual int Indent
         {
             get { return indent; }
-            set 
+            set
             {
                 int dif = value - indent;
 
@@ -30,7 +30,7 @@ namespace SortAlgGame.Model.Statements
                 }
                 else if (dif < 0)
                 {
-                    content = content.Substring(dif*(-1)*4);
+                    content = content.Substring(dif * (-1) * 4);
                     indent = value;
                 }
             }
@@ -43,8 +43,8 @@ namespace SortAlgGame.Model.Statements
 
         public ListStm Parent
         {
-            get { return parent;}
-            set { parent = value;}
+            get { return parent; }
+            set { parent = value; }
         }
 
         public Player Player
@@ -58,6 +58,11 @@ namespace SortAlgGame.Model.Statements
             this.parent = parent;
         }
         //Methods
-        public abstract void execute(bool buildLog);
+        public abstract string execute(bool buildLog);
+
+        public void updateLog()
+        {
+            player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(player.Stack.Peek())));
+        }
     }
 }

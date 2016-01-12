@@ -13,21 +13,24 @@ namespace SortAlgGame.Model.Statements.Loops
             content = "while(i <= j) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED && actDataSet.J != Config.NOTUSED)
+
+            if (actDataSet.I == Config.NOTUSED || actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            while (actDataSet.I <= actDataSet.J)
             {
-                while (actDataSet.I <= actDataSet.J)
-                {
-                    //TODO LOG + RUNTIME
-                    executeList(buildLog);
-                }
+                if (buildLog) updateLog();
+                tmpError = executeList(buildLog);
+                if (tmpError != null) return tmpError;
+                actDataSet = player.Stack.Peek();
             }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

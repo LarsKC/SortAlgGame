@@ -13,18 +13,18 @@ namespace SortAlgGame.Model.Statements.Allocations
             content = "min = i;";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
             if (actDataSet.I != Config.NOTUSED)
             {
                 actDataSet.Min = actDataSet.I;
-                //TODO LOG + RUNTIME
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+                if (buildLog) updateLog();
+                return null;
             }
             else
             {
-                //TODO ExceptionHandling
+                return "i wurde nicht initialisiert!";
             }
 
         }

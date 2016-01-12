@@ -13,26 +13,24 @@ namespace SortAlgGame.Model.Statements.Loops
             content = "for (int j= i+1; j < n; j++) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED && actDataSet.N != Config.NOTUSED)
+            if (actDataSet.I == Config.NOTUSED || actDataSet.N == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            for (int j = actDataSet.I + 1; j < actDataSet.N; j++)
             {
-                int tmpJ = actDataSet.J;
-                for (int j = actDataSet.I + 1; j < actDataSet.N; j++)
-                {
-                    //TODO LOG + RUNTIME
-                    actDataSet.J = j;
-                    if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
-                    executeList(buildLog);
-                }
-                actDataSet.J = tmpJ;
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+                actDataSet.J = j;
+                if (buildLog) updateLog();
+                tmpError = executeList(buildLog);
+                if (tmpError != null) return tmpError;
+                actDataSet = player.Stack.Peek();
             }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

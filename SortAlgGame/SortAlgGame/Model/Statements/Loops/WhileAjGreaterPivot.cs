@@ -13,22 +13,30 @@ namespace SortAlgGame.Model.Statements.Loops
             content = "while (a[j] > pivot) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-
-            if (actDataSet.J != Config.NOTUSED && actDataSet.Pivot != Config.NOTUSED)
+            if (actDataSet.J == Config.NOTUSED || actDataSet.Pivot == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            try
             {
                 while (actDataSet.A[actDataSet.J] > actDataSet.Pivot)
                 {
-                    //TODO LOG + RUNTIME
-                    executeList(buildLog);
+                    if (buildLog) updateLog();
+                    tmpError = executeList(buildLog);
+                    if (tmpError != null) return tmpError;
+                    actDataSet = player.Stack.Peek();
                 }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

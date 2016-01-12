@@ -13,24 +13,27 @@ namespace SortAlgGame.Model.Statements.Conditions
             content = "if (a[i] > a[i+1]) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED)
+            if (actDataSet.I == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            if (buildLog) updateLog();
+            string tmpError = null;
+            try
             {
                 if (actDataSet.A[actDataSet.I] > actDataSet.A[actDataSet.I + 1])
                 {
-
-                    foreach (Statement x in stmList)
-                    {
-                        x.execute(buildLog);
-                    }
+                    tmpError = executeList(buildLog);
                 }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
+            updateDataSets();
+            return tmpError;
         }
     }
 }

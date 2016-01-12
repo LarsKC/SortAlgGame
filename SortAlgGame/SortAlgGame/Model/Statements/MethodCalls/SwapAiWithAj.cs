@@ -13,22 +13,22 @@ namespace SortAlgGame.Model.Statements.MethodCalls
             content = "swap(a, i, j);";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED && actDataSet.J != Config.NOTUSED)
+            if (actDataSet.I == Config.NOTUSED || actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
+            try
             {
                 int tmp = actDataSet.A[actDataSet.I];
                 actDataSet.A[actDataSet.I] = actDataSet.A[actDataSet.J];
                 actDataSet.A[actDataSet.J] = tmp;
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
-                //TODO LOG + RUNTIME
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
-
+            if (buildLog) updateLog();
+            return null;
         }
 
     }

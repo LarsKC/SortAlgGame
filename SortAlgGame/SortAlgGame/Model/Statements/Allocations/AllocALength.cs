@@ -10,15 +10,15 @@ namespace SortAlgGame.Model.Statements.Allocations
         public AllocALength(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "int n = right +1;";
+            content = "n = right +1;";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            actDataSet.N = actDataSet.Right;
-            //TODO LOG + RUNTIME
-            if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+            actDataSet.N = actDataSet.Right +1 ;
+            if (buildLog) updateLog();
+            return null;
         }
     }
 }

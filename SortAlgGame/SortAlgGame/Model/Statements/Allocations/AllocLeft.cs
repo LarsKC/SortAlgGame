@@ -10,15 +10,15 @@ namespace SortAlgGame.Model.Statements.Allocations
         public AllocLeft(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "int i = left";
+            content = "i = left";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
             actDataSet.I = actDataSet.Left;
-            //TODO LOG + RUNTIME
-            if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+            if (buildLog) updateLog();
+            return null;
         }
     }
 }

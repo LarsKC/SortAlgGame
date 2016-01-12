@@ -10,28 +10,27 @@ namespace SortAlgGame.Model.Statements.Conditions
         public ForInBubble(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "for (int i = left; i > n-1; i++) {";
+            content = "for (int i = left; i < n-1; i++) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.N != Config.NOTUSED)
+            if (actDataSet.N == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            for (int i = actDataSet.Left; i < actDataSet.N - 1; i++)
             {
-                int tmpI = actDataSet.I;
-                for (int i = actDataSet.Left; i > actDataSet.N - 1; i++)
-                {
-                    actDataSet.I = i;
-                    if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
-                    executeList(buildLog);
-                }
-                actDataSet.I = tmpI;
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+                actDataSet.I = i;
+                if (buildLog) updateLog();
+                tmpError = executeList(buildLog);
+                if (tmpError != null) return tmpError;
+                actDataSet = player.Stack.Peek();
             }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

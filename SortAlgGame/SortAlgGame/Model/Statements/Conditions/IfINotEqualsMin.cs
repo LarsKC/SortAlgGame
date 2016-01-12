@@ -13,20 +13,20 @@ namespace SortAlgGame.Model.Statements.Conditions
             content = "if (i != min) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
-            DataSet actDatSet = player.Stack.Peek();
-            if (actDatSet.I != Config.NOTUSED && actDatSet.Min != Config.NOTUSED)
+            DataSet actDataSet = player.Stack.Peek();
+            if (actDataSet.I == Config.NOTUSED || actDataSet.Min == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            if (buildLog) updateLog();
+            string tmpError = null;
+            if (actDataSet.I != actDataSet.Min)
             {
-                if (actDatSet.I != actDatSet.Min)
-                {
-                    executeList(buildLog);
-                }
+                tmpError = executeList(buildLog);
             }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            updateDataSets();
+            return tmpError;
         }
     }
 }

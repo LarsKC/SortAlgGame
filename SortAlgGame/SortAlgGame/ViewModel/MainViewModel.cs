@@ -61,6 +61,38 @@ namespace SortAlgGame.ViewModel
             }
         }
 
+        public ICommand changeToQuick
+        {
+            get
+            {
+                return new RelayCommand(action => CurrentView = new QuickSortVM());
+            }
+        }
+
+        public ICommand changeToSelection
+        {
+            get
+            {
+                return new RelayCommand(action => CurrentView = new SelectionSortVM());
+            }
+        }
+
+        public ICommand changeToInsertion
+        {
+            get
+            {
+                return new RelayCommand(Action => CurrentView = new InsertionSortVM());
+            }
+        }
+
+        public ICommand changeToResult
+        {
+            get
+            {
+                return new RelayCommand(Action => CurrentView = new ResultVM());
+            }
+        }
+
         public ICommand printExecute
         {
             get

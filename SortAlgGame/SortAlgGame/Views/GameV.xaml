@@ -73,10 +73,10 @@
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
                 ItemsSource="{Binding Path=SourceItemsP1, Mode=OneWay}"
-                PreviewTouchDown="sourceList_PreviewTouchDown"
-                s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
             <s:SurfaceListBox 
                 Tag="targetListP1"
                 Name="surfaceList2"
@@ -90,11 +90,10 @@
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
                 ItemsSource="{Binding Path=TargetItemsP1, Mode=OneWay}"
-                s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"
-                PreviewTouchDown="sourceList_PreviewTouchDown"/>
-            <Image Tag="delete1" Height="50" Name="image1" Stretch="Fill" Width="50" Source="/Resources/icon.png"/>
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"
+                PreviewTouchDown="OnTouchDown"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal" Grid.Column="1">
             <s:SurfaceListBox 
@@ -110,10 +109,10 @@
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
                 ItemsSource="{Binding Path=SourceItemsP2, Mode=OneWay}"
-                PreviewTouchDown="sourceList_PreviewTouchDown"
-                s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
             <s:SurfaceListBox 
                 Tag="targetListP2"
                 Name="surfaceList4"
@@ -127,10 +126,10 @@
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
                 ItemsSource="{Binding Path=TargetItemsP2, Mode=OneWay}"
-                PreviewTouchDown="sourceList_PreviewTouchDown"
-                s:SurfaceDragDrop.DragEnter="OnDropTargetDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDropTargetDragLeave"
-                s:SurfaceDragDrop.Drop="OnDropTargetDrop"/>
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1">
             <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton1" Width="200" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>

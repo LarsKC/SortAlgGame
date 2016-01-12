@@ -45,7 +45,7 @@ namespace SortAlgGame.Model
         public int Min
         {
             get { return min; }
-            set { n = value; }
+            set { min = value; }
         }
 
         public int Pivot
@@ -78,12 +78,13 @@ namespace SortAlgGame.Model
             this.left = Config.NOTUSED;
             this.right = Config.NOTUSED;
         }
-        public DataSet(int[] a)
+        public DataSet(int[] array)
         {
             this.i = Config.NOTUSED;
             this.j = Config.NOTUSED;
             this.n = Config.NOTUSED;
-            this.a = a;
+            this.a = new int[array.Length];
+            array.CopyTo(a, 0);
             this.min = Config.NOTUSED;
             this.pivot = Config.NOTUSED;
             this.left = Config.NOTUSED;
@@ -107,7 +108,8 @@ namespace SortAlgGame.Model
             this.i = dataSet.I;
             this.j = dataSet.J;
             this.n = dataSet.N;
-            this.a = dataSet.A;
+            a = new int[dataSet.A.Length];
+            dataSet.A.CopyTo(a, 0);
             this.min = dataSet.Min;
             this.pivot = dataSet.Pivot;
             this.left = dataSet.Left;

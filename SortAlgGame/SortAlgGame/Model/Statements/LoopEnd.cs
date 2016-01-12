@@ -13,9 +13,10 @@ namespace SortAlgGame.Model.Statements
             content = "}";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
-            //Do Nothing
+            if (buildLog) updateLog();
+            return null;
         }
     }
 }

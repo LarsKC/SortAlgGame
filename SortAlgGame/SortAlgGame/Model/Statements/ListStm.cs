@@ -48,24 +48,25 @@ namespace SortAlgGame.Model.Statements
             : base(player, parent)
         {
             stmList = new LinkedList<Statement>();
-            stmList.AddLast(new AddBrick(player, this));
             stmList.AddLast(new LoopEnd(player, this));
-            stmList.Last.Previous.Value.Indent++;
+            //stmList.Last.Previous.Value.Indent++;
         }
 
-        public void executeList(bool buildLog)
+        public string executeList(bool buildLog)
         {
-            for(int i = 0; i < stmList.Count - 2; i++)
+            string tmpError = null;
+            for(int i = 0; i < stmList.Count && tmpError == null; i++)
             {
-                stmList.ElementAt(i).execute(buildLog);
+                 tmpError = stmList.ElementAt(i).execute(buildLog);
             }
+            return tmpError;
         }
 
         public void addBeforeStm(Statement pos, Statement stm)
         {
             if (pos == null)
             {
-                StmList.AddBefore(StmList.Last.Previous, stm);
+                StmList.AddBefore(StmList.Last, stm);
             }
             else
             {
@@ -82,12 +83,12 @@ namespace SortAlgGame.Model.Statements
             stm.Indent = 0;
             if (stm is ListStm)
             {
-                for (int i = 0; i < (stm as ListStm).StmList.Count - 2; i++ )
+                for (int i = (stm as ListStm).StmList.Count - 2; i  >= 0; i--)
                 {
 
-                    (stm as ListStm).StmList.ElementAt<Statement>(0).Indent = this.Indent + 1;
-                    this.addBeforeStm(stm, (stm as ListStm).StmList.ElementAt<Statement>(0));
-                    (stm as ListStm).StmList.Remove((stm as ListStm).StmList.ElementAt<Statement>(0));
+                    (stm as ListStm).StmList.ElementAt<Statement>(i).Indent = this.Indent + 1;
+                    this.addBeforeStm(stm, (stm as ListStm).StmList.ElementAt<Statement>(i));
+                    (stm as ListStm).StmList.Remove((stm as ListStm).StmList.ElementAt<Statement>(i));
                 }
             }
             stmList.Remove(stm);
@@ -111,6 +112,18 @@ namespace SortAlgGame.Model.Statements
                 }
             }
             return false;
+        }
+
+        public void updateDataSets()
+        {
+            DataSet actDataSet = Player.Stack.Pop();
+            DataSet oldDataSet = Player.Stack.Pop();
+            if (oldDataSet.I == Config.NOTUSED) actDataSet.I = Config.NOTUSED;
+            if (oldDataSet.J == Config.NOTUSED) actDataSet.J = Config.NOTUSED;
+            if (oldDataSet.N == Config.NOTUSED) actDataSet.N = Config.NOTUSED;
+            if (oldDataSet.Min == Config.NOTUSED) actDataSet.Min = Config.NOTUSED;
+            if (oldDataSet.Pivot == Config.NOTUSED) actDataSet.Pivot = Config.NOTUSED;
+            player.Stack.Push(actDataSet);
         }
     }
 }

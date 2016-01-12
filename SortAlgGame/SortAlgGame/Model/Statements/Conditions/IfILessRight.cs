@@ -13,20 +13,20 @@ namespace SortAlgGame.Model.Statements.Conditions
             content = "if (i < right) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED && actDataSet.Right != Config.NOTUSED)
+            if (actDataSet.I == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            if (buildLog) updateLog();
+            string tmpError = null;
+            if (actDataSet.I < actDataSet.Right)
             {
-                if (actDataSet.I < actDataSet.Right)
-                {
-                    executeList(buildLog);
-                }
+                tmpError = executeList(buildLog);
             }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+            updateDataSets();
+            return tmpError;
         }
     }
 }

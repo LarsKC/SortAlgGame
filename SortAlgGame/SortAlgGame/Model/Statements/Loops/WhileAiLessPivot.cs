@@ -10,24 +10,33 @@ namespace SortAlgGame.Model.Statements.Loops
         public WhileAiLessPivot(Player player, ListStm parent)
             : base(player, parent)
         {
-            content = "while (a[i] > pivot) {";
+            content = "while (a[i] < pivot) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED && actDataSet.Pivot != Config.NOTUSED)
+            if (actDataSet.I == Config.NOTUSED || actDataSet.Pivot == Config.NOTUSED) return Config.NOTINITERROR;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
+            try
             {
-                while (actDataSet.A[actDataSet.I] > actDataSet.Pivot)
+                while (actDataSet.A[actDataSet.I] < actDataSet.Pivot)
                 {
-                    //TODO LOG + RUNTIME
-                    executeList(buildLog);
+                    if (buildLog) updateLog();
+                    tmpError = executeList(buildLog);
+                    if (tmpError != null) return tmpError;
+                    actDataSet = player.Stack.Peek();
                 }
             }
-            else
+            catch (IndexOutOfRangeException e)
             {
-                //TODO ExceptionHandling
+                return Config.OUTOFRANGEERROR;
             }
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }

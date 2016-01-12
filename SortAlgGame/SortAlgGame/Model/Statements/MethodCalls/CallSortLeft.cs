@@ -13,24 +13,21 @@ namespace SortAlgGame.Model.Statements.MethodCalls
             content = "sort(a, left, J);";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.J != Config.NOTUSED)
-            {
+                if (actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
                 DataSet newDataSet = new DataSet(actDataSet.A);
                 newDataSet.Left = actDataSet.Left;
                 newDataSet.Right = actDataSet.J;
                 player.Stack.Push(newDataSet);
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(newDataSet)));
+                if (buildLog) updateLog();
                 player.Stm.execute(buildLog);
-                player.Stack.Pop();
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(player.Stack.Peek())));
-            }
-            else
-            {
-                //TODO ExceptionHandling
-            }
+                newDataSet = player.Stack.Pop();
+                actDataSet = player.Stack.Peek();
+                actDataSet.A = newDataSet.A;
+                if (buildLog) updateLog();
+                return null;
         }
     }
 }

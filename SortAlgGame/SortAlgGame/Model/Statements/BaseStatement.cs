@@ -15,13 +15,12 @@ namespace SortAlgGame.Model.Statements
             indent = 0;
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
             actDataSet.Left = (actDataSet.Left == Config.NOTUSED) ? 0 : actDataSet.Left;
-            actDataSet.Right = (actDataSet.Right == Config.NOTUSED) ? actDataSet.A.Length-1 : actDataSet.Right;
-
-            executeList(buildLog);
+            actDataSet.Right = (actDataSet.Right == Config.NOTUSED) ? actDataSet.A.Length - 1 : actDataSet.Right;
+            return executeList(buildLog);
         }
     }
 }

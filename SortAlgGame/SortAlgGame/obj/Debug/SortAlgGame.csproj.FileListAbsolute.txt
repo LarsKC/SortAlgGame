@@ -36,8 +36,6 @@ D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Hauptmenue.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\MenueErklaerungen.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\MenueErklaerungen.g.cs
-D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.g.cs
-D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\GameV.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\GameV.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.exe
@@ -92,3 +90,13 @@ C:\Users\Lars\Desktop\Bachelor\SortAlgGame\SortAlgGame\obj\Debug\Views\MenueErkl
 C:\Users\Lars\Desktop\Bachelor\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.g.resources
 C:\Users\Lars\Desktop\Bachelor\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.Properties.Resources.resources
 C:\Users\Lars\Desktop\Bachelor\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.csproj.GenerateResource.Cache
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\BubbleSort.baml
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\BubbleSort.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\InsertionSort.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\QuickSort.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\SelectionSort.g.cs
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\InsertionSort.baml
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\QuickSort.baml
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\SelectionSort.baml
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.baml
+D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.g.cs

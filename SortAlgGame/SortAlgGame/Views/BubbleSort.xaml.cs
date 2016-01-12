@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SortAlgGame.Views
 {
     /// <summary>
-    /// Interaktionslogik für Erklaerung.xaml
+    /// Interaktionslogik für BubbleSort.xaml
     /// </summary>
-    public partial class Erklaerung : UserControl
+    public partial class BubbleSort : UserControl
     {
-        public Erklaerung()
+        public BubbleSort()
         {
             InitializeComponent();
         }

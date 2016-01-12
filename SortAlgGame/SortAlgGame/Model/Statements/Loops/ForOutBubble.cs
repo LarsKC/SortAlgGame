@@ -13,19 +13,23 @@ namespace SortAlgGame.Model.Statements.Loops
             content = "for (int n = right+1; n > 1; n--) {";
         }
 
-        public override void execute(bool buildLog)
+        public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            int tmpN = actDataSet.N;
+            player.Stack.Push(new DataSet(actDataSet));
+            actDataSet = player.Stack.Peek();
+            string tmpError = null;
             for (int n = actDataSet.Right + 1; n > 1; n--)
             {
                 actDataSet.N = n;
-                if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
-                //TODO LOG + RUNTIME
-                executeList(buildLog);
+                if (buildLog) updateLog();
+                tmpError = executeList(buildLog);
+                if (tmpError != null) return tmpError;
+                actDataSet = player.Stack.Peek();
             }
-            actDataSet.N = tmpN;
-            if (buildLog) player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(actDataSet)));
+            if (buildLog) updateLog();
+            updateDataSets();
+            return tmpError;
         }
     }
 }
