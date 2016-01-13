@@ -69,26 +69,26 @@ namespace SortAlgGame.Model
         //Konstruktoren
         public DataSet()
         {
-            this.i = Config.NOTUSED;
-            this.j = Config.NOTUSED;
-            this.n = Config.NOTUSED;
+            this.i = Config.NOT_USED;
+            this.j = Config.NOT_USED;
+            this.n = Config.NOT_USED;
             this.a = null;
-            this.min = Config.NOTUSED;
-            this.pivot = Config.NOTUSED;
-            this.left = Config.NOTUSED;
-            this.right = Config.NOTUSED;
+            this.min = Config.NOT_USED;
+            this.pivot = Config.NOT_USED;
+            this.left = Config.NOT_USED;
+            this.right = Config.NOT_USED;
         }
         public DataSet(int[] array)
         {
-            this.i = Config.NOTUSED;
-            this.j = Config.NOTUSED;
-            this.n = Config.NOTUSED;
+            this.i = Config.NOT_USED;
+            this.j = Config.NOT_USED;
+            this.n = Config.NOT_USED;
             this.a = new int[array.Length];
             array.CopyTo(a, 0);
-            this.min = Config.NOTUSED;
-            this.pivot = Config.NOTUSED;
-            this.left = Config.NOTUSED;
-            this.right = Config.NOTUSED;
+            this.min = Config.NOT_USED;
+            this.pivot = Config.NOT_USED;
+            this.left = Config.NOT_USED;
+            this.right = Config.NOT_USED;
         }
 
         public DataSet(int i, int j, int n, int[] a, int min, int pivot, int left, int right)

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace SortAlgGame.ViewModel
 {
-    class SelectionSortVM : AnimationVM
+    class SelectionSortVM : SortVM
     {
         public SelectionSortVM()
             : base()
         {
             _programm.buildSelectionsort();
-            initAnimation();
+            runAnimation();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.Min == Config.NOTUSED || actDataSet.I == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.Min == Config.NOT_USED || actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             try
             {
                 int tmp = actDataSet.A[actDataSet.Min];
@@ -25,7 +25,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
             }
             catch (IndexOutOfRangeException e)
             {
-                return Config.OUTOFRANGEERROR;
+                return Config.OUT_OF_RANGE_ERROR;
             }
             if (buildLog) updateLog();
             return null;

@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             DataSet newDataSet = new DataSet(actDataSet.A);
             newDataSet.Left = actDataSet.I;
             newDataSet.Right = actDataSet.Right;

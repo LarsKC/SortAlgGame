@@ -60,6 +60,8 @@ namespace SortAlgGame.Views
             FrameworkElement source = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
             //Wurde kein Ziehbares Obeject gefunden -> return
             if (source == null || !(this.DataContext as GameVM).dragableObject(source.DataContext)) return;
+            FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.OriginalSource as FrameworkElement);
+            if (sourceList == null || sourceList.Tag == null || (this.DataContext as GameVM).playerFin(sourceList.Tag.ToString())) return;
             //Cursor Darstellung
             ContentControl cursor = new ContentControl()
             {

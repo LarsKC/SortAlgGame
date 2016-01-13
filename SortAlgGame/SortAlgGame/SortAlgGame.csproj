@@ -97,6 +97,7 @@
     <Compile Include="ViewModel\QuickSortVM.cs" />
     <Compile Include="ViewModel\ResultVM.cs" />
     <Compile Include="ViewModel\SelectionSortVM.cs" />
+    <Compile Include="ViewModel\SortVM.cs" />
     <Compile Include="Views\BubbleSort.xaml.cs">
       <DependentUpon>BubbleSort.xaml</DependentUpon>
     </Compile>

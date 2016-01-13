@@ -21,11 +21,11 @@
         <StackPanel Grid.Column="0" Grid.Row="0">
             <ItemsControl 
                 Name="animationControl"  
-                ItemsSource="{Binding Path=AnimationData, Mode=OneWay}"
+                ItemsSource="{Binding Path=AnimationVM.AnimationData, Mode=OneWay}"
                 Margin="0,0,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" MinHeight="{Binding DataContext.MaxAnimationHeight, RelativeSource={RelativeSource AncestorType={x:Type v:BubbleSort}}}"/>
+                        <StackPanel Orientation="Horizontal" MinHeight="{Binding DataContext.AnimationVM.MaxAnimationHeight, RelativeSource={RelativeSource AncestorType={x:Type v:QuickSort}}}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
@@ -58,7 +58,7 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <ItemsControl ItemsSource="{Binding Path=DataSetValues}">
+            <ItemsControl ItemsSource="{Binding Path=AnimationVM.DataSetValues}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <DockPanel/>
@@ -74,10 +74,10 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                <s:SurfaceButton Content="Zurück" Name="btnBackward" Command="{Binding Path=animationBackward, Mode=OneWay}"/>
-                <s:SurfaceButton Content="Start" Name="btnStart" Command="{Binding Path=animationStart, Mode=OneWay}"/>
-                <s:SurfaceButton Content="Stop" Name="btnStop" Command="{Binding Path=animationStop, Mode=OneWay}"/>
-                <s:SurfaceButton Content="Vor" Name="btnForward" Command="{Binding Path=animationForward, Mode=OneWay}"/>
+                <s:SurfaceButton Content="Zurück" Name="btnBackward" Command="{Binding Path=AnimationVM.animationBackward, Mode=OneWay}"/>
+                <s:SurfaceButton Content="Start" Name="btnStart" Command="{Binding Path=AnimationVM.animationStart, Mode=OneWay}"/>
+                <s:SurfaceButton Content="Stop" Name="btnStop" Command="{Binding Path=AnimationVM.animationStop, Mode=OneWay}"/>
+                <s:SurfaceButton Content="Vor" Name="btnForward" Command="{Binding Path=AnimationVM.animationForward, Mode=OneWay}"/>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
@@ -98,7 +98,7 @@
             Name="codeControl" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            ItemsSource="{Binding Path=Stms, Mode=OneWay}">
+            ItemsSource="{Binding Path=AnimationVM.Stms, Mode=OneWay}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Background="DarkGray" >

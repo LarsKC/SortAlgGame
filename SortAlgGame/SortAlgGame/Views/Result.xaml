@@ -3,26 +3,152 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:s="http://schemas.microsoft.com/surface/2008"
+             xmlns:root="clr-namespace:SortAlgGame"
+             xmlns:v="clr-namespace:SortAlgGame.Views"
              mc:Ignorable="d" 
              d:DesignHeight="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" d:DesignWidth="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}">
-    <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" VerticalAlignment="Stretch" Background="Chocolate" AllowDrop="False">
+    <UserControl.Resources>
+
+    </UserControl.Resources>
+    <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid Background="DarkGray" Grid.Column="1" RenderTransformOrigin="0.5 ,0.5" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Height="950">
-            <Grid.RenderTransform>
+        <Grid Name="player2Grid" Background="DarkGray" Grid.Column="1" RenderTransformOrigin="0.5 ,0.5" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Height="950" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Grid.LayoutTransform>
                 <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-90"/>
-                    
+                    <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform/>
                 </TransformGroup>
-            </Grid.RenderTransform>
-            <Label Content="Top left" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <Label Content="Top right" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <Label Content="Bottom left" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-            <Label Content="Bottom right" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Label  Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Content="SPIELER 2" HorizontalAlignment="Stretch"  VerticalAlignment="Top" FontSize="30" Background="Blue" HorizontalContentAlignment="Center" />
+            <!--Animation-->
+            <StackPanel Grid.Column="0" Grid.Row="1">
+                <StackPanel Grid.Column="0" Grid.Row="0">
+                    <ItemsControl 
+                            Name="animationControl"  
+                            ItemsSource="{Binding Path=P2Animation.AnimationData, Mode=OneWay}"
+                            Margin="0,0,0,0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" MinHeight="{Binding Path=P2Animation.MaxAnimationHeight}"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                                    <Rectangle
+                                        Width="10"
+                                        Height="{Binding Path=Item2}" 
+                                        Fill="#FF279BFF"
+                                        VerticalAlignment="Bottom"/>
+                                    <Label
+                                        Content="{Binding Path=Item1}"
+                                        VerticalAlignment="Bottom"/>
+                                    <ItemsControl ItemsSource="{Binding Path=Item3}" VerticalAlignment="Bottom" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel MinHeight="50" MinWidth="10"/>
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Label Content="{Binding}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl ItemsSource="{Binding Path=P2Animation.DataSetValues}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <DockPanel/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Label Content="{Binding}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                        <s:SurfaceButton Content="Zurück" Name="btnBackward" Command="{Binding Path=P2Animation.animationBackward, Mode=OneWay}"/>
+                        <s:SurfaceButton Content="Start" Name="btnStart" Command="{Binding Path=P2Animation.animationStart, Mode=OneWay}"/>
+                        <s:SurfaceButton Content="Stop" Name="btnStop" Command="{Binding Path=P2Animation.animationStop, Mode=OneWay}"/>
+                        <s:SurfaceButton Content="Vor" Name="btnForward" Command="{Binding Path=P2Animation.animationForward, Mode=OneWay}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <!--Tabelle-->
+            <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch">
+                <Label Content="Auswertung" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" FontSize="30" Background="Blue" HorizontalContentAlignment="Center"/>
+                <ListView ItemsSource="{Binding Path=P2StatCol}" Background="Blue" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Feldgröße" DisplayMemberBinding="{Binding Path=Item1}"/>
+                            <GridViewColumn Header="Fehler" DisplayMemberBinding="{Binding Path=Item2}" />
+                            <GridViewColumn Header="Laufzeit" DisplayMemberBinding="{Binding Path=Item3}"/>
+                            <GridViewColumn Header="Sortiert" DisplayMemberBinding="{Binding Path=Item4}"/>
+                            <GridViewColumn Header="Punkte" DisplayMemberBinding="{Binding Path=Item5}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Label Content="{Binding Path=P2Time}" FontSize="20" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                <Label Content="{Binding Path=P2Points}" FontSize="30" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="1" Grid.RowSpan="2">
+                <ItemsControl 
+                    Grid.Column="1" 
+                    Grid.RowSpan="3" 
+                    Name="codeControl" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center" 
+                    ItemsSource="{Binding Path=P2Animation.Stms, Mode=OneWay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Background="DarkGray" >
+                                <Label 
+                                Content="{Binding Path=Item1.Content}"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="15"
+                                Foreground="Black"
+                                FontWeight="{Binding Path=Item2}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+        <!--Player1-->
+        <Grid Name="player1Grid" Background="DarkGray" Grid.Column="0" RenderTransformOrigin="0.5 ,0.5" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Height="950" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Grid.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.LayoutTransform>
         </Grid>
     </Grid>
 </UserControl>

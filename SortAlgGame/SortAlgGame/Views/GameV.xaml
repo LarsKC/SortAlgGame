@@ -94,7 +94,9 @@
                 s:SurfaceDragDrop.DragLeave="OnDragLeave"
                 s:SurfaceDragDrop.Drop="OnDrop"
                 PreviewTouchDown="OnTouchDown"/>
+            <Label Content="{Binding Path=P1Time}" FontSize="20"/>
         </StackPanel>
+        
         <StackPanel Orientation="Horizontal" Grid.Column="1">
             <s:SurfaceListBox 
                 Tag="sourceListP2"
@@ -130,10 +132,16 @@
                 s:SurfaceDragDrop.DragEnter="OnDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDragLeave"
                 s:SurfaceDragDrop.Drop="OnDrop"/>
+            <Label Content="{Binding Path=P2Time}" FontSize="20"/>
         </StackPanel>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1">
             <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton1" Width="200" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
             <s:SurfaceButton Content="PrintExecute" Height="25" Name="surfaceButton2" Width="200" Command="{Binding DataContext.printExecute, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
         </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+            <s:SurfaceButton Content="Fin1" Height="25" Name="surfaceButton3" Width="200" Command="{Binding Path=gameFin1}"/>
+            <s:SurfaceButton Content="Fin2" Height="25" Name="surfaceButton4" Width="200" Command="{Binding Path=gameFin2}"/>
+        </StackPanel>
+        
     </Grid>
 </UserControl>

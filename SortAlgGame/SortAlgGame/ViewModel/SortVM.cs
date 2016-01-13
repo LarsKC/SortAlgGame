@@ -19,12 +19,29 @@ using System.Windows.Threading;
 
 namespace SortAlgGame.ViewModel
 {
-    class BubbleSortVM : SortVM
+    class SortVM : BaseViewModel
     {
-        public BubbleSortVM() : base()
+        protected AnimationVM _animationVM;
+        private ArrayGen _arrayGen;
+        private int[] _testArray;
+        protected Player _programm;
+
+        public AnimationVM AnimationVM
         {
-            _programm.buildBubblesort();
-            runAnimation();
+            get { return _animationVM; }
+        }
+
+        public SortVM()
+        {
+            _arrayGen = new ArrayGen();
+            _testArray = _arrayGen.getRndArray(Config.RUNS[0]);
+            _programm = new Player();
+        }
+
+        public void runAnimation()
+        {
+            _programm.execute(_testArray, true);
+            _animationVM = new AnimationVM(_programm);
         }
     }
 }

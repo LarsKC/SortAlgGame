@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements.Conditions
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.J == Config.NOTUSED || actDataSet.Min == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.J == Config.NOT_USED || actDataSet.Min == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             player.Stack.Push(new DataSet(actDataSet));
             actDataSet = player.Stack.Peek();
             string tmpError = null;
@@ -30,7 +30,7 @@ namespace SortAlgGame.Model.Statements.Conditions
             }
             catch (IndexOutOfRangeException e)
             {
-                return Config.OUTOFRANGEERROR;
+                return Config.OUT_OF_RANGE_ERROR;
             }
             updateDataSets();
             return tmpError;

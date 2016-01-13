@@ -16,13 +16,14 @@ namespace SortAlgGame.Model.Statements.Loops
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-
-            if (actDataSet.I == Config.NOTUSED || actDataSet.J == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.I == Config.NOT_USED || actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             player.Stack.Push(new DataSet(actDataSet));
             actDataSet = player.Stack.Peek();
             string tmpError = null;
             while (actDataSet.I <= actDataSet.J)
             {
+                player.ActRuntime++;
+                if (player.ActRuntime >= Config.MAX_RUNTIME(actDataSet.A.Length)) return Config.MAX_RUNTIME_ERROR;
                 if (buildLog) updateLog();
                 tmpError = executeList(buildLog);
                 if (tmpError != null) return tmpError;

@@ -18,8 +18,9 @@ namespace SortAlgGame.Model.Statements
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            actDataSet.Left = (actDataSet.Left == Config.NOTUSED) ? 0 : actDataSet.Left;
-            actDataSet.Right = (actDataSet.Right == Config.NOTUSED) ? actDataSet.A.Length - 1 : actDataSet.Right;
+            actDataSet.Left = (actDataSet.Left == Config.NOT_USED) ? 0 : actDataSet.Left;
+            actDataSet.Right = (actDataSet.Right == Config.NOT_USED) ? actDataSet.A.Length - 1 : actDataSet.Right;
+            if (buildLog) updateLog();
             return executeList(buildLog);
         }
     }

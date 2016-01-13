@@ -7,14 +7,13 @@ using SortAlgGame.Model.Statements.Loops;
 using SortAlgGame.Model.Statements.Allocations;
 using SortAlgGame.Model.Statements.Conditions;
 using SortAlgGame.Model.Statements.MethodCalls;
-using System.Collections.ObjectModel;
 
 namespace SortAlgGame.Model
 {
     class Player
     {
         #region Variablen
-        private List<Tuple<int, string, string>> _programmStats;
+        private Tuple<int, string, string> _programmStats;
         private int _actRuntime;
         private DateTime _endTime;
         private LinkedList<Tuple<Statement, DataSet>> _log;
@@ -24,7 +23,7 @@ namespace SortAlgGame.Model
         #endregion
 
         #region Accessor
-        public List<Tuple<int, string, string>> ProgrammStats
+        public Tuple<int, string, string> ProgrammStats
         {
             get { return _programmStats; }
         }
@@ -48,12 +47,18 @@ namespace SortAlgGame.Model
         {
             get { return _log; }
         }
+
+        public int ActRuntime
+        {
+            get { return _actRuntime; }
+            set { _actRuntime = value; }
+        }
         #endregion
 
         #region Konstruktor
         public Player()
         {
-            _programmStats = new List<Tuple<int, string, string>>();
+            _programmStats = null;
             _stm = new BaseStatement(this, null);
             _stack = new Stack<DataSet>();
             _log = new LinkedList<Tuple<Statement, DataSet>>();
@@ -62,50 +67,22 @@ namespace SortAlgGame.Model
         #endregion
 
         #region Methods
-
-        public string execute(int[] a, bool genLog)
+        public void execute(int[] a, bool genLog)
         {
+            _actRuntime = 0;
+            _programmStats = null;
+            _stack.Clear();
             DataSet dataSet = new DataSet(a);
             _stack.Push(dataSet);
-            if (genLog)
+            string error = _stm.execute(genLog);
+            if (error != null)
             {
-                _log.AddLast(new Tuple<Statement, DataSet>(_stm, new DataSet(dataSet)));
-            }
-            return _stm.execute(genLog);
-        }
-
-        public void execute(int[][] a)
-        {
-            string tmpError = null;
-            tmpError = execute(a[0], true);
-            if (tmpError != null)
-            {
-                _programmStats.Add(new Tuple<int, string, string>(a[0].Length, tmpError, "nicht messbar"));
+                _programmStats = new Tuple<int, string, string>(a.Length, error, Config.RUNTIME_NA);
             }
             else
             {
-                _programmStats.Add(new Tuple<int, string, string>(a[0].Length, "keine", _actRuntime.ToString()));
+                _programmStats = new Tuple<int, string, string>(a.Length, "keine", _actRuntime.ToString());
             }
-            _actRuntime = 0;
-            for (int i = 1; i < a.Length; i++)
-            {
-                tmpError = execute(a[i], false);
-                if (tmpError != null)
-                {
-                    _programmStats.Add(new Tuple<int, string, string>(a[i].Length, tmpError, "nicht messbar"));
-                }
-                else
-                {
-                    _programmStats.Add(new Tuple<int, string, string>(a[i].Length, "keine", _actRuntime.ToString()));
-                }
-                _actRuntime = 0;
-            }
-        }
-
-        public void resetStack(int[] a)
-        {
-            _stack = new Stack<DataSet>();
-            _stack.Push(new DataSet(a));
         }
 
         public TimeSpan calcTimeSpan(DateTime startTime)

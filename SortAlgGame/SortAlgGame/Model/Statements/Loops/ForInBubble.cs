@@ -16,13 +16,15 @@ namespace SortAlgGame.Model.Statements.Conditions
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.N == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.N == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             player.Stack.Push(new DataSet(actDataSet));
             actDataSet = player.Stack.Peek();
             string tmpError = null;
             for (int i = actDataSet.Left; i < actDataSet.N - 1; i++)
             {
                 actDataSet.I = i;
+                player.ActRuntime++;
+                if (player.ActRuntime >= Config.MAX_RUNTIME(actDataSet.A.Length)) return Config.MAX_RUNTIME_ERROR;
                 if (buildLog) updateLog();
                 tmpError = executeList(buildLog);
                 if (tmpError != null) return tmpError;

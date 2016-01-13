@@ -22,6 +22,8 @@ namespace SortAlgGame.Model.Statements.Loops
             for (int n = actDataSet.Right + 1; n > 1; n--)
             {
                 actDataSet.N = n;
+                player.ActRuntime++;
+                if (player.ActRuntime >= Config.MAX_RUNTIME(actDataSet.A.Length)) return Config.MAX_RUNTIME_ERROR;
                 if (buildLog) updateLog();
                 tmpError = executeList(buildLog);
                 if (tmpError != null) return tmpError;

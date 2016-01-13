@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements.Allocations
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I != Config.NOTUSED)
+            if (actDataSet.I != Config.NOT_USED)
             {
                 actDataSet.J = actDataSet.I;
                 if (buildLog) updateLog();

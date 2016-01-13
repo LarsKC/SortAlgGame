@@ -16,7 +16,7 @@ namespace SortAlgGame.Model.Statements.Conditions
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = player.Stack.Peek();
-            if (actDataSet.I == Config.NOTUSED || actDataSet.Min == Config.NOTUSED) return Config.NOTINITERROR;
+            if (actDataSet.I == Config.NOT_USED || actDataSet.Min == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             player.Stack.Push(new DataSet(actDataSet));
             actDataSet = player.Stack.Peek();
             if (buildLog) updateLog();

@@ -45,7 +45,6 @@ C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.xml
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.exe
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\bin\Debug\SortAlgGame.pdb
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame.csprojResolveAssemblyReference.cache
-C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\GameV.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Hauptmenue.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SurfaceWindow1.g.cs
@@ -56,7 +55,6 @@ C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\GeneratedInternalTypeHel
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame_MarkupCompile.cache
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SortAlgGame_MarkupCompile.lref
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\App.baml
-C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.baml
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\GameV.baml
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Hauptmenue.baml
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\SurfaceWindow1.baml
@@ -100,3 +98,13 @@ D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\SelectionSort.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.baml
 D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\BubbleSort.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\InsertionSort.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\QuickSort.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\SelectionSort.g.cs
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\BubbleSort.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\InsertionSort.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\QuickSort.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\SelectionSort.baml

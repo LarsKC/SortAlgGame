@@ -25,8 +25,6 @@ namespace SortAlgGame.ViewModel
         protected ObservableCollection<string> _dataSetValues;
         protected ObservableCollection<Tuple<Statement, String>> _stms;
         protected Player _programm;
-        protected ArrayGen _arrayGen;
-        protected int[] _testArray;
         protected Tuple<Statement, DataSet> _curLogSet;
         protected DispatcherTimer _timer;
         protected int _maxAnimationHeight;
@@ -103,30 +101,26 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public AnimationVM()
+        public Player Programm
         {
-            _maxAnimationHeight = Config.RUNS[0] * Config.RECTMULTIPLIKATOR + 200;
-            _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 0 , 0, Config.ANIMATIONTIMER);
-            _timer.Tick += new EventHandler(dispatcherAnimationTimer);
-            _programm = new Player();
-            _arrayGen = new ArrayGen();
-            _testArray = _arrayGen.getRndArray(Config.RUNS[0]);
-            _animationData = new ObservableCollection<Tuple<int,int,ObservableCollection<string>>>();
-            _dataSetValues = new ObservableCollection<string>();
+            get { return _programm; }
         }
 
-        public void initAnimation()
+        public AnimationVM(Player prg)
         {
-            _programm.execute(_testArray, true);
+            _maxAnimationHeight = Config.RUNS[0] * Config.RECT_MULTIPLIKATOR + 200;
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 0 , 0, Config.ANIMATION_TIMER);
+            _timer.Tick += new EventHandler(dispatcherAnimationTimer);
+            _programm = prg;
             _curLogSet = _programm.Log.First.Value;
+            _animationData = new ObservableCollection<Tuple<int,int,ObservableCollection<string>>>();
+            _dataSetValues = new ObservableCollection<string>();
             updateAnimationData();
             updateDataSetValues();
             initStms();
-            //printExecute();
-       
-        }
 
+        }
 
         public void logForward()
         {
@@ -163,7 +157,7 @@ namespace SortAlgGame.ViewModel
             for (int i = 0; i < _curLogSet.Item2.A.Length; i++)
             {
                 fieldValue = _curLogSet.Item2.A[i];
-                rectHeight = fieldValue * Config.RECTMULTIPLIKATOR;
+                rectHeight = fieldValue * Config.RECT_MULTIPLIKATOR;
                 ObservableCollection<string> pointer = new ObservableCollection<string>();
                 if (_curLogSet.Item2.I == i) pointer.Add("i");
                 if (_curLogSet.Item2.J == i) pointer.Add("j");
@@ -176,10 +170,10 @@ namespace SortAlgGame.ViewModel
         {
             ObservableCollection<Statement> tmpCol = new ObservableCollection<Statement>(_programm.getActualStmNesting());
             _stms = new ObservableCollection<Tuple<Statement, string>>();
-            _stms.Add(new Tuple<Statement,string>(tmpCol.ElementAt(0), Config.textBold));
+            _stms.Add(new Tuple<Statement,string>(tmpCol.ElementAt(0), Config.TEXT_BOLD));
             for (int i = 1; i < tmpCol.Count; i++)
             {
-                _stms.Add(new Tuple<Statement, string>(tmpCol.ElementAt(i), Config.textNormal));
+                _stms.Add(new Tuple<Statement, string>(tmpCol.ElementAt(i), Config.TEXT_NORMAL));
             }
         }
 
@@ -187,11 +181,11 @@ namespace SortAlgGame.ViewModel
         {
             bool foundOldStm = false;
             bool foundNewStm = false;
-            int indexOld = Config.NOTUSED;
-            int indexNew = Config.NOTUSED;
+            int indexOld = Config.NOT_USED;
+            int indexNew = Config.NOT_USED;
             foreach(Tuple<Statement, string> x in _stms)
             {
-                if(x.Item2 == Config.textBold)
+                if(x.Item2 == Config.TEXT_BOLD)
                 {
                     indexOld = _stms.IndexOf(x);
                     foundOldStm = true;
@@ -206,17 +200,17 @@ namespace SortAlgGame.ViewModel
                     break;
                 }
             }
-            if (indexNew != Config.NOTUSED)
+            if (indexNew != Config.NOT_USED)
             {
                 Tuple<Statement, string> tmpTuple = _stms.ElementAt(indexNew);
-                _stms.Insert(indexNew, new Tuple<Statement, string>(_stms.ElementAt<Tuple<Statement, string>>(indexNew).Item1, Config.textBold));
+                _stms.Insert(indexNew, new Tuple<Statement, string>(_stms.ElementAt<Tuple<Statement, string>>(indexNew).Item1, Config.TEXT_BOLD));
                 _stms.Remove(tmpTuple);
             }
 
-            if (indexOld != Config.NOTUSED)
+            if (indexOld != Config.NOT_USED)
             {
                 Tuple<Statement, string> tmpTuple = _stms.ElementAt(indexOld);
-                _stms.Insert(indexOld, new Tuple<Statement, string>(_stms.ElementAt(indexOld).Item1, Config.textNormal));
+                _stms.Insert(indexOld, new Tuple<Statement, string>(_stms.ElementAt(indexOld).Item1, Config.TEXT_NORMAL));
                 _stms.Remove(tmpTuple);
             }
         }
@@ -231,13 +225,13 @@ namespace SortAlgGame.ViewModel
         public void updateDataSetValues()
         {
             DataSetValues.Clear();
-            if (_curLogSet.Item2.I != Config.NOTUSED) DataSetValues.Add("i = " + _curLogSet.Item2.I);
-            if (_curLogSet.Item2.J != Config.NOTUSED) DataSetValues.Add("j = " + _curLogSet.Item2.J);
-            if (_curLogSet.Item2.N != Config.NOTUSED) DataSetValues.Add("n = " + _curLogSet.Item2.N);
-            if (_curLogSet.Item2.Left != Config.NOTUSED) DataSetValues.Add("left = " + _curLogSet.Item2.Left);
-            if (_curLogSet.Item2.Right != Config.NOTUSED) DataSetValues.Add("right = " + _curLogSet.Item2.Right);
-            if (_curLogSet.Item2.Min != Config.NOTUSED) DataSetValues.Add("min = " + _curLogSet.Item2.Min);
-            if (_curLogSet.Item2.Pivot != Config.NOTUSED) DataSetValues.Add("pivot = " + _curLogSet.Item2.Pivot);
+            if (_curLogSet.Item2.I != Config.NOT_USED) DataSetValues.Add("i = " + _curLogSet.Item2.I);
+            if (_curLogSet.Item2.J != Config.NOT_USED) DataSetValues.Add("j = " + _curLogSet.Item2.J);
+            if (_curLogSet.Item2.N != Config.NOT_USED) DataSetValues.Add("n = " + _curLogSet.Item2.N);
+            if (_curLogSet.Item2.Left != Config.NOT_USED) DataSetValues.Add("left = " + _curLogSet.Item2.Left);
+            if (_curLogSet.Item2.Right != Config.NOT_USED) DataSetValues.Add("right = " + _curLogSet.Item2.Right);
+            if (_curLogSet.Item2.Min != Config.NOT_USED) DataSetValues.Add("min = " + _curLogSet.Item2.Min);
+            if (_curLogSet.Item2.Pivot != Config.NOT_USED) DataSetValues.Add("pivot = " + _curLogSet.Item2.Pivot);
         }
 
         public void printExecute()

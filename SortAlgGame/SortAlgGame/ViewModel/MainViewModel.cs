@@ -49,7 +49,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => CurrentView = new GameVM());
+                return new RelayCommand(action => CurrentView = new GameVM(this));
             }
         }
 
@@ -89,7 +89,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => CurrentView = new ResultVM());
+                return new RelayCommand(Action => CurrentView = new ResultVM(CurrentView as GameVM));
             }
         }
 

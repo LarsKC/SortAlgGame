@@ -15,6 +15,7 @@ using SortAlgGame.Model.Statements.Conditions;
 using SortAlgGame.Model.Statements.MethodCalls;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
+using System.Windows.Threading;
 
 
 
@@ -29,8 +30,29 @@ namespace SortAlgGame.ViewModel
         private ObservableCollection<Statement> _sourceItemsP2;
         private ObservableCollection<Statement> _targetItemsP2;
         private Game _game;
-        private String[] _resultPlayer1;
-        private String[] _resultPlayer2;
+        private MainViewModel _mainVM;
+        private DispatcherTimer _timer;
+        private bool _p1Fin;
+        private bool _p2Fin;
+        private string _p1Time;
+        private string _p2Time;
+
+
+        public ICommand gameFin1
+        {
+            get
+            {
+                return new RelayCommand(Action => gameFin(_game.Player1), Predicate => !_p1Fin);
+            }
+        }
+
+        public ICommand gameFin2
+        {
+            get
+            {
+                return new RelayCommand(Action => gameFin(_game.Player2), Predicate => !_p2Fin);
+            }
+        }
 
         public ObservableCollection<Statement> SourceItemsP1
         {
@@ -76,15 +98,94 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public GameVM()
+        public string P1Time
+        {
+            get { return _p1Time; }
+            set
+            {
+                _p1Time = value;
+                NotifyPropertyChanged("P1Time");
+            }
+        }
+
+        public string P2Time
+        {
+            get { return _p2Time; }
+            set
+            {
+                _p2Time = value;
+                NotifyPropertyChanged("P2Time");
+            }
+        }
+
+        public Game Game
+        {
+            get { return _game; }
+        }
+
+        public GameVM( MainViewModel mainVM)
         {
             _sourceItemsP1 = new ObservableCollection<Statement>();
             _targetItemsP1 = new ObservableCollection<Statement>();
             _sourceItemsP2 = new ObservableCollection<Statement>();
             _targetItemsP2 = new ObservableCollection<Statement>();
+            _p1Fin = false;
+            _p2Fin = false;
             _game = new Game();
+            _mainVM = mainVM;
             initSourceItems();
             initTargetItems();
+            _p1Time = "00:00";
+            _p2Time = "00:00";
+            _timer = new DispatcherTimer();
+            _timer.Interval = new TimeSpan(0, 0, 1);
+            _timer.Tick += timeEvent;
+            _timer.Start();
+        }
+
+        public bool playerFin(string sourceTag)
+        {
+            if ((sourceTag == "targetListP1" || sourceTag == "sourceListP1") && _p1Fin)
+            {
+                return true;
+            }
+            if ((sourceTag == "targetListP2" || sourceTag == "sourceListP2") && _p2Fin)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void timeEvent(object sender, EventArgs e)
+        {
+            if (!_p1Fin)
+            {
+                _game.P1Time++;
+                P1Time = string.Format("{0:00}:{1:00}",_game.P1Time/60, _game.P1Time%60);
+            }
+            if (!_p2Fin)
+            {
+                _game.P2Time++;
+                P2Time = string.Format("{0:00}:{1:00}", _game.P2Time / 60, _game.P2Time % 60);
+            }
+        }
+
+        public void gameFin(Player player)
+        {
+            if (player == _game.Player1)
+            {
+                _p1Fin = true;
+            }
+            else if (player == _game.Player2)
+            {
+                _p2Fin = true;
+            }
+            if (_p1Fin && _p2Fin)
+            {
+                _timer.Stop();
+                _mainVM.CurrentView = new ResultVM(this);
+            }
+
         }
 
         public void initSourceItems()
@@ -261,37 +362,6 @@ namespace SortAlgGame.ViewModel
                 updateTargetList((cursorData as Statement).Player);
             }
         }
-
-        /*public void stopPlayer1()
-        {
-            _game.Player1.EndTime = DateTime.Now;
-            if (_game.PlayerRdy)
-            {
-                gameFin();
-            }
-            else
-            {
-                _game.PlayerRdy = true;
-            }
-        }
-
-        public void stopPlayer2()
-        {
-            _game.Player2.EndTime = DateTime.Now;
-            if (_game.PlayerRdy)
-            {
-                gameFin();
-            }
-            else
-            {
-                _game.PlayerRdy = true;
-            }
-        }*/
-
-        /*private void gameFin()
-        {
-            _game.run();
-        }*/
 
         public void printExecute()
         {
