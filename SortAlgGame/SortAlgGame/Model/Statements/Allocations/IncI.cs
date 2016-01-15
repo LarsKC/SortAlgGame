@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class IncI : Statement
     {
-        public IncI(Player player, ListStm parent)
+        public IncI(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "i++;";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             actDataSet.I++;
             if (buildLog) updateLog();

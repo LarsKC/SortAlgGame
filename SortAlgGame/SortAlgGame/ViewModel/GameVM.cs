@@ -36,13 +36,16 @@ namespace SortAlgGame.ViewModel
         private bool _p2Fin;
         private string _p1Time;
         private string _p2Time;
+        private string _waiting;
+        private string _p1LoadingVisible;
+        private string _p2LoadingVisible;
 
 
         public ICommand gameFin1
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.Player1), Predicate => !_p1Fin);
+                return new RelayCommand(Action => gameFin(_game.P1), Predicate => !_p1Fin);
             }
         }
 
@@ -50,7 +53,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.Player2), Predicate => !_p2Fin);
+                return new RelayCommand(Action => gameFin(_game.P2), Predicate => !_p2Fin);
             }
         }
 
@@ -118,6 +121,36 @@ namespace SortAlgGame.ViewModel
             }
         }
 
+        public string Waiting
+        {
+            get { return _waiting; }
+            set
+            {
+                _waiting = value;
+                NotifyPropertyChanged("Waiting");
+            }
+        }
+
+        public string P1LoadingVisible
+        {
+            get { return _p1LoadingVisible; }
+            set
+            {
+                _p1LoadingVisible = value;
+                NotifyPropertyChanged("P1LoadingVisible");
+            }
+        }
+
+        public string P2LoadingVisible
+        {
+            get { return _p2LoadingVisible; }
+            set
+            {
+                _p2LoadingVisible = value;
+                NotifyPropertyChanged("P2LoadingVisible");
+            }
+        }
+
         public Game Game
         {
             get { return _game; }
@@ -131,6 +164,9 @@ namespace SortAlgGame.ViewModel
             _targetItemsP2 = new ObservableCollection<Statement>();
             _p1Fin = false;
             _p2Fin = false;
+            _p1LoadingVisible = "Hidden";
+            _p2LoadingVisible = "Hidden";
+            _waiting = Config.WAITING_Player;
             _game = new Game();
             _mainVM = mainVM;
             initSourceItems();
@@ -141,6 +177,11 @@ namespace SortAlgGame.ViewModel
             _timer.Interval = new TimeSpan(0, 0, 1);
             _timer.Tick += timeEvent;
             _timer.Start();
+        }
+
+        public void stopTimer()
+        {
+            _timer.Stop();
         }
 
         public bool playerFin(string sourceTag)
@@ -160,85 +201,87 @@ namespace SortAlgGame.ViewModel
         {
             if (!_p1Fin)
             {
-                _game.P1Time++;
-                P1Time = string.Format("{0:00}:{1:00}",_game.P1Time/60, _game.P1Time%60);
+                _game.P1.Time++;
+                P1Time = string.Format("{0:00}:{1:00}",_game.P1.Time/60, _game.P1.Time%60);
             }
             if (!_p2Fin)
             {
-                _game.P2Time++;
-                P2Time = string.Format("{0:00}:{1:00}", _game.P2Time / 60, _game.P2Time % 60);
+                _game.P2.Time++;
+                P2Time = string.Format("{0:00}:{1:00}", _game.P2.Time / 60, _game.P2.Time % 60);
             }
         }
 
         public void gameFin(Player player)
         {
-            if (player == _game.Player1)
+            if (player == _game.P1)
             {
                 _p1Fin = true;
+                P1LoadingVisible = "Visible";
             }
-            else if (player == _game.Player2)
+            else if (player == _game.P2)
             {
                 _p2Fin = true;
+                P2LoadingVisible = "Visible";
             }
             if (_p1Fin && _p2Fin)
             {
+                Waiting = Config.WAITING_RESULT;
                 _timer.Stop();
-                _mainVM.CurrentView = new ResultVM(this);
+                BaseViewModel resultVM = new ResultVM(this);
+                _mainVM.CurrentView = resultVM;
             }
 
         }
 
         public void initSourceItems()
         {
-            initPlayerWise(_sourceItemsP1, _game.Player1);
-            initPlayerWise(_sourceItemsP2, _game.Player2);
+            initPlayerWise(_sourceItemsP1, _game.P1);
+            initPlayerWise(_sourceItemsP2, _game.P2);
         }
 
         public void initPlayerWise(ObservableCollection<Statement> list, Player player)
         {
-            //Player 1
             //Allocations
-            list.Add(new AllocALength(player, null));
-            list.Add(new AllocIToJ(player, null));
-            list.Add(new AllocIToMin(player, null));
-            list.Add(new AllocJToMin(player, null));
-            list.Add(new AllocLeft(player, null));
-            list.Add(new AllocPivot(player, null));
-            list.Add(new AllocRight(player, null));
-            list.Add(new DecJ(player, null));
-            list.Add(new IncI(player, null));
+            list.Add(new AllocALength(player.Programm, null));
+            list.Add(new AllocIToJ(player.Programm, null));
+            list.Add(new AllocIToMin(player.Programm, null));
+            list.Add(new AllocJToMin(player.Programm, null));
+            list.Add(new AllocLeft(player.Programm, null));
+            list.Add(new AllocPivot(player.Programm, null));
+            list.Add(new AllocRight(player.Programm, null));
+            list.Add(new DecJ(player.Programm, null));
+            list.Add(new IncI(player.Programm, null));
             //Conditions
-            list.Add(new IfAiGreaterAiInc(player, null));
-            list.Add(new IfAjLessAmin(player, null));
-            list.Add(new IfIEqualsJ(player, null));
-            list.Add(new IfILessJ(player, null));
-            list.Add(new IfILessRight(player, null));
-            list.Add(new IfINotEqualsMin(player, null));
-            list.Add(new IfLeftLessJ(player, null));
+            list.Add(new IfAiGreaterAiInc(player.Programm, null));
+            list.Add(new IfAjLessAmin(player.Programm, null));
+            list.Add(new IfILessEqualsJ(player.Programm, null));
+            list.Add(new IfILessRight(player.Programm, null));
+            list.Add(new IfINotEqualsMin(player.Programm, null));
+            list.Add(new IfLeftLessJ(player.Programm, null));
             //Loops
-            list.Add(new ForInBubble(player, null));
-            list.Add(new ForInSelection(player, null));
-            list.Add(new ForInsertion(player, null));
-            list.Add(new ForOutBubble(player, null));
-            list.Add(new WhileAiLessPivot(player, null));
-            list.Add(new WhileAjGreaterPivot(player, null));
-            list.Add(new WhileILessEqualsJ(player, null));
-            list.Add(new WhileJGreaterNull(player, null));
+            list.Add(new ForInBubble(player.Programm, null));
+            list.Add(new ForInSelection(player.Programm, null));
+            list.Add(new ForInsertion(player.Programm, null));
+            list.Add(new ForOutBubble(player.Programm, null));
+            list.Add(new WhileAiLessPivot(player.Programm, null));
+            list.Add(new WhileAjGreaterPivot(player.Programm, null));
+            list.Add(new WhileILessEqualsJ(player.Programm, null));
+            list.Add(new WhileJGreaterNull(player.Programm, null));
             //MethodCalls
-            list.Add(new CallSortLeft(player, null));
-            list.Add(new CallSortRight(player, null));
-            list.Add(new SwapAiWithAiInc(player, null));
-            list.Add(new SwapAiWithAj(player, null));
-            list.Add(new SwapAjWithAjDec(player, null));
-            list.Add(new SwapAminWithAi(player, null));
+            list.Add(new CallSortLeft(player.Programm, null));
+            list.Add(new CallSortRight(player.Programm, null));
+            list.Add(new SwapAiWithAiInc(player.Programm, null));
+            list.Add(new SwapAiWithAj(player.Programm, null));
+            list.Add(new SwapAjWithAjDec(player.Programm, null));
+            list.Add(new SwapAminWithAi(player.Programm, null));
         }
 
         public void initTargetItems()
         {
-            _targetItemsP1.Add(_game.Player1.Stm);
-            _targetItemsP1.Add((_game.Player1.Stm as ListStm).StmList.Last.Value);
-            _targetItemsP2.Add(_game.Player2.Stm);
-            _targetItemsP2.Add((_game.Player2.Stm as ListStm).StmList.Last.Value);
+            _targetItemsP1.Add(_game.P1.Programm.Stm);
+            _targetItemsP1.Add((_game.P1.Programm.Stm as ListStm).StmList.Last.Value);
+            _targetItemsP2.Add(_game.P2.Programm.Stm);
+            _targetItemsP2.Add((_game.P2.Programm.Stm as ListStm).StmList.Last.Value);
         }
 
         public bool canDrop(Object cursorData, Object targetData, String sourceTag, String targetTag)
@@ -250,14 +293,14 @@ namespace SortAlgGame.ViewModel
 
             if (targetData is Statement)
             {
-                if ((cursorData as Statement).Player != (targetData as Statement).Player)
+                if ((cursorData as Statement).Programm != (targetData as Statement).Programm)
                 {
                     return false;
                 }
             }
             else
             {
-                if ((cursorData as Statement).Player != (targetData as ObservableCollection<Statement>).First<Statement>().Player)
+                if ((cursorData as Statement).Programm != (targetData as ObservableCollection<Statement>).First<Statement>().Programm)
                 {
                     return false;
                 }
@@ -316,15 +359,15 @@ namespace SortAlgGame.ViewModel
             return false;
         }
 
-        public void updateTargetList(Player p)
+        public void updateTargetList(Programm p)
         {
-            if (p == _game.Player1)
+            if (p == _game.P1.Programm)
             {
-                TargetItemsP1 = new ObservableCollection<Statement>(_game.Player1.getActualStmNesting());
+                TargetItemsP1 = new ObservableCollection<Statement>(_game.P1.Programm.getActualStmNesting());
             }
-            else if (p == _game.Player2)
+            else if (p == _game.P2.Programm)
             {
-                TargetItemsP2 = new ObservableCollection<Statement>(_game.Player2.getActualStmNesting());
+                TargetItemsP2 = new ObservableCollection<Statement>(_game.P2.Programm.getActualStmNesting());
             }
         }
 
@@ -336,7 +379,7 @@ namespace SortAlgGame.ViewModel
             {
                 (targetStm as Statement).Parent.addBeforeStm(targetStm as Statement, cursorData as Statement);
                 (sourceList as ObservableCollection<Statement>).Remove(cursorData as Statement);
-                updateTargetList((cursorData as Statement).Player);
+                updateTargetList((cursorData as Statement).Programm);
             }
         }
 
@@ -349,7 +392,7 @@ namespace SortAlgGame.ViewModel
                 //Model Statement Schachtelung aktualisieren
                 (cursorData as Statement).Parent.removeStm(cursorData as Statement);
                 //TargetList aktualisieren
-                updateTargetList((cursorData as Statement).Player);
+                updateTargetList((cursorData as Statement).Programm);
             }
         }
 
@@ -359,28 +402,7 @@ namespace SortAlgGame.ViewModel
             {
                 (cursorData as Statement).Parent.StmList.Remove(cursorData as Statement);
                 (targetData as Statement).Parent.addBeforeStm(targetData as Statement, cursorData as Statement);
-                updateTargetList((cursorData as Statement).Player);
-            }
-        }
-
-        public void printExecute()
-        {
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Lars\Desktop\executePrint.txt");
-            file.WriteLine(_game.Player1.Stm.Content);
-            rekursivePrint((_game.Player1.Stm as ListStm).StmList, file);
-            file.WriteLine("---------------------------------------------------------------------------------");
-            file.Close();
-        }
-
-        public void rekursivePrint(LinkedList<Statement> stmList, System.IO.StreamWriter file)
-        {
-            foreach (Statement x in stmList)
-            {
-                file.WriteLine(x.Content);
-                if (x is ListStm)
-                {
-                    rekursivePrint((x as ListStm).StmList, file);
-                }
+                updateTargetList((cursorData as Statement).Programm);
             }
         }
     }

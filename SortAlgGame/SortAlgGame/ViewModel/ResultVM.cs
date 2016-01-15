@@ -103,28 +103,28 @@ namespace SortAlgGame.ViewModel
             _p2TargetItems = gameVM.TargetItemsP2;
             _game = gameVM.Game;
             _game.evaluate();
-            _p1StatCol = new ObservableCollection<Tuple<int, string, string, string, int>>(_game.P1PointList);
-            _p2StatCol = new ObservableCollection<Tuple<int, string, string, string, int>>(_game.P2PointList);
-            _p1Points = _game.P1Points;
-            _p2Points = _game.P2Points;
-            _p1Time = "Benötigte Zeit: " + string.Format("{0:00}:{1:00}", _game.P1Time / 60, _game.P1Time % 60);
-            _p2Time = "Benötigte Zeit: " + string.Format("{0:00}:{1:00}", _game.P2Time / 60, _game.P2Time % 60);
-            if (_game.FastestPlayer == _game.Player1)
+            _p1StatCol = new ObservableCollection<Tuple<int, string, string, string, int>>(_game.P1.PointList);
+            _p2StatCol = new ObservableCollection<Tuple<int, string, string, string, int>>(_game.P2.PointList);
+            _p1Points = _game.P1.Points;
+            _p2Points = _game.P2.Points;
+            _p1Time = "Benötigte Zeit: " + string.Format("{0:00}:{1:00}", _game.P1.Time / 60, _game.P1.Time % 60);
+            _p2Time = "Benötigte Zeit: " + string.Format("{0:00}:{1:00}", _game.P2.Time / 60, _game.P2.Time % 60);
+            if (_game.FastestPlayer == _game.P1)
             {
                 _p1Time += " schnellster Spieler +1 Bonuspunkt!";
             }
-            else if (_game.FastestPlayer == _game.Player2)
+            else if (_game.FastestPlayer == _game.P2)
             {
                 _p2Time += " schnellster Spieler +1 Bonuspunkt!";
             }
-            _p1Animation = new AnimationVM(_game.Player1);
-            _p2Animation = new AnimationVM(_game.Player2);
-            if (_game.Winner == _game.Player1)
+            _p1Animation = new AnimationVM(_game.P1.Programm);
+            _p2Animation = new AnimationVM(_game.P2.Programm);
+            if (_game.Winner == _game.P1)
             {
                 _p1Status = "Gewonnen";
                 _p2Status = "Verloren";
             }
-            else if (_game.Winner == _game.Player2)
+            else if (_game.Winner == _game.P2)
             {
                 _p2Status = "Gewonnen";
                 _p1Status = "Verloren";

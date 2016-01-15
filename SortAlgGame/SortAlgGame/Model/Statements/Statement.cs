@@ -10,7 +10,7 @@ namespace SortAlgGame.Model.Statements
         //Var
         protected int indent = 0;
         protected string content;
-        protected Player player;
+        protected Programm programm;
         protected ListStm parent;
         //Accessore
         public virtual int Indent
@@ -47,14 +47,14 @@ namespace SortAlgGame.Model.Statements
             set { parent = value; }
         }
 
-        public Player Player
+        public Programm Programm
         {
-            get { return player; }
+            get { return programm; }
         }
         //Konstruktoren
-        public Statement(Player player, ListStm parent)
+        public Statement(Programm player, ListStm parent)
         {
-            this.player = player;
+            this.programm = player;
             this.parent = parent;
         }
         //Methods
@@ -62,7 +62,7 @@ namespace SortAlgGame.Model.Statements
 
         public void updateLog()
         {
-            player.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(player.Stack.Peek())));
+            programm.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(programm.Stack.Peek())));
         }
     }
 }

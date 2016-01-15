@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocIToJ : Statement
     {
-        public AllocIToJ(Player player, ListStm parent)
+        public AllocIToJ(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "j = i;";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.I != Config.NOT_USED)
             {
                 actDataSet.J = actDataSet.I;

@@ -44,7 +44,7 @@ namespace SortAlgGame.Model.Statements
         }
 
 
-        public ListStm(Player player, ListStm parent)
+        public ListStm(Programm player, ListStm parent)
             : base(player, parent)
         {
             stmList = new LinkedList<Statement>();
@@ -116,14 +116,14 @@ namespace SortAlgGame.Model.Statements
 
         public void updateDataSets()
         {
-            DataSet actDataSet = Player.Stack.Pop();
-            DataSet oldDataSet = Player.Stack.Pop();
+            DataSet actDataSet = Programm.Stack.Pop();
+            DataSet oldDataSet = Programm.Stack.Pop();
             if (oldDataSet.I == Config.NOT_USED) actDataSet.I = Config.NOT_USED;
             if (oldDataSet.J == Config.NOT_USED) actDataSet.J = Config.NOT_USED;
             if (oldDataSet.N == Config.NOT_USED) actDataSet.N = Config.NOT_USED;
             if (oldDataSet.Min == Config.NOT_USED) actDataSet.Min = Config.NOT_USED;
             if (oldDataSet.Pivot == Config.NOT_USED) actDataSet.Pivot = Config.NOT_USED;
-            player.Stack.Push(actDataSet);
+            programm.Stack.Push(actDataSet);
         }
     }
 }

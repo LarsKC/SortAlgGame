@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocRight : Statement
     {
-        public AllocRight(Player player, ListStm parent)
+        public AllocRight(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "j = right;";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             actDataSet.J = actDataSet.Right;
             if (buildLog) updateLog();
             return null;

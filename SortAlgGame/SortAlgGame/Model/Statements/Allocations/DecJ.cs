@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class DecJ : Statement
     {
-        public DecJ(Player player, ListStm parent)
+        public DecJ(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "j--;";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             actDataSet.J--;
             if(buildLog) updateLog();

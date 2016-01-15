@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\obj\Debug\
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\
 SortAlgGame
 none
 false
 DEBUG;TRACE
-D:\Dokumente\Schule-Ausb-Studium\FH-Luebeck\7BachelorArbeit\programm\SortAlgGame\SortAlgGame\App.xaml
-998518364
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\App.xaml
+5-1323601210
 2-259798666
-65-570581202
+56-603268103
 152103913890
-Views\BubbleSort.xaml;Views\GameV.xaml;Views\Hauptmenue.xaml;SurfaceWindow1.xaml;Views\InsertionSort.xaml;Views\MenueErklaerungen.xaml;Views\QuickSort.xaml;Views\Result.xaml;Views\SelectionSort.xaml;
+Views\Erklaerung.xaml;Views\GameV.xaml;Views\Hauptmenue.xaml;SurfaceWindow1.xaml;Views\Result.xaml;
 
 False
 

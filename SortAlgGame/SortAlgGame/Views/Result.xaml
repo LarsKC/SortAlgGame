@@ -131,8 +131,8 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
                                 FontSize="15"
-                                Foreground="Black"
-                                FontWeight="{Binding Path=Item2}"/>
+                                Foreground="{Binding Path=Item2}"
+                                FontWeight="Bold"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

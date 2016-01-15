@@ -59,6 +59,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Model\ArrayGen.cs" />
     <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\Programm.cs" />
     <Compile Include="Model\Statements\Allocations\AllocALength.cs" />
     <Compile Include="Model\Statements\Allocations\AllocIToJ.cs" />
     <Compile Include="Model\Statements\Allocations\AllocIToMin.cs" />
@@ -71,8 +72,7 @@
     <Compile Include="Model\Statements\BaseStatement.cs" />
     <Compile Include="Model\Statements\Conditions\IfAiGreaterAiInc.cs" />
     <Compile Include="Model\Statements\Conditions\IfAjLessAmin.cs" />
-    <Compile Include="Model\Statements\Conditions\IfIEqualsJ.cs" />
-    <Compile Include="Model\Statements\Conditions\IfILessJ.cs" />
+    <Compile Include="Model\Statements\Conditions\IfILessEqualsJ.cs" />
     <Compile Include="Model\Statements\Conditions\IfILessRight.cs" />
     <Compile Include="Model\Statements\Conditions\IfINotEqualsMin.cs" />
     <Compile Include="Model\Statements\Conditions\IfLeftLessJ.cs" />
@@ -91,35 +91,19 @@
     <Compile Include="Model\Statements\MethodCalls\SwapAjWithAjDec.cs" />
     <Compile Include="Model\Statements\MethodCalls\SwapAminWithAi.cs" />
     <Compile Include="ViewModel\AnimationVM.cs" />
-    <Compile Include="ViewModel\BubbleSortVM.cs" />
     <Compile Include="ViewModel\GameVM.cs" />
-    <Compile Include="ViewModel\InsertionSortVM.cs" />
-    <Compile Include="ViewModel\QuickSortVM.cs" />
     <Compile Include="ViewModel\ResultVM.cs" />
-    <Compile Include="ViewModel\SelectionSortVM.cs" />
     <Compile Include="ViewModel\SortVM.cs" />
-    <Compile Include="Views\BubbleSort.xaml.cs">
-      <DependentUpon>BubbleSort.xaml</DependentUpon>
+    <Compile Include="Views\Erklaerung.xaml.cs">
+      <DependentUpon>Erklaerung.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GameV.xaml.cs">
       <DependentUpon>GameV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\InsertionSort.xaml.cs">
-      <DependentUpon>InsertionSort.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\MenueErklaerungen.xaml.cs">
-      <DependentUpon>MenueErklaerungen.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\QuickSort.xaml.cs">
-      <DependentUpon>QuickSort.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Result.xaml.cs">
       <DependentUpon>Result.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SelectionSort.xaml.cs">
-      <DependentUpon>SelectionSort.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\BubbleSort.xaml">
+    <Page Include="Views\Erklaerung.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,7 +126,6 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\HauptmenueViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MenueErklaerungViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="Views\Hauptmenue.xaml.cs">
       <DependentUpon>Hauptmenue.xaml</DependentUpon>
@@ -156,23 +139,7 @@
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\InsertionSort.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MenueErklaerungen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\QuickSort.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Result.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SelectionSort.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +169,15 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Arrows.png" />
+    <Resource Include="Resources\GameButton.png" />
+    <Resource Include="Resources\ButtonBackground.png" />
+    <Resource Include="Resources\MenueBackground.png" />
+    <Resource Include="Resources\Background.png" />
+    <Resource Include="Resources\BtnBackward.png" />
+    <Resource Include="Resources\BtnForward.png" />
+    <Resource Include="Resources\BtnPause.png" />
+    <Resource Include="Resources\BtnPlay.png" />
     <Content Include="Resources\icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

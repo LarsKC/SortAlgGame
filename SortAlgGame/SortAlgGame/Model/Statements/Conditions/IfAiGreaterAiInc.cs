@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfAiGreaterAiInc : ListStm
     {
-        public IfAiGreaterAiInc(Player player, ListStm parent)
+        public IfAiGreaterAiInc(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "if (a[i] > a[i+1]) {";
@@ -15,10 +15,10 @@ namespace SortAlgGame.Model.Statements.Conditions
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
-            player.Stack.Push(new DataSet(actDataSet));
-            actDataSet = player.Stack.Peek();
+            programm.Stack.Push(new DataSet(actDataSet));
+            actDataSet = programm.Stack.Peek();
             if (buildLog) updateLog();
             string tmpError = null;
             try

@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace SortAlgGame.Views
 {
     /// <summary>
-    /// Interaktionslogik für MenueErklaerungen.xaml
+    /// Interaktionslogik für Erklaerung.xaml
     /// </summary>
-    public partial class MenueErklaerungen : UserControl
+    public partial class Erklaerung : UserControl
     {
-        public MenueErklaerungen()
+        public Erklaerung()
         {
             InitializeComponent();
         }

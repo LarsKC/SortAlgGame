@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAjWithAjDec : Statement
     {
-        public SwapAjWithAjDec(Player player, ListStm parent)
+        public SwapAjWithAjDec(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "swap (a, j, j-1);";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             try
             {

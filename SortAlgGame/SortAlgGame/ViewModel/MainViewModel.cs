@@ -33,16 +33,17 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => CurrentView = new HauptmenueViewModel());
+                return new RelayCommand(action => menueChange());
             }
         }
-
-        public ICommand changeToErklaerung
+        
+        public void menueChange()
         {
-            get
+            if(CurrentView is GameVM)
             {
-                return new RelayCommand(action => CurrentView = new MenueErklaerungViewModel());
+                (CurrentView as GameVM).stopTimer();
             }
+            CurrentView = new HauptmenueViewModel();
         }
 
         public ICommand changeToGame
@@ -57,7 +58,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => CurrentView = new BubbleSortVM());
+                return new RelayCommand(action => CurrentView = new SortVM("BubbleSort"));
             }
         }
 
@@ -65,7 +66,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => CurrentView = new QuickSortVM());
+                return new RelayCommand(action => CurrentView = new SortVM("QuickSort"));
             }
         }
 
@@ -73,7 +74,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => CurrentView = new SelectionSortVM());
+                return new RelayCommand(action => CurrentView = new SortVM("SelectionSort"));
             }
         }
 
@@ -81,7 +82,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => CurrentView = new InsertionSortVM());
+                return new RelayCommand(Action => CurrentView = new SortVM("InsertionSort"));
             }
         }
 
@@ -90,14 +91,6 @@ namespace SortAlgGame.ViewModel
             get
             {
                 return new RelayCommand(Action => CurrentView = new ResultVM(CurrentView as GameVM));
-            }
-        }
-
-        public ICommand printExecute
-        {
-            get
-            {
-                return new RelayCommand(action => (currentView as GameVM).printExecute());
             }
         }
     }

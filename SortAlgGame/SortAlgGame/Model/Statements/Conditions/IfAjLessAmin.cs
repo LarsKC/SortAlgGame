@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Conditions
 {
     class IfAjLessAmin : ListStm
     {
-        public IfAjLessAmin(Player player, ListStm parent)
+        public IfAjLessAmin(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "if (a[j] < a[min]) {";
@@ -15,10 +15,10 @@ namespace SortAlgGame.Model.Statements.Conditions
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.J == Config.NOT_USED || actDataSet.Min == Config.NOT_USED) return Config.NOT_INIT_ERROR;
-            player.Stack.Push(new DataSet(actDataSet));
-            actDataSet = player.Stack.Peek();
+            programm.Stack.Push(new DataSet(actDataSet));
+            actDataSet = programm.Stack.Peek();
             string tmpError = null;
             if (buildLog) updateLog();
             try

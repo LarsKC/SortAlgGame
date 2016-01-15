@@ -24,7 +24,7 @@ namespace SortAlgGame.ViewModel
         protected ObservableCollection<Tuple<int, int, ObservableCollection<string>>> _animationData;
         protected ObservableCollection<string> _dataSetValues;
         protected ObservableCollection<Tuple<Statement, String>> _stms;
-        protected Player _programm;
+        protected Programm _programm;
         protected Tuple<Statement, DataSet> _curLogSet;
         protected DispatcherTimer _timer;
         protected int _maxAnimationHeight;
@@ -101,14 +101,14 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public Player Programm
+        public Programm Programm
         {
             get { return _programm; }
         }
 
-        public AnimationVM(Player prg)
+        public AnimationVM(Programm prg)
         {
-            _maxAnimationHeight = Config.RUNS[0] * Config.RECT_MULTIPLIKATOR + 200;
+            _maxAnimationHeight = Config.RUNS[0] * Config.RECT_MULTIPLIKATOR + 80;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 0 , 0, Config.ANIMATION_TIMER);
             _timer.Tick += new EventHandler(dispatcherAnimationTimer);
@@ -170,7 +170,7 @@ namespace SortAlgGame.ViewModel
         {
             ObservableCollection<Statement> tmpCol = new ObservableCollection<Statement>(_programm.getActualStmNesting());
             _stms = new ObservableCollection<Tuple<Statement, string>>();
-            _stms.Add(new Tuple<Statement,string>(tmpCol.ElementAt(0), Config.TEXT_BOLD));
+            _stms.Add(new Tuple<Statement,string>(tmpCol.ElementAt(0), Config.TEXT_RED));
             for (int i = 1; i < tmpCol.Count; i++)
             {
                 _stms.Add(new Tuple<Statement, string>(tmpCol.ElementAt(i), Config.TEXT_NORMAL));
@@ -185,7 +185,7 @@ namespace SortAlgGame.ViewModel
             int indexNew = Config.NOT_USED;
             foreach(Tuple<Statement, string> x in _stms)
             {
-                if(x.Item2 == Config.TEXT_BOLD)
+                if(x.Item2 == Config.TEXT_RED)
                 {
                     indexOld = _stms.IndexOf(x);
                     foundOldStm = true;
@@ -203,7 +203,7 @@ namespace SortAlgGame.ViewModel
             if (indexNew != Config.NOT_USED)
             {
                 Tuple<Statement, string> tmpTuple = _stms.ElementAt(indexNew);
-                _stms.Insert(indexNew, new Tuple<Statement, string>(_stms.ElementAt<Tuple<Statement, string>>(indexNew).Item1, Config.TEXT_BOLD));
+                _stms.Insert(indexNew, new Tuple<Statement, string>(_stms.ElementAt<Tuple<Statement, string>>(indexNew).Item1, Config.TEXT_RED));
                 _stms.Remove(tmpTuple);
             }
 

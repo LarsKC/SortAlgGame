@@ -4,33 +4,188 @@
     xmlns:vm ="clr-namespace:SortAlgGame.ViewModel"
     xmlns:views="clr-namespace:SortAlgGame.Views"
     StartupUri="SurfaceWindow1.xaml"
+    xmlns:s="http://schemas.microsoft.com/surface/2008"
     >
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type vm:HauptmenueViewModel}">
                 <views:Hauptmenue />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:MenueErklaerungViewModel}">
-                <views:MenueErklaerungen />
-            </DataTemplate>
             <DataTemplate DataType="{x:Type vm:GameVM}">
                 <views:GameV />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:BubbleSortVM}">
-                <views:BubbleSort />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:QuickSortVM}">
-                <views:QuickSort />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:SelectionSortVM}">
-                <views:SelectionSort />
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:InsertionSortVM}">
-                <views:InsertionSort />
+            <DataTemplate DataType="{x:Type vm:SortVM}">
+                <views:Erklaerung/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:ResultVM}">
                 <views:Result/>
             </DataTemplate>
+            <Style x:Key="CodeList" TargetType="{x:Type s:SurfaceListBox}">
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Center"/>
+                <Setter Property="ItemsSource" Value="{Binding Path=AnimationVM.Stms}"/>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Label 
+                                    Content="{Binding Path=Item1.Content}"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    FontSize="16"
+                                    FontFamily="Aharoni"
+                                    Foreground="{Binding Path=Item2}"
+                                    FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="Label" TargetType="Label">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontFamily" Value="Aharoni"/>
+            </Style>
+            <Style x:Key="Button" TargetType="{x:Type s:SurfaceButton}">
+                <Setter Property="Width" Value="200"/>
+                <Setter Property="Height" Value="100"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="FontSize" Value="25"/>
+                <Setter Property="FontFamily" Value="Aharoni"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/SortAlgGame;component/Resources/ButtonBackground.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="AnimationDiagramm" TargetType="ItemsControl">
+                <Setter Property="ItemsSource" Value="{Binding Path=AnimationData}"/>
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" MinHeight="{Binding Path=MaxAnimationHeight}" HorizontalAlignment="Left"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate >
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,40,5,0">
+                                <Rectangle MinWidth="40" Height="{Binding Path=Item2}" Fill="White" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                                <Label Content="{Binding Path=Item1}" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                                <ItemsControl ItemsSource="{Binding Path=Item3}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel MinHeight="50" MinWidth="40" Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Foreground="White" Content="{Binding}" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="AnimationDataValues" TargetType="ItemsControl">
+                <Setter Property="ItemsSource" Value="{Binding Path=DataSetValues}"/>
+                <Setter Property="ItemsPanel">
+                    <Setter.Value>
+                        <ItemsPanelTemplate>
+                            <DockPanel HorizontalAlignment="Left"/>
+                        </ItemsPanelTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                                <Label Foreground="White" Content="{Binding}"/>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="BtnForward" TargetType="s:SurfaceButton">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Command" Value="{Binding Path=animationForward, Mode=OneWay}"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/SortAlgGame;component/Resources/BtnForward.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="BtnBackward" TargetType="s:SurfaceButton">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Command" Value="{Binding Path=animationBackward, Mode=OneWay}"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/SortAlgGame;component/Resources/BtnBackward.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="BtnPause" TargetType="s:SurfaceButton">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Command" Value="{Binding Path=animationStop, Mode=OneWay}"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/SortAlgGame;component/Resources/BtnPause.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="BtnPlay" TargetType="s:SurfaceButton">
+                <Setter Property="Width" Value="50"/>
+                <Setter Property="Height" Value="50"/>
+                <Setter Property="Command" Value="{Binding Path=animationStart, Mode=OneWay}"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <ImageBrush ImageSource="/SortAlgGame;component/Resources/BtnPlay.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="InfoText" TargetType="TextBlock">
+                <Setter Property="Text" Value="{Binding Path=InfoText}"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontFamily" Value="Aharoni"/>
+                <Setter Property="Foreground" Value="White"/>
+            </Style>
+            <Style x:Key="ListItem" TargetType="{x:Type s:SurfaceListBoxItem}">
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type s:SurfaceListBoxItem}">
+                                <Grid   
+                                    x:Name="Grid"
+							        Background="Black"
+							        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                    <Border  x:Name="ButtonBody"
+								        BorderThickness="{TemplateBinding BorderThickness}"
+								        Background="{TemplateBinding Background}"
+								        BorderBrush="{TemplateBinding BorderBrush}"
+								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    <Border x:Name="PressOverlay"    
+								        Background="Black"
+								        Opacity="0" 
+								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <ContentPresenter   
+                                        x:Name="Content" 
+                                        Margin="{TemplateBinding Padding}"
+								        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                               					   
+								        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Microsoft.Surface.Presentation.Generic;v2.0.0.0;31bf3856ad364e35;component/themes\styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

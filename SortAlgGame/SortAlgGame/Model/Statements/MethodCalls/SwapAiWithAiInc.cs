@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAiWithAiInc : Statement
     {
-        public SwapAiWithAiInc(Player player, ListStm parent)
+        public SwapAiWithAiInc(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "swap(a, i, i+1);";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             try
             {

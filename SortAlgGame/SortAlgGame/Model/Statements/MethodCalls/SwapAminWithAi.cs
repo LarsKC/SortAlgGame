@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 {
     class SwapAminWithAi : Statement
     {
-        public SwapAminWithAi(Player player, ListStm parent)
+        public SwapAminWithAi(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "swap (a, min, i);";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.MethodCalls
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.Min == Config.NOT_USED || actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
             try
             {

@@ -24,18 +24,52 @@ namespace SortAlgGame.ViewModel
         protected AnimationVM _animationVM;
         private ArrayGen _arrayGen;
         private int[] _testArray;
-        protected Player _programm;
+        private string _infoText;
+        protected Programm _programm;
 
         public AnimationVM AnimationVM
         {
             get { return _animationVM; }
         }
 
-        public SortVM()
+        public string InfoText
+        {
+            get { return _infoText; }
+        }
+
+        public SortVM(string sortAlg)
         {
             _arrayGen = new ArrayGen();
             _testArray = _arrayGen.getRndArray(Config.RUNS[0]);
-            _programm = new Player();
+            _programm = new Programm();
+            switchOnAlg(sortAlg);
+            runAnimation();
+        }
+
+        private void switchOnAlg(string sortAlg)
+        {
+            switch (sortAlg)
+            {
+                case "BubbleSort":
+                    _programm.buildBubblesort();
+                    _infoText = Config.INFO_BUBBLE;
+                    break;
+                case "InsertionSort":
+                    _programm.buildInsertionsort();
+                    _infoText = Config.INFO_INSERTION;
+                    break;
+                case "SelectionSort":
+                    _programm.buildSelectionsort();
+                    _infoText = Config.INFO_SELECTION;
+                    break;
+                case "QuickSort":
+                    _programm.buildQuicksort();
+                    _infoText = Config.INFO_QUICK;
+                    break;
+                default:
+                    //NOTHING
+                    break;
+            }
         }
 
         public void runAnimation()

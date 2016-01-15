@@ -6,10 +6,19 @@
              xmlns:root="clr-namespace:SortAlgGame"
              xmlns:v="clr-namespace:SortAlgGame.Views"
              xmlns:vm="clr-namespace:SortAlgGame.ViewModel"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:s="http://schemas.microsoft.com/surface/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" xmlns:s="http://schemas.microsoft.com/surface/2008">
+             d:DesignHeight="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" d:DesignWidth="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}">
     <UserControl.Resources>
+        <DataTemplate x:Key="GapTemplate">
+            <StackPanel>
+                <Image Source="/SortAlgGame;component/Resources/Arrows.png"/>
+                <Label Content="Drag" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
+                <Label Content="&amp;" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
+                <Label Content="Drop" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
+                <Image Source="/SortAlgGame;component/Resources/Arrows.png"/>
+            </StackPanel>
+        </DataTemplate>
         <DataTemplate x:Key="SurfaceListBoxItemDataTemplate">
             <StackPanel Background="DarkGray">
                 <Label 
@@ -22,6 +31,18 @@
                         />
             </StackPanel>
         </DataTemplate>
+        <Style x:Key="waitStyle" TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Style.Triggers>
+                <Trigger Property="Tag" Value="WaitForResult">
+                    <Setter Property="Content" Value="Wird ausgewertet"/>
+                </Trigger>
+                <Trigger Property="Tag" Value="WaitForPlayer">
+                    <Setter Property="Content" Value="Warte auf anderen Spieler"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="CursorStyle" TargetType="{x:Type ContentControl}">
             <Setter Property="ContentTemplate" Value="{StaticResource SurfaceListBoxItemDataTemplate}" />
             <Setter Property="BorderThickness" Value="9"/>
@@ -50,79 +71,49 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="1*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" >
+        <!--PLAYER 2-->
+        <Grid Name="player2Grid" Background="DarkGray" Grid.Column="1" RenderTransformOrigin="0.5 ,0.5" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Height="950" HorizontalAlignment="Right" VerticalAlignment="Center">
+            <Grid.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="-90" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--HEADER-->
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Content="Spieler 2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30" Background="Black" Foreground="White"/>
+            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="Dein Algorithmus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" Background="Black" Foreground="White"/>
+            <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Content="Bausteine" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" Background="Black" Foreground="White"/>
+            <!--P2 TARGETLIST-->
             <s:SurfaceListBox 
-                Tag="sourceListP1"
-                Name="surfaceList1"
-                Margin="10,10,10,10" 
-                Height="auto" 
-                HorizontalAlignment="Left"   
-                VerticalAlignment="Top" 
-                Width="auto" 
-                AllowDrop="True"
-                HorizontalContentAlignment="Stretch"
-                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
-                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
-                ItemsSource="{Binding Path=SourceItemsP1, Mode=OneWay}"
-                PreviewTouchDown="OnTouchDown"
-                s:SurfaceDragDrop.DragEnter="OnDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDragLeave"
-                s:SurfaceDragDrop.Drop="OnDrop"/>
-            <s:SurfaceListBox 
-                Tag="targetListP1"
-                Name="surfaceList2"
-                Margin="0,10,10,10" 
-                Height="auto" 
-                HorizontalAlignment="Left"   
-                VerticalAlignment="Top" 
-                Width="auto" 
-                AllowDrop="False"
-                HorizontalContentAlignment="Stretch"
-                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
-                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
-                ItemsSource="{Binding Path=TargetItemsP1, Mode=OneWay}"
-                s:SurfaceDragDrop.DragEnter="OnDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDragLeave"
-                s:SurfaceDragDrop.Drop="OnDrop"
-                PreviewTouchDown="OnTouchDown"/>
-            <Label Content="{Binding Path=P1Time}" FontSize="20"/>
-        </StackPanel>
-        
-        <StackPanel Orientation="Horizontal" Grid.Column="1">
-            <s:SurfaceListBox 
-                Tag="sourceListP2"
-                Name="surfaceList3"
-                Margin="10,10,10,10" 
-                Height="auto" 
-                HorizontalAlignment="Left"   
-                VerticalAlignment="Top"
-                Width="auto" 
-                AllowDrop="True"
-                HorizontalContentAlignment="Stretch"
-                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
-                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
-                ItemsSource="{Binding Path=SourceItemsP2, Mode=OneWay}"
-                PreviewTouchDown="OnTouchDown"
-                s:SurfaceDragDrop.DragEnter="OnDragEnter"
-                s:SurfaceDragDrop.DragLeave="OnDragLeave"
-                s:SurfaceDragDrop.Drop="OnDrop"/>
-            <s:SurfaceListBox 
+                Grid.Column="0"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
                 Tag="targetListP2"
-                Name="surfaceList4"
-                Margin="0,10,10,10" 
-                Height="auto" 
-                HorizontalAlignment="Left"   
-                VerticalAlignment="Top" 
-                Width="auto" 
+                Name="surfaceList1"
+                Margin="0" 
                 AllowDrop="False"
                 HorizontalContentAlignment="Stretch"
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
@@ -132,16 +123,131 @@
                 s:SurfaceDragDrop.DragEnter="OnDragEnter"
                 s:SurfaceDragDrop.DragLeave="OnDragLeave"
                 s:SurfaceDragDrop.Drop="OnDrop"/>
-            <Label Content="{Binding Path=P2Time}" FontSize="20"/>
-        </StackPanel>
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1">
-            <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton1" Width="200" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-            <s:SurfaceButton Content="PrintExecute" Height="25" Name="surfaceButton2" Width="200" Command="{Binding DataContext.printExecute, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
-        </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
-            <s:SurfaceButton Content="Fin1" Height="25" Name="surfaceButton3" Width="200" Command="{Binding Path=gameFin1}"/>
-            <s:SurfaceButton Content="Fin2" Height="25" Name="surfaceButton4" Width="200" Command="{Binding Path=gameFin2}"/>
-        </StackPanel>
-        
+            <!--GAP-->
+            <ContentControl Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" ContentTemplate="{StaticResource ResourceKey=GapTemplate}"/>
+            <!--P2 SOURCELIST-->
+            <s:SurfaceListBox 
+                Grid.Column="3"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Tag="sourceListP2"
+                Name="surfaceList2"
+                Margin="0" 
+                AllowDrop="True"
+                HorizontalContentAlignment="Stretch"
+                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
+                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
+                ItemsSource="{Binding Path=SourceItemsP2, Mode=OneWay}"
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
+            <!--Footer Left-->
+            <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding Path=P2Time}" FontSize="30" Margin="5,5,5,5"/>
+            <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <s:SurfaceButton Content="Fertig" Height="25" Name="surfaceButton1" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center" Command="{Binding Path=gameFin2}"/>
+            </StackPanel>
+            <!--FOOTER Right-->
+            <StackPanel Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton2" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
+            </StackPanel>
+            <!--OVERLAY-->
+            <!--"{Binding Path=P2LoadingVisible}"-->
+            <ContentControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Grid.RowSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding Path=P2LoadingVisible}">
+                <Grid Background="Black">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Style="{StaticResource ResourceKey=waitStyle}" Tag="{Binding Path=Waiting}"/>
+                    </StackPanel>
+                </Grid>
+            </ContentControl>
+        </Grid>
+        <Grid Name="player1Grid" Background="DarkGray" Grid.Column="0" RenderTransformOrigin="0.5 ,0.5" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" Height="950" HorizontalAlignment="Left" VerticalAlignment="Center">
+            <Grid.LayoutTransform>
+                <TransformGroup>
+                    <ScaleTransform CenterX="0.5" CenterY="0.5"/>
+                    <SkewTransform CenterX="0.5" CenterY="0.5"/>
+                    <RotateTransform Angle="90" CenterX="0.5" CenterY="0.5"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.LayoutTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3.5*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="7*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <!--HEADER-->
+            <Label Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5" Content="Spieler 1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="30" Background="Black" Foreground="White"/>
+            <Label Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Content="Dein Algorithmus" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" Background="Black" Foreground="White"/>
+            <Label Grid.Column="3" Grid.Row="1" Grid.ColumnSpan="2" Content="Bausteine" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="25" Background="Black" Foreground="White"/>
+            <!--P2 TARGETLIST-->
+            <s:SurfaceListBox 
+                Grid.Column="0"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Tag="targetListP1"
+                Name="surfaceList3"
+                Margin="0" 
+                AllowDrop="False"
+                HorizontalContentAlignment="Stretch"
+                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
+                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
+                ItemsSource="{Binding Path=TargetItemsP1, Mode=OneWay}"
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
+            <!--GAP-->
+            <ContentControl Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" ContentTemplate="{StaticResource ResourceKey=GapTemplate}"/>
+            <!--P2 SOURCELIST-->
+            <s:SurfaceListBox 
+                Grid.Column="3"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Tag="sourceListP1"
+                Name="surfaceList4"
+                Margin="0" 
+                AllowDrop="True"
+                HorizontalContentAlignment="Stretch"
+                ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
+                BorderBrush="{DynamicResource {x:Static s:SurfaceColors.ListBoxItemBackgroundBrushKey}}" 
+                ItemsSource="{Binding Path=SourceItemsP1, Mode=OneWay}"
+                PreviewTouchDown="OnTouchDown"
+                s:SurfaceDragDrop.DragEnter="OnDragEnter"
+                s:SurfaceDragDrop.DragLeave="OnDragLeave"
+                s:SurfaceDragDrop.Drop="OnDrop"/>
+            <!--Footer Left-->
+            <Label Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="{Binding Path=P1Time}" FontSize="30" Margin="5,5,5,5"/>
+            <StackPanel Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <s:SurfaceButton Content="Fertig" Height="25" Name="surfaceButton3" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center" Command="{Binding Path=gameFin1}"/>
+            </StackPanel>
+            <!--FOOTER Right-->
+            <StackPanel Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                <s:SurfaceButton Content="Hauptmenü" Height="25" Name="surfaceButton4" VerticalContentAlignment="Center" FontSize="20" HorizontalContentAlignment="Center" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}"/>
+            </StackPanel>
+            <!--OVERLAY-->
+            <!--"{Binding Path=P1LoadingVisible}"-->
+            <ContentControl Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" Grid.RowSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="{Binding Path=P1LoadingVisible}">
+                <Grid Background="Black">
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Style="{StaticResource ResourceKey=waitStyle}" Tag="{Binding Path=Waiting}"/>
+                    </StackPanel>
+                </Grid>
+            </ContentControl>
+        </Grid>
     </Grid>
 </UserControl>

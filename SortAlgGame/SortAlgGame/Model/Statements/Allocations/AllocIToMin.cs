@@ -7,7 +7,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 {
     class AllocIToMin : Statement
     {
-        public AllocIToMin(Player player, ListStm parent)
+        public AllocIToMin(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "min = i;";
@@ -15,7 +15,7 @@ namespace SortAlgGame.Model.Statements.Allocations
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             if (actDataSet.I != Config.NOT_USED)
             {
                 actDataSet.Min = actDataSet.I;

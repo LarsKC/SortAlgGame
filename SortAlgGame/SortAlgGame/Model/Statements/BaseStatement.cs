@@ -8,7 +8,7 @@ namespace SortAlgGame.Model.Statements
 {
     class BaseStatement : ListStm
     {
-        public BaseStatement(Player player, ListStm parent)
+        public BaseStatement(Programm player, ListStm parent)
             : base(player, parent)
         {
             content = "public sort(int[] a, int left, int right) {";
@@ -17,7 +17,7 @@ namespace SortAlgGame.Model.Statements
 
         public override string execute(bool buildLog)
         {
-            DataSet actDataSet = player.Stack.Peek();
+            DataSet actDataSet = programm.Stack.Peek();
             actDataSet.Left = (actDataSet.Left == Config.NOT_USED) ? 0 : actDataSet.Left;
             actDataSet.Right = (actDataSet.Right == Config.NOT_USED) ? actDataSet.A.Length - 1 : actDataSet.Right;
             if (buildLog) updateLog();
