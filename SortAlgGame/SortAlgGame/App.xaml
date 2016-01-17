@@ -20,21 +20,32 @@
             <DataTemplate DataType="{x:Type vm:ResultVM}">
                 <views:Result/>
             </DataTemplate>
+            <Style x:Key="SurfaceListBoxGameStyle" TargetType="{x:Type s:SurfaceListBox}">
+                <Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            </Style>
             <Style x:Key="CodeList" TargetType="{x:Type s:SurfaceListBox}">
-                <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="VerticalAlignment" Value="Center"/>
-                <Setter Property="ItemsSource" Value="{Binding Path=AnimationVM.Stms}"/>
+                <Setter Property="BorderThickness" Value="5"/>
+                <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                <Setter Property="ItemsSource" Value="{Binding Path=Stms}"/>
                 <Setter Property="Background" Value="Black"/>
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
                                 <Label 
                                     Content="{Binding Path=Item1.Content}"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    FontSize="16"
-                                    FontFamily="Aharoni"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    FontSize="15"
+                                    FontFamily="Arial"
                                     Foreground="{Binding Path=Item2}"
                                     FontWeight="Bold"/>
                             </StackPanel>
@@ -44,7 +55,7 @@
             </Style>
             <Style x:Key="Label" TargetType="Label">
                 <Setter Property="Foreground" Value="White"/>
-                <Setter Property="FontFamily" Value="Aharoni"/>
+                <Setter Property="FontFamily" Value="Arial"/>
             </Style>
             <Style x:Key="Button" TargetType="{x:Type s:SurfaceButton}">
                 <Setter Property="Width" Value="200"/>
@@ -52,11 +63,36 @@
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 <Setter Property="VerticalContentAlignment" Value="Center"/>
                 <Setter Property="FontSize" Value="25"/>
-                <Setter Property="FontFamily" Value="Aharoni"/>
+                <Setter Property="FontFamily" Value="Arial"/>
                 <Setter Property="Foreground" Value="White"/>
                 <Setter Property="Background">
                     <Setter.Value>
                         <ImageBrush ImageSource="/SortAlgGame;component/Resources/ButtonBackground.png"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="DataGridStyle" TargetType="DataGrid">
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="IsReadOnly" Value="True"/>
+                <Setter Property="RowBackground" Value="Black"/>
+                <Setter Property="IsEnabled" Value="False"/>
+                <Setter Property="GridLinesVisibility" Value="All"/>
+                <Setter Property="VerticalGridLinesBrush" Value="DarkGray"/>
+                <Setter Property="HorizontalGridLinesBrush" Value="DarkGray"/>
+                <Setter Property="ColumnHeaderStyle">
+                    <Setter.Value>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="Black"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="BorderThickness" Value="2"/>
+                            <Setter Property="BorderBrush" Value="DarkGray"/>
+                        </Style>
                     </Setter.Value>
                 </Setter>
             </Style>
@@ -65,25 +101,25 @@
                 <Setter Property="ItemsPanel">
                     <Setter.Value>
                         <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" MinHeight="{Binding Path=MaxAnimationHeight}" HorizontalAlignment="Left"/>
+                            <StackPanel Orientation="Horizontal" MinHeight="{Binding Path=MaxAnimationHeight}" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
                         </ItemsPanelTemplate>
                     </Setter.Value>
                 </Setter>
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
-                        <DataTemplate >
-                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5,40,5,0">
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5,40,5,0">
                                 <Rectangle MinWidth="40" Height="{Binding Path=Item2}" Fill="White" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                                 <Label Content="{Binding Path=Item1}" Foreground="White" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                                <ItemsControl ItemsSource="{Binding Path=Item3}">
+                                <ItemsControl ItemsSource="{Binding Path=Item3}" HorizontalAlignment="Stretch">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <StackPanel MinHeight="50" MinWidth="40" Orientation="Horizontal"/>
+                                            <StackPanel MinHeight="30" Orientation="Horizontal" HorizontalAlignment="Stretch"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Foreground="White" Content="{Binding}" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                                            <Label Style="{StaticResource ResourceKey=Label}" Content="{Binding}" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" FontSize="17" />
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
@@ -104,7 +140,7 @@
                 <Setter Property="ItemTemplate">
                     <Setter.Value>
                         <DataTemplate>
-                                <Label Foreground="White" Content="{Binding}"/>
+                            <Label Foreground="White" Content="{Binding}"/>
                         </DataTemplate>
                     </Setter.Value>
                 </Setter>
@@ -152,40 +188,40 @@
             <Style x:Key="InfoText" TargetType="TextBlock">
                 <Setter Property="Text" Value="{Binding Path=InfoText}"/>
                 <Setter Property="FontSize" Value="20"/>
-                <Setter Property="FontFamily" Value="Aharoni"/>
+                <Setter Property="FontFamily" Value="Arial"/>
                 <Setter Property="Foreground" Value="White"/>
             </Style>
             <Style x:Key="ListItem" TargetType="{x:Type s:SurfaceListBoxItem}">
-                    <Setter Property="Background" Value="Black"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="BorderThickness" Value="0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type s:SurfaceListBoxItem}">
-                                <Grid   
-                                    x:Name="Grid"
-							        Background="Black"
-							        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
-                                    <Border  x:Name="ButtonBody"
-								        BorderThickness="{TemplateBinding BorderThickness}"
-								        Background="{TemplateBinding Background}"
-								        BorderBrush="{TemplateBinding BorderBrush}"
-								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                    <Border x:Name="PressOverlay"    
-								        Background="Black"
-								        Opacity="0" 
-								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    <ContentPresenter   
-                                        x:Name="Content" 
-                                        Margin="{TemplateBinding Padding}"
-								        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                               					   
-								        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-								        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
+                <Setter Property="Background" Value="Black"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type s:SurfaceListBoxItem}">
+                            <Grid   
+                                x:Name="Grid"
+							    Background="Black"
+							    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                                <Border  
+                                    x:Name="ButtonBody"
+								    BorderThickness="{TemplateBinding BorderThickness}"
+								    Background="{TemplateBinding Background}"
+								    BorderBrush="{TemplateBinding BorderBrush}"
+								    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                <Border x:Name="PressOverlay"    
+								    Background="Black"
+								    Opacity="0" 
+								    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                <ContentPresenter   
+                                    x:Name="Content" 
+                                    Margin="{TemplateBinding Padding}"
+								    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"                               					   
+								    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+								    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Microsoft.Surface.Presentation.Generic;v2.0.0.0;31bf3856ad364e35;component/themes\styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>

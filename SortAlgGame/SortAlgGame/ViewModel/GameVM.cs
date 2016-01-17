@@ -31,7 +31,9 @@ namespace SortAlgGame.ViewModel
         private ObservableCollection<Statement> _targetItemsP2;
         private Game _game;
         private MainViewModel _mainVM;
+        private ResultVM _resultVM;
         private DispatcherTimer _timer;
+        private int _loadingTimer;
         private bool _p1Fin;
         private bool _p2Fin;
         private string _p1Time;
@@ -167,6 +169,7 @@ namespace SortAlgGame.ViewModel
             _p1LoadingVisible = "Hidden";
             _p2LoadingVisible = "Hidden";
             _waiting = Config.WAITING_Player;
+            _loadingTimer = 0;
             _game = new Game();
             _mainVM = mainVM;
             initSourceItems();
@@ -209,6 +212,10 @@ namespace SortAlgGame.ViewModel
                 _game.P2.Time++;
                 P2Time = string.Format("{0:00}:{1:00}", _game.P2.Time / 60, _game.P2.Time % 60);
             }
+            if (_p1Fin && _p2Fin)
+            {
+                _loadingTimer++;
+            }
         }
 
         public void gameFin(Player player)
@@ -226,9 +233,10 @@ namespace SortAlgGame.ViewModel
             if (_p1Fin && _p2Fin)
             {
                 Waiting = Config.WAITING_RESULT;
+                App.Current.Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
                 _timer.Stop();
-                BaseViewModel resultVM = new ResultVM(this);
-                _mainVM.CurrentView = resultVM;
+                _resultVM = new ResultVM(this); 
+                _mainVM.CurrentView = _resultVM;
             }
 
         }

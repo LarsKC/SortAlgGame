@@ -23,7 +23,7 @@
         </Grid.RowDefinitions>
         <Image Grid.ColumnSpan="4" Grid.RowSpan="4" Source="/SortAlgGame;component/Resources/Background.png"/>
         <!--Animation-->
-        <StackPanel Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  DataContext="{Binding Path=AnimationVM}">
+        <StackPanel Grid.Column="1" Grid.RowSpan="2" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"  DataContext="{Binding Path=AnimationVM}">
             <ItemsControl Style="{StaticResource ResourceKey=AnimationDiagramm}"/>
             <ItemsControl Style="{StaticResource ResourceKey=AnimationDataValues}"/>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Left">
@@ -34,9 +34,7 @@
             </StackPanel>
         </StackPanel>
         <TextBlock Grid.Column="1" Grid.Row="2" Style="{StaticResource ResourceKey=InfoText}"/>
-        <s:SurfaceListBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Style="{StaticResource ResourceKey=CodeList}" ItemContainerStyle="{StaticResource ResourceKey=ListItem}">
-            
-        </s:SurfaceListBox>        
+        <s:SurfaceListBox Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Margin="10,0,0,10" DataContext="{Binding Path=AnimationVM}" Style="{StaticResource ResourceKey=CodeList}" ItemContainerStyle="{StaticResource ResourceKey=ListItem}"/>    
         <StackPanel Grid.Column="2" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
             <s:SurfaceButton Content="Hauptmenü" Style="{StaticResource ResourceKey=Button}" Name="btnHauptmenue" Command="{Binding DataContext.changeToHauptmenue, RelativeSource={RelativeSource AncestorType={x:Type root:SurfaceWindow1}}, Mode=OneWay}" />
         </StackPanel>

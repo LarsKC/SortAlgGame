@@ -13,8 +13,8 @@ namespace SortAlgGame
         public const int ANIMATION_TIMER = 500;
         public const string TEXT_RED = "Red", TEXT_NORMAL = "White";
         public const int RECT_MULTIPLIKATOR = 30;
-        public const string OUT_OF_RANGE_ERROR = "Zugriff außerhalb des Array-Index-Bereichs!";
-        public const string NOT_INIT_ERROR = "Eine Variable wurde nicht Initialisiert!";
+        public const string OUT_OF_RANGE_ERROR = "Zugriff außerhalb des Arrays!";
+        public const string NOT_INIT_ERROR = "Nicht initialisierte Variable!";
         public const string RUNTIME_NA = "nicht messbar";
         public const string MAX_RUNTIME_ERROR = "Laufzeit größer n²";
         public const string WAITING_Player = "WaitForPlayer";
@@ -26,7 +26,7 @@ namespace SortAlgGame
 
         public static int MAX_RUNTIME(int n)
         {
-            return n * n;
+            return n * n * 10;
         }
     }
 }

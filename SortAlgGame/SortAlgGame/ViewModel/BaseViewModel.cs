@@ -11,9 +11,9 @@ namespace SortAlgGame.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public void NotifyPropertyChanged(String info)
+        public void NotifyPropertyChanged(String property)
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(info));
+            PropertyChanged(this, new PropertyChangedEventArgs(property));
         }
 
     }

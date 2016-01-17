@@ -85,13 +85,5 @@ namespace SortAlgGame.ViewModel
                 return new RelayCommand(Action => CurrentView = new SortVM("InsertionSort"));
             }
         }
-
-        public ICommand changeToResult
-        {
-            get
-            {
-                return new RelayCommand(Action => CurrentView = new ResultVM(CurrentView as GameVM));
-            }
-        }
     }
 }

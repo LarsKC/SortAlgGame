@@ -21,13 +21,14 @@ namespace SortAlgGame.ViewModel
 {
     class AnimationVM : BaseViewModel
     {
-        protected ObservableCollection<Tuple<int, int, ObservableCollection<string>>> _animationData;
-        protected ObservableCollection<string> _dataSetValues;
-        protected ObservableCollection<Tuple<Statement, String>> _stms;
-        protected Programm _programm;
-        protected Tuple<Statement, DataSet> _curLogSet;
-        protected DispatcherTimer _timer;
-        protected int _maxAnimationHeight;
+        private ObservableCollection<Tuple<int, int, ObservableCollection<string>>> _animationData;
+        private ObservableCollection<string> _dataSetValues;
+        private ObservableCollection<Tuple<Statement, String>> _stms;
+        private Programm _programm;
+        private Tuple<Statement, DataSet> _curLogSet;
+        private DispatcherTimer _timer;
+        private int _maxAnimationHeight;
+
 
         public ICommand animationForward
         {

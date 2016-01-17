@@ -16,17 +16,10 @@ namespace SortAlgGame.Model.Statements.Allocations
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = programm.Stack.Peek();
-            if (actDataSet.I != Config.NOT_USED)
-            {
-                actDataSet.Min = actDataSet.I;
-                if (buildLog) updateLog();
-                return null;
-            }
-            else
-            {
-                return "i wurde nicht initialisiert!";
-            }
-
+            if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+            actDataSet.Min = actDataSet.I;
+            if (buildLog) updateLog();
+            return null;
         }
     }
 }

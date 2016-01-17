@@ -95,7 +95,7 @@ namespace SortAlgGame.ViewModel
             get { return _p2Time; }
         }
 
-        #endregion 
+        #endregion
 
         public ResultVM(GameVM gameVM)
         {
@@ -135,7 +135,5 @@ namespace SortAlgGame.ViewModel
                 _p2Status = "Unentschieden";
             }
         }
-
-
     }
 }
