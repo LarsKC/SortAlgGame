@@ -34,7 +34,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logForward(), predicate=> !_timer.IsEnabled);
+                return new RelayCommand(action => logForward());
             }
         }
 
@@ -42,7 +42,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logBackwards(), predicate => !_timer.IsEnabled);
+                return new RelayCommand(action => logBackwards());
             }
         }
 
@@ -50,7 +50,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logPlay(), predicate => !_timer.IsEnabled);
+                return new RelayCommand(action => logPlay());
             }
         }
 
@@ -58,7 +58,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logStop(), predicate => _timer.IsEnabled);
+                return new RelayCommand(action => logStop());
             }
         }
 

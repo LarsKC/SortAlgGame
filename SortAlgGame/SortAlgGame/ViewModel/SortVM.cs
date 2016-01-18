@@ -25,7 +25,18 @@ namespace SortAlgGame.ViewModel
         private ArrayGen _arrayGen;
         private int[] _testArray;
         private string _infoText;
+        private string _sortName;
         protected Programm _programm;
+
+        public string SortName
+        {
+            get { return _sortName; }
+            set
+            {
+                _sortName = value;
+                NotifyPropertyChanged("SortName");
+            }
+        }
 
         public AnimationVM AnimationVM
         {
@@ -53,21 +64,25 @@ namespace SortAlgGame.ViewModel
                 case "BubbleSort":
                     _programm.buildBubblesort();
                     _infoText = Config.INFO_BUBBLE;
+                    _sortName = sortAlg;
                     break;
                 case "InsertionSort":
                     _programm.buildInsertionsort();
                     _infoText = Config.INFO_INSERTION;
+                    _sortName = sortAlg;
                     break;
                 case "SelectionSort":
                     _programm.buildSelectionsort();
                     _infoText = Config.INFO_SELECTION;
+                    _sortName = sortAlg;
                     break;
                 case "QuickSort":
                     _programm.buildQuicksort();
                     _infoText = Config.INFO_QUICK;
+                    _sortName = sortAlg;
                     break;
                 default:
-                    //NOTHING
+                    //Nothing
                     break;
             }
         }

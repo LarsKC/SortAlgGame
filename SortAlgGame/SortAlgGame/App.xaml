@@ -20,6 +20,9 @@
             <DataTemplate DataType="{x:Type vm:ResultVM}">
                 <views:Result/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:LoadingScreenVM}">
+                <views:LoadingScreen/>
+            </DataTemplate>
             <Style x:Key="SurfaceListBoxGameStyle" TargetType="{x:Type s:SurfaceListBox}">
                 <Setter Property="BorderThickness" Value="5"/>
                 <Setter Property="BorderBrush" Value="White"/>
@@ -58,6 +61,7 @@
                 <Setter Property="FontFamily" Value="Arial"/>
             </Style>
             <Style x:Key="Button" TargetType="{x:Type s:SurfaceButton}">
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Width" Value="200"/>
                 <Setter Property="Height" Value="100"/>
                 <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -146,6 +150,7 @@
                 </Setter>
             </Style>
             <Style x:Key="BtnForward" TargetType="s:SurfaceButton">
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Command" Value="{Binding Path=animationForward, Mode=OneWay}"/>
@@ -156,6 +161,7 @@
                 </Setter>
             </Style>
             <Style x:Key="BtnBackward" TargetType="s:SurfaceButton">
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Command" Value="{Binding Path=animationBackward, Mode=OneWay}"/>
@@ -166,6 +172,7 @@
                 </Setter>
             </Style>
             <Style x:Key="BtnPause" TargetType="s:SurfaceButton">
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Command" Value="{Binding Path=animationStop, Mode=OneWay}"/>
@@ -176,6 +183,8 @@
                 </Setter>
             </Style>
             <Style x:Key="BtnPlay" TargetType="s:SurfaceButton">
+                <Setter Property="Stylus.IsPressAndHoldEnabled" Value="True"/>
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="Width" Value="50"/>
                 <Setter Property="Height" Value="50"/>
                 <Setter Property="Command" Value="{Binding Path=animationStart, Mode=OneWay}"/>

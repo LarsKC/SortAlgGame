@@ -92,6 +92,7 @@
     <Compile Include="Model\Statements\MethodCalls\SwapAminWithAi.cs" />
     <Compile Include="ViewModel\AnimationVM.cs" />
     <Compile Include="ViewModel\GameVM.cs" />
+    <Compile Include="ViewModel\LoadingScreenVM.cs" />
     <Compile Include="ViewModel\ResultVM.cs" />
     <Compile Include="ViewModel\SortVM.cs" />
     <Compile Include="Views\Erklaerung.xaml.cs">
@@ -99,6 +100,9 @@
     </Compile>
     <Compile Include="Views\GameV.xaml.cs">
       <DependentUpon>GameV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LoadingScreen.xaml.cs">
+      <DependentUpon>LoadingScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Result.xaml.cs">
       <DependentUpon>Result.xaml</DependentUpon>
@@ -139,6 +143,10 @@
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\LoadingScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Result.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -100,3 +100,5 @@ C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.baml
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Result.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.g.cs
 C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\Erklaerung.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\LoadingScreen.baml
+C:\Users\Lars\Desktop\SortAlgGame\SortAlgGame\obj\Debug\Views\LoadingScreen.g.cs

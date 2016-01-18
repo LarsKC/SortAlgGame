@@ -31,9 +31,8 @@ namespace SortAlgGame.ViewModel
         private ObservableCollection<Statement> _targetItemsP2;
         private Game _game;
         private MainViewModel _mainVM;
-        private ResultVM _resultVM;
-        private DispatcherTimer _timer;
-        private int _loadingTimer;
+        private DispatcherTimer _gameTimer;
+        private DispatcherTimer _loadingTimer;
         private bool _p1Fin;
         private bool _p2Fin;
         private string _p1Time;
@@ -47,7 +46,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.P1), Predicate => !_p1Fin);
+                return new RelayCommand(Action => gameFin(_game.P1));
             }
         }
 
@@ -55,8 +54,13 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.P2), Predicate => !_p2Fin);
+                return new RelayCommand(Action => gameFin(_game.P2));
             }
+        }
+
+        public MainViewModel MainVM
+        {
+            get { return _mainVM; }
         }
 
         public ObservableCollection<Statement> SourceItemsP1
@@ -169,38 +173,27 @@ namespace SortAlgGame.ViewModel
             _p1LoadingVisible = "Hidden";
             _p2LoadingVisible = "Hidden";
             _waiting = Config.WAITING_Player;
-            _loadingTimer = 0;
             _game = new Game();
             _mainVM = mainVM;
             initSourceItems();
             initTargetItems();
             _p1Time = "00:00";
             _p2Time = "00:00";
-            _timer = new DispatcherTimer();
-            _timer.Interval = new TimeSpan(0, 0, 1);
-            _timer.Tick += timeEvent;
-            _timer.Start();
+            _gameTimer = new DispatcherTimer();
+            _gameTimer.Interval = new TimeSpan(0, 0, 1);
+            _gameTimer.Tick += gameTimeEvent;
+            _gameTimer.Start();
+            _loadingTimer = new DispatcherTimer();
+            _loadingTimer.Interval = new TimeSpan(0, 0, 1);
+            _loadingTimer.Tick += loadingTimeEvent;
         }
 
         public void stopTimer()
         {
-            _timer.Stop();
+            _gameTimer.Stop();
         }
 
-        public bool playerFin(string sourceTag)
-        {
-            if ((sourceTag == "targetListP1" || sourceTag == "sourceListP1") && _p1Fin)
-            {
-                return true;
-            }
-            if ((sourceTag == "targetListP2" || sourceTag == "sourceListP2") && _p2Fin)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public void timeEvent(object sender, EventArgs e)
+        public void gameTimeEvent(object sender, EventArgs e)
         {
             if (!_p1Fin)
             {
@@ -212,10 +205,13 @@ namespace SortAlgGame.ViewModel
                 _game.P2.Time++;
                 P2Time = string.Format("{0:00}:{1:00}", _game.P2.Time / 60, _game.P2.Time % 60);
             }
-            if (_p1Fin && _p2Fin)
-            {
-                _loadingTimer++;
-            }
+        }
+
+        public void loadingTimeEvent(object sender, EventArgs e)
+        {
+            ResultVM resultVM = new ResultVM(this);
+            _mainVM.CurrentView = resultVM;
+            _loadingTimer.Stop();
         }
 
         public void gameFin(Player player)
@@ -233,10 +229,8 @@ namespace SortAlgGame.ViewModel
             if (_p1Fin && _p2Fin)
             {
                 Waiting = Config.WAITING_RESULT;
-                App.Current.Dispatcher.Invoke(new Action(() => { }), DispatcherPriority.ContextIdle, null);
-                _timer.Stop();
-                _resultVM = new ResultVM(this); 
-                _mainVM.CurrentView = _resultVM;
+                _gameTimer.Stop();
+                _loadingTimer.Start();
             }
 
         }

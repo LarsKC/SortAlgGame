@@ -9,7 +9,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" d:DesignWidth="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}">
     <UserControl.Resources>
-
     </UserControl.Resources>
     <Grid x:Name="mainGrid" Width="{DynamicResource {x:Static SystemParameters.PrimaryScreenWidthKey}}" Height="{DynamicResource {x:Static SystemParameters.PrimaryScreenHeightKey}}" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
@@ -35,12 +34,12 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Label  Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="Spieler 2" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="40" Style="{StaticResource ResourceKey=Label}"/>
+            <Label  Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="{Binding Path=P2Status}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="40" Style="{StaticResource ResourceKey=Label}"/>
             <!--Animation-->
             <StackPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"  DataContext="{Binding Path=P2Animation}" Margin="0,0,0,10">
                     <ItemsControl Style="{StaticResource ResourceKey=AnimationDiagramm}"/>
@@ -53,39 +52,39 @@
                 <s:SurfaceButton Style="{StaticResource ResourceKey=BtnPause}"/>
             </StackPanel>
             <!--Tabelle-->
-            <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <StackPanel Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Auswertung" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="30" VerticalContentAlignment="Center"/>
                 <DataGrid ItemsSource="{Binding Path=P2StatCol}" Style="{StaticResource ResourceKey=DataGridStyle}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Länge" IsReadOnly="True" Width="15*">
+                        <DataGridTemplateColumn Header=" Länge " IsReadOnly="True">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item1}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Fehler" Width="35*">
+                        <DataGridTemplateColumn Header=" Fehler " MinWidth="200">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item2}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Laufzeit" Width="20*">
+                        <DataGridTemplateColumn Header=" Laufzeit ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item3}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Sortiert" Width="15*">
+                        <DataGridTemplateColumn Header=" Sortiert ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item4}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Punkte" Width="15*">
+                        <DataGridTemplateColumn Header=" Pkt. ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item5}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
@@ -121,12 +120,12 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
-                <RowDefinition Height="6*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="0.5*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Label  Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="Spieler 1" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="40" Style="{StaticResource ResourceKey=Label}"/>
+            <Label  Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="3" Content="{Binding Path=P1Status}" HorizontalAlignment="Center"  VerticalAlignment="Center" FontSize="40" Style="{StaticResource ResourceKey=Label}"/>
             <!--Animation-->
             <StackPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center"  DataContext="{Binding Path=P1Animation}" Margin="0,0,0,10">
                 <ItemsControl Style="{StaticResource ResourceKey=AnimationDiagramm}"/>
@@ -139,39 +138,39 @@
                 <s:SurfaceButton Style="{StaticResource ResourceKey=BtnPause}"/>
             </StackPanel>
             <!--Tabelle-->
-            <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Label Content="Auswertung" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="30" VerticalContentAlignment="Center" Style="{StaticResource ResourceKey=Label}"/>
                 <DataGrid ItemsSource="{Binding Path=P1StatCol}" Style="{StaticResource ResourceKey=DataGridStyle}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Länge" IsReadOnly="True" Width="15*">
+                        <DataGridTemplateColumn Header=" Länge ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item1}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Fehler" Width="35*">
+                        <DataGridTemplateColumn Header=" Fehler " MinWidth="200">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item2}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Laufzeit" Width="20*">
+                        <DataGridTemplateColumn Header=" Laufzeit ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item3}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Sortiert" Width="15*">
+                        <DataGridTemplateColumn Header=" Sortiert ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item4}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="Punkte" Width="15*">
+                        <DataGridTemplateColumn Header=" Ptkt. ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item5}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
