@@ -8,20 +8,17 @@
     >
     <Application.Resources>
         <ResourceDictionary>
-            <DataTemplate DataType="{x:Type vm:HauptmenueViewModel}">
-                <views:Hauptmenue />
+            <DataTemplate DataType="{x:Type vm:HauptmenueVM}">
+                <views:HauptmenueV />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:GameVM}">
                 <views:GameV />
             </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:SortVM}">
-                <views:Erklaerung/>
+            <DataTemplate DataType="{x:Type vm:ErklaerungVM}">
+                <views:ErklaerungV/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:ResultVM}">
-                <views:Result/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:LoadingScreenVM}">
-                <views:LoadingScreen/>
+                <views:ResultV/>
             </DataTemplate>
             <Style x:Key="SurfaceListBoxGameStyle" TargetType="{x:Type s:SurfaceListBox}">
                 <Setter Property="BorderThickness" Value="5"/>

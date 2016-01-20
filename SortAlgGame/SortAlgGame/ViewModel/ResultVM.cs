@@ -9,16 +9,12 @@ using System.Linq;
 using System.Text;
 using SortAlgGame.Model;
 using SortAlgGame.Model.Statements;
-using SortAlgGame.Model.Statements.Loops;
-using SortAlgGame.Model.Statements.Allocations;
-using SortAlgGame.Model.Statements.Conditions;
-using SortAlgGame.Model.Statements.MethodCalls;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 
 namespace SortAlgGame.ViewModel
 {
-    class ResultVM : BaseViewModel
+    class ResultVM : NotifyChangeBase
     {
         private Game _game;
         private ObservableCollection<Tuple<int, string, string, string, int>> _p1StatCol;

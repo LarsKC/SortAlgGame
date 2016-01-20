@@ -127,40 +127,44 @@ namespace SortAlgGame.Views
         {
             if (sender is SurfaceListBox && (sender as SurfaceListBox).Tag != null)
             {
-                FrameworkElement targetItem = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
-
-                switch ((sender as SurfaceListBox).Tag.ToString())
+                FrameworkElement cursorSourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
+                if ((this.DataContext as GameVM).inSourceList((cursorSourceList as SurfaceListBox).ItemsSource, e.Cursor.Data))
                 {
-                    case "sourceListP1":
-                    case "sourceListP2":
-                        (this.DataContext as GameVM).addToSourceList(e.Cursor.Data, (sender as SurfaceListBox).ItemsSource);
-                        break;
-                    case "targetListP1":
-                    case "targetListP2":
-                        FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
-                        if(sourceList != null && sourceList.Tag != null)
-                        {
-                            switch (sourceList.Tag.ToString())
+                    FrameworkElement targetItem = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
+                    switch ((sender as SurfaceListBox).Tag.ToString())
+                    {
+                        case "sourceListP1":
+                        case "sourceListP2":
+                            (this.DataContext as GameVM).addToSourceList(e.Cursor.Data, (sender as SurfaceListBox).ItemsSource);
+                            break;
+                        case "targetListP1":
+                        case "targetListP2":
+                            FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
+                            if (sourceList != null && sourceList.Tag != null)
                             {
-                                case "sourceListP1":
-                                case "sourceListP2":
-                                    (this.DataContext as GameVM).addToTargetList(e.Cursor.Data, (targetItem as SurfaceListBoxItem).DataContext, (sourceList as SurfaceListBox).ItemsSource);
-                                    break;
-                                case "targetListP1":
-                                case "targetListP2":
-                                    (this.DataContext as GameVM).sortStm(e.Cursor.Data, targetItem.DataContext);
-                                    break;
-                                default:
-                                    //Nothing
-                                    break;
+                                switch (sourceList.Tag.ToString())
+                                {
+                                    case "sourceListP1":
+                                    case "sourceListP2":
+                                        (this.DataContext as GameVM).addToTargetList(e.Cursor.Data, (targetItem as SurfaceListBoxItem).DataContext, (sourceList as SurfaceListBox).ItemsSource);
+                                        break;
+                                    case "targetListP1":
+                                    case "targetListP2":
+                                        (this.DataContext as GameVM).sortStm(e.Cursor.Data, targetItem.DataContext);
+                                        break;
+                                    default:
+                                        //Nothing
+                                        break;
+                                }
                             }
-                        }
-                        break;
-                    default:
-                        //Nothing
-                        break;
+                            break;
+                        default:
+                            //Nothing
+                            break;
+                    }
                 }
+
             }
-        } 
+        }
     }
 }

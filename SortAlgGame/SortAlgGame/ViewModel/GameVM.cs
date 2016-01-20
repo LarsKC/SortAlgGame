@@ -9,10 +9,6 @@ using System.Linq;
 using System.Text;
 using SortAlgGame.Model;
 using SortAlgGame.Model.Statements;
-using SortAlgGame.Model.Statements.Loops;
-using SortAlgGame.Model.Statements.Allocations;
-using SortAlgGame.Model.Statements.Conditions;
-using SortAlgGame.Model.Statements.MethodCalls;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Threading;
@@ -22,7 +18,7 @@ using System.Windows.Threading;
 
 namespace SortAlgGame.ViewModel
 {
-    class GameVM : BaseViewModel
+    class GameVM : NotifyChangeBase
     {
 
         private ObservableCollection<Statement> _sourceItemsP1;
@@ -30,7 +26,7 @@ namespace SortAlgGame.ViewModel
         private ObservableCollection<Statement> _sourceItemsP2;
         private ObservableCollection<Statement> _targetItemsP2;
         private Game _game;
-        private MainViewModel _mainVM;
+        private MainVM _mainVM;
         private DispatcherTimer _gameTimer;
         private DispatcherTimer _loadingTimer;
         private bool _p1Fin;
@@ -46,7 +42,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.P1));
+                return new Command(Action => gameFin(_game.P1));
             }
         }
 
@@ -54,11 +50,11 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(Action => gameFin(_game.P2));
+                return new Command(Action => gameFin(_game.P2));
             }
         }
 
-        public MainViewModel MainVM
+        public MainVM MainVM
         {
             get { return _mainVM; }
         }
@@ -162,7 +158,7 @@ namespace SortAlgGame.ViewModel
             get { return _game; }
         }
 
-        public GameVM( MainViewModel mainVM)
+        public GameVM( MainVM mainVM)
         {
             _sourceItemsP1 = new ObservableCollection<Statement>();
             _targetItemsP1 = new ObservableCollection<Statement>();
@@ -244,38 +240,38 @@ namespace SortAlgGame.ViewModel
         public void initPlayerWise(ObservableCollection<Statement> list, Player player)
         {
             //Allocations
-            list.Add(new AllocALength(player.Programm, null));
-            list.Add(new AllocIToJ(player.Programm, null));
-            list.Add(new AllocIToMin(player.Programm, null));
-            list.Add(new AllocJToMin(player.Programm, null));
-            list.Add(new AllocLeft(player.Programm, null));
-            list.Add(new AllocPivot(player.Programm, null));
-            list.Add(new AllocRight(player.Programm, null));
-            list.Add(new DecJ(player.Programm, null));
-            list.Add(new IncI(player.Programm, null));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_ALENGHT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_I_TO_J));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_I_TO_MIN));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_J_TO_MIN));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_LEFT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_PIVOT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.ALLOC_RIGHT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.DEC_J));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.INC_I));
             //Conditions
-            list.Add(new IfAiGreaterAiInc(player.Programm, null));
-            list.Add(new IfAjLessAmin(player.Programm, null));
-            list.Add(new IfILessEqualsJ(player.Programm, null));
-            list.Add(new IfILessRight(player.Programm, null));
-            list.Add(new IfINotEqualsMin(player.Programm, null));
-            list.Add(new IfLeftLessJ(player.Programm, null));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_AI_GREATER_AI_INC));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_AJ_LESS_AMIN));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_I_LESS_EQUALS_J));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_I_LESS_RIGHT));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_I_NOTEQUALS_MIN));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.IF_LEFT_LESS_J));
             //Loops
-            list.Add(new ForInBubble(player.Programm, null));
-            list.Add(new ForInSelection(player.Programm, null));
-            list.Add(new ForInsertion(player.Programm, null));
-            list.Add(new ForOutBubble(player.Programm, null));
-            list.Add(new WhileAiLessPivot(player.Programm, null));
-            list.Add(new WhileAjGreaterPivot(player.Programm, null));
-            list.Add(new WhileILessEqualsJ(player.Programm, null));
-            list.Add(new WhileJGreaterNull(player.Programm, null));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.FOR_IN_BUBBLE));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.FOR_IN_SELECTION));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.FOR_INSERTION));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.FOR_OUT_BUBBLE));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.WHILE_AI_LESS_PIVOT));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.WHILE_AJ_GREATER_PIVOT));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.WHILE_I_LESS_EQUALS_J));
+            list.Add(new ListStm(player.Programm, null, Config.EXECUTE.WHILE_J_GREATER_NULL));
             //MethodCalls
-            list.Add(new CallSortLeft(player.Programm, null));
-            list.Add(new CallSortRight(player.Programm, null));
-            list.Add(new SwapAiWithAiInc(player.Programm, null));
-            list.Add(new SwapAiWithAj(player.Programm, null));
-            list.Add(new SwapAjWithAjDec(player.Programm, null));
-            list.Add(new SwapAminWithAi(player.Programm, null));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.CALL_SORT_LEFT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.CALL_SORT_RIGHT));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.SWAP_AI_WITH_AI_INC));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.SWAP_AI_WITH_AJ));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.SWAP_AJ_WITH_AJ_DEC));
+            list.Add(new Statement(player.Programm, null, Config.EXECUTE.SWAP_AMIN_WITH_AI));
         }
 
         public void initTargetItems()
@@ -317,7 +313,7 @@ namespace SortAlgGame.ViewModel
                         case "targetListP1":
                         case "targetListP2":
                             //Sortieren der TargetListe
-                            if(!(targetData is BaseStatement) && targetData is Statement)
+                            if(!((targetData as Statement).Brick == Config.EXECUTE.BASE_STM) && targetData is Statement)
                             {
                                 if((cursorData is ListStm && !(cursorData as ListStm).stmListContains(targetData as Statement, cursorData as ListStm)))
                                 {
@@ -340,7 +336,7 @@ namespace SortAlgGame.ViewModel
                     break;
                 case "sourceListP1":
                 case "sourceListP2":
-                    if((targetTag == "targetListP1" || targetTag == "targetListP2") && !(targetData is BaseStatement))
+                    if((targetTag == "targetListP1" || targetTag == "targetListP2") && !((targetData as Statement).Brick == Config.EXECUTE.BASE_STM))
                     {
                         return true;
                     }
@@ -354,9 +350,21 @@ namespace SortAlgGame.ViewModel
 
         public bool dragableObject(Object cursorData)
         {
-            if (cursorData is Statement && !( cursorData is LoopEnd || cursorData is BaseStatement))
+            if (cursorData is Statement && !( (cursorData as Statement).Brick == Config.EXECUTE.LOOP_END || (cursorData as Statement).Brick == Config.EXECUTE.BASE_STM))
             {
                 return true;
+            }
+            return false;
+        }
+
+        public bool inSourceList(Object sourceList, Object cursorData)
+        {
+            if(sourceList is ObservableCollection<Statement> && cursorData is Statement)
+            {
+                if((sourceList as ObservableCollection<Statement>).Contains(cursorData as Statement))
+                {
+                    return true;
+                }
             }
             return false;
         }

@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using SortAlgGame.Model.Statements;
-using SortAlgGame.Model.Statements.Loops;
-using SortAlgGame.Model.Statements.Allocations;
-using SortAlgGame.Model.Statements.Conditions;
-using SortAlgGame.Model.Statements.MethodCalls;
 
 namespace SortAlgGame.Model
 {
@@ -59,7 +55,7 @@ namespace SortAlgGame.Model
         public Programm()
         {
             _actStats = null;
-            _stm = new BaseStatement(this, null);
+            _stm = new ListStm(this, null, Config.EXECUTE.BASE_STM);
             _stack = new Stack<DataSet>();
             _log = new LinkedList<Tuple<Statement, DataSet>>();
             _actRuntime = 0;
@@ -125,69 +121,69 @@ namespace SortAlgGame.Model
 
         public void buildBubblesort()
         {
-            _stm.addBeforeStm(null, new ForOutBubble(this, _stm));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.FOR_OUT_BUBBLE));
             ListStm tmp = _stm.StmList.First.Value as ListStm;
-            tmp.addBeforeStm(null, new ForInBubble(this, tmp));
+            tmp.addBeforeStm(null, new ListStm(this, tmp, Config.EXECUTE.FOR_IN_BUBBLE));
             tmp = tmp.StmList.First.Value as ListStm;
-            tmp.addBeforeStm(null, new IfAiGreaterAiInc(this, tmp));
+            tmp.addBeforeStm(null, new ListStm(this, tmp, Config.EXECUTE.IF_AI_GREATER_AI_INC));
             tmp = tmp.StmList.First.Value as ListStm;
-            tmp.addBeforeStm(null, new SwapAiWithAiInc(this, tmp));
+            tmp.addBeforeStm(null, new Statement(this, tmp, Config.EXECUTE.SWAP_AI_WITH_AI_INC));
         }
 
 
         public void buildQuicksort()
         {
-            _stm.addBeforeStm(null, new AllocLeft(this, _stm));
-            _stm.addBeforeStm(null, new AllocRight(this, _stm));
-            _stm.addBeforeStm(null, new AllocPivot(this, _stm));
-            _stm.addBeforeStm(null, new WhileILessEqualsJ(this, _stm));
+            _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_LEFT));
+            _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_RIGHT));
+            _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_PIVOT));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.WHILE_I_LESS_EQUALS_J));
             ListStm tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new WhileAiLessPivot(this, tmp1));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.WHILE_AI_LESS_PIVOT));
             ListStm tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new IncI(this, tmp2));
-            tmp1.addBeforeStm(null, new WhileAjGreaterPivot(this, tmp1));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.INC_I));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.WHILE_AJ_GREATER_PIVOT));
             tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new DecJ(this, tmp2));
-            tmp1.addBeforeStm(null, new IfILessEqualsJ(this, tmp1));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.DEC_J));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.IF_I_LESS_EQUALS_J));
             tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new SwapAiWithAj(this, tmp2));
-            tmp2.addBeforeStm(null, new IncI(this, tmp2));
-            tmp2.addBeforeStm(null, new DecJ(this, tmp2));
-            _stm.addBeforeStm(null, new IfLeftLessJ(this, _stm));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.SWAP_AI_WITH_AJ));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.INC_I));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.DEC_J));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.IF_LEFT_LESS_J));
             tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new CallSortLeft(this, tmp1));
-            _stm.addBeforeStm(null, new IfILessRight(this, _stm));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.CALL_SORT_LEFT));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.IF_I_LESS_RIGHT));
             tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new CallSortRight(this, tmp1));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.CALL_SORT_RIGHT));
             printExecute();
         }
 
         public void buildSelectionsort()
         {
-            _stm.addBeforeStm(null, new AllocALength(this, _stm));
-            _stm.addBeforeStm(null, new ForInBubble(this, _stm));
+            _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_ALENGHT));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.FOR_IN_BUBBLE));
             ListStm tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new AllocIToMin(this, tmp1));
-            tmp1.addBeforeStm(null, new ForInSelection(this, tmp1));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.ALLOC_I_TO_MIN));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.FOR_IN_SELECTION));
             ListStm tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new IfAjLessAmin(this, tmp2));
+            tmp2.addBeforeStm(null, new ListStm(this, tmp2, Config.EXECUTE.IF_AJ_LESS_AMIN));
             tmp2 = tmp2.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new AllocJToMin(this, tmp2));
-            tmp1.addBeforeStm(null, new IfINotEqualsMin(this, tmp1));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.ALLOC_J_TO_MIN));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.IF_I_NOTEQUALS_MIN));
             tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp2.addBeforeStm(null, new SwapAminWithAi(this, tmp2));
+            tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.SWAP_AMIN_WITH_AI));
         }
 
         public void buildInsertionsort()
         {
-            _stm.addBeforeStm(null, new AllocALength(this, _stm));
-            _stm.addBeforeStm(null, new ForInsertion(this, _stm));
+            _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_ALENGHT));
+            _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.FOR_INSERTION));
             ListStm tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new AllocIToJ(this, tmp1));
-            tmp1.addBeforeStm(null, new WhileJGreaterNull(this, tmp1));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.ALLOC_I_TO_J));
+            tmp1.addBeforeStm(null, new ListStm(this, tmp1, Config.EXECUTE.WHILE_J_GREATER_NULL));
             tmp1 = tmp1.StmList.Last.Previous.Value as ListStm;
-            tmp1.addBeforeStm(null, new SwapAjWithAjDec(this, tmp1));
-            tmp1.addBeforeStm(null, new DecJ(this, tmp1));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.SWAP_AJ_WITH_AJ_DEC));
+            tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.DEC_J));
         }
 
         public void printExecute()

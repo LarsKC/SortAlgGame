@@ -60,54 +60,21 @@
     <Compile Include="Model\ArrayGen.cs" />
     <Compile Include="Model\Player.cs" />
     <Compile Include="Model\Programm.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocALength.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocIToJ.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocIToMin.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocJToMin.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocLeft.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocPivot.cs" />
-    <Compile Include="Model\Statements\Allocations\AllocRight.cs" />
-    <Compile Include="Model\Statements\Allocations\DecJ.cs" />
-    <Compile Include="Model\Statements\Allocations\IncI.cs" />
-    <Compile Include="Model\Statements\BaseStatement.cs" />
-    <Compile Include="Model\Statements\Conditions\IfAiGreaterAiInc.cs" />
-    <Compile Include="Model\Statements\Conditions\IfAjLessAmin.cs" />
-    <Compile Include="Model\Statements\Conditions\IfILessEqualsJ.cs" />
-    <Compile Include="Model\Statements\Conditions\IfILessRight.cs" />
-    <Compile Include="Model\Statements\Conditions\IfINotEqualsMin.cs" />
-    <Compile Include="Model\Statements\Conditions\IfLeftLessJ.cs" />
     <Compile Include="Model\Statements\ListStm.cs" />
-    <Compile Include="Model\Statements\Loops\ForInSelection.cs" />
-    <Compile Include="Model\Statements\Loops\ForInsertion.cs" />
-    <Compile Include="Model\Statements\LoopEnd.cs" />
-    <Compile Include="Model\Statements\Loops\WhileAiLessPivot.cs" />
-    <Compile Include="Model\Statements\Loops\WhileAjGreaterPivot.cs" />
-    <Compile Include="Model\Statements\Loops\WhileILessEqualsJ.cs" />
-    <Compile Include="Model\Statements\Loops\WhileJGreaterNull.cs" />
-    <Compile Include="Model\Statements\MethodCalls\CallSortLeft.cs" />
-    <Compile Include="Model\Statements\MethodCalls\CallSortRight.cs" />
-    <Compile Include="Model\Statements\MethodCalls\SwapAiWithAiInc.cs" />
-    <Compile Include="Model\Statements\MethodCalls\SwapAiWithAj.cs" />
-    <Compile Include="Model\Statements\MethodCalls\SwapAjWithAjDec.cs" />
-    <Compile Include="Model\Statements\MethodCalls\SwapAminWithAi.cs" />
     <Compile Include="ViewModel\AnimationVM.cs" />
     <Compile Include="ViewModel\GameVM.cs" />
-    <Compile Include="ViewModel\LoadingScreenVM.cs" />
     <Compile Include="ViewModel\ResultVM.cs" />
-    <Compile Include="ViewModel\SortVM.cs" />
-    <Compile Include="Views\Erklaerung.xaml.cs">
-      <DependentUpon>Erklaerung.xaml</DependentUpon>
+    <Compile Include="ViewModel\ErklaerungVM.cs" />
+    <Compile Include="Views\ErklaerungV.xaml.cs">
+      <DependentUpon>ErklaerungV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GameV.xaml.cs">
       <DependentUpon>GameV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\LoadingScreen.xaml.cs">
-      <DependentUpon>LoadingScreen.xaml</DependentUpon>
+    <Compile Include="Views\ResultV.xaml.cs">
+      <DependentUpon>ResultV.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Result.xaml.cs">
-      <DependentUpon>Result.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Views\Erklaerung.xaml">
+    <Page Include="Views\ErklaerungV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -115,7 +82,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Hauptmenue.xaml">
+    <Page Include="Views\HauptmenueV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -127,27 +94,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel\BaseViewModel.cs" />
-    <Compile Include="ViewModel\HauptmenueViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="Views\Hauptmenue.xaml.cs">
-      <DependentUpon>Hauptmenue.xaml</DependentUpon>
+    <Compile Include="ViewModel\NotifyChangeBase.cs" />
+    <Compile Include="ViewModel\HauptmenueVM.cs" />
+    <Compile Include="ViewModel\MainVM.cs" />
+    <Compile Include="ViewModel\Command.cs" />
+    <Compile Include="Views\HauptmenueV.xaml.cs">
+      <DependentUpon>HauptmenueV.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\DataSet.cs" />
     <Compile Include="Model\Game.cs" />
-    <Compile Include="Model\Statements\Loops\ForInBubble.cs" />
-    <Compile Include="Model\Statements\Loops\ForOutBubble.cs" />
     <Compile Include="Model\Statements\Statement.cs" />
     <Compile Include="SurfaceWindow1.xaml.cs">
       <DependentUpon>SurfaceWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\LoadingScreen.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Result.xaml">
+    <Page Include="Views\ResultV.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

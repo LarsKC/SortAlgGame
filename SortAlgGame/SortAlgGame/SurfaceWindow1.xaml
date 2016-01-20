@@ -5,7 +5,7 @@
     xmlns:vm="clr-namespace:SortAlgGame.ViewModel"
     Title="SortAlgGame" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="372" d:DesignWidth="431" SnapsToDevicePixels="True" WindowStyle="None">
     <Window.DataContext>
-        <vm:MainViewModel />
+        <vm:MainVM />
     </Window.DataContext>
     <ContentControl Content="{Binding CurrentView}" />
 </s:SurfaceWindow>

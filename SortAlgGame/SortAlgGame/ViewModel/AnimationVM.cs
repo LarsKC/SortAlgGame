@@ -9,17 +9,13 @@ using System.Linq;
 using System.Text;
 using SortAlgGame.Model;
 using SortAlgGame.Model.Statements;
-using SortAlgGame.Model.Statements.Loops;
-using SortAlgGame.Model.Statements.Allocations;
-using SortAlgGame.Model.Statements.Conditions;
-using SortAlgGame.Model.Statements.MethodCalls;
 using Microsoft.Surface.Presentation;
 using Microsoft.Surface.Presentation.Controls;
 using System.Windows.Threading;
 
 namespace SortAlgGame.ViewModel
 {
-    class AnimationVM : BaseViewModel
+    class AnimationVM : NotifyChangeBase
     {
         private ObservableCollection<Tuple<int, int, ObservableCollection<string>>> _animationData;
         private ObservableCollection<string> _dataSetValues;
@@ -34,7 +30,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logForward());
+                return new Command(action => logForward());
             }
         }
 
@@ -42,7 +38,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logBackwards());
+                return new Command(action => logBackwards());
             }
         }
 
@@ -50,7 +46,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logPlay());
+                return new Command(action => logPlay());
             }
         }
 
@@ -58,7 +54,7 @@ namespace SortAlgGame.ViewModel
         {
             get
             {
-                return new RelayCommand(action => logStop());
+                return new Command(action => logStop());
             }
         }
 
@@ -112,7 +108,7 @@ namespace SortAlgGame.ViewModel
             _maxAnimationHeight = Config.RUNS[0] * Config.RECT_MULTIPLIKATOR + 80;
             _timer = new DispatcherTimer();
             _timer.Interval = new TimeSpan(0, 0, 0 , 0, Config.ANIMATION_TIMER);
-            _timer.Tick += new EventHandler(dispatcherAnimationTimer);
+            _timer.Tick += new EventHandler(animationEvent);
             _programm = prg;
             _curLogSet = _programm.Log.First.Value;
             _animationData = new ObservableCollection<Tuple<int,int,ObservableCollection<string>>>();
@@ -145,7 +141,7 @@ namespace SortAlgGame.ViewModel
             _timer.Stop();
         }
 
-        private void dispatcherAnimationTimer(object sender, EventArgs e)
+        private void animationEvent(object sender, EventArgs e)
         {
             logForward();
         }

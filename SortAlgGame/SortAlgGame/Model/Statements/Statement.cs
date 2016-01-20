@@ -5,13 +5,14 @@ using System.Text;
 
 namespace SortAlgGame.Model.Statements
 {
-    abstract class Statement
+    class Statement
     {
         //Var
         protected int indent = 0;
         protected string content;
         protected Programm programm;
         protected ListStm parent;
+        protected Config.EXECUTE brick;
         //Accessore
         public virtual int Indent
         {
@@ -51,18 +52,188 @@ namespace SortAlgGame.Model.Statements
         {
             get { return programm; }
         }
+
+        public Config.EXECUTE Brick
+        {
+            get { return brick; }
+        }
         //Konstruktoren
-        public Statement(Programm player, ListStm parent)
+        public Statement(Programm player, ListStm parent, Config.EXECUTE brick)
         {
             this.programm = player;
             this.parent = parent;
+            this.brick = brick;
+            this.content = switchContent(brick);
         }
         //Methods
-        public abstract string execute(bool buildLog);
-
         public void updateLog()
         {
             programm.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(programm.Stack.Peek())));
+        }
+
+        protected virtual string switchContent(Config.EXECUTE brick)
+        {
+            switch (brick)
+            {
+                case Config.EXECUTE.ALLOC_ALENGHT:
+                    return "n = right +1;";
+                case Config.EXECUTE.ALLOC_I_TO_J:
+                    return "j = i;";
+                case Config.EXECUTE.ALLOC_I_TO_MIN:
+                    return "min = i;";
+                case Config.EXECUTE.ALLOC_J_TO_MIN:
+                    return "min = j;";
+                case Config.EXECUTE.ALLOC_LEFT:
+                    return "i = left";
+                case Config.EXECUTE.ALLOC_PIVOT:
+                    return "pivot = a[(int)((left+right)/2)];";
+                case Config.EXECUTE.ALLOC_RIGHT:
+                    return "j = right;";
+                case Config.EXECUTE.CALL_SORT_LEFT:
+                    return "sort(a, left, J);";
+                case Config.EXECUTE.CALL_SORT_RIGHT:
+                    return "sort (a, i, right);";
+                case Config.EXECUTE.DEC_J:
+                    return "j--;";
+                case Config.EXECUTE.INC_I:
+                    return "i++;";
+                case Config.EXECUTE.LOOP_END:
+                    return "}";
+                case Config.EXECUTE.SWAP_AI_WITH_AI_INC:
+                    return "swap(a, i, i+1);";
+                case Config.EXECUTE.SWAP_AI_WITH_AJ:
+                    return "swap(a, i, j);";
+                case Config.EXECUTE.SWAP_AJ_WITH_AJ_DEC:
+                    return "swap (a, j, j-1);";
+                case Config.EXECUTE.SWAP_AMIN_WITH_AI:
+                    return "swap (a, min, i);";
+                default:
+                    return null;
+            }
+        }
+
+        public virtual string execute(bool buildLog)
+        {
+            DataSet actDataSet = programm.Stack.Peek();
+            switch (brick)
+            {
+                case Config.EXECUTE.ALLOC_ALENGHT:
+                    actDataSet.N = actDataSet.Right + 1;
+                    break;
+                case Config.EXECUTE.ALLOC_I_TO_J:
+                    if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    actDataSet.J = actDataSet.I;
+                    break;
+                case Config.EXECUTE.ALLOC_I_TO_MIN:
+                    if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    actDataSet.Min = actDataSet.I;
+                    break;
+                case Config.EXECUTE.ALLOC_J_TO_MIN:
+                    if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    actDataSet.Min = actDataSet.J;
+                    break;
+                case Config.EXECUTE.ALLOC_LEFT:
+                    actDataSet.I = actDataSet.Left;
+                    break;
+                case Config.EXECUTE.ALLOC_PIVOT:
+                    actDataSet.Pivot = actDataSet.A[(int)((actDataSet.Left + actDataSet.Right) / 2)];
+                    break;
+                case Config.EXECUTE.ALLOC_RIGHT:
+                    actDataSet.J = actDataSet.Right;
+                    break;
+                case Config.EXECUTE.CALL_SORT_LEFT:
+                    if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    DataSet newDataSetLeft = new DataSet(actDataSet.A);
+                    newDataSetLeft.Left = actDataSet.Left;
+                    newDataSetLeft.Right = actDataSet.J;
+                    programm.Stack.Push(newDataSetLeft);
+                    if (buildLog) updateLog();
+                    string tmpErrorLeft = programm.Stm.execute(buildLog);
+                    if (tmpErrorLeft != null) return tmpErrorLeft;
+                    newDataSetLeft = programm.Stack.Pop();
+                    actDataSet = programm.Stack.Peek();
+                    actDataSet.A = newDataSetLeft.A;
+                    break;
+                case Config.EXECUTE.CALL_SORT_RIGHT:
+                    if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    DataSet newDataSetRight = new DataSet(actDataSet.A);
+                    newDataSetRight.Left = actDataSet.I;
+                    newDataSetRight.Right = actDataSet.Right;
+                    programm.Stack.Push(newDataSetRight);
+                    if (buildLog) updateLog();
+                    string tmpErrorRight = programm.Stm.execute(buildLog);
+                    if (tmpErrorRight != null) return tmpErrorRight;
+                    newDataSetRight = programm.Stack.Pop();
+                    actDataSet = programm.Stack.Peek();
+                    actDataSet.A = newDataSetRight.A;
+                    break;
+                case Config.EXECUTE.DEC_J:
+                    if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    actDataSet.J--;
+                    break;
+                case Config.EXECUTE.INC_I:
+                    if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    actDataSet.I++;
+                    break;
+                case Config.EXECUTE.SWAP_AI_WITH_AI_INC:
+                    if (actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    try
+                    {
+                        int tmp = actDataSet.A[actDataSet.I];
+                        actDataSet.A[actDataSet.I] = actDataSet.A[actDataSet.I + 1];
+                        actDataSet.A[actDataSet.I + 1] = tmp;
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return Config.OUT_OF_RANGE_ERROR;
+                    }
+                    break;
+                case Config.EXECUTE.SWAP_AI_WITH_AJ:
+                    if (actDataSet.I == Config.NOT_USED || actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    try
+                    {
+                        int tmp = actDataSet.A[actDataSet.I];
+                        actDataSet.A[actDataSet.I] = actDataSet.A[actDataSet.J];
+                        actDataSet.A[actDataSet.J] = tmp;
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return Config.OUT_OF_RANGE_ERROR;
+                    }
+                    break;
+                case Config.EXECUTE.SWAP_AJ_WITH_AJ_DEC:
+                    if (actDataSet.J == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    try
+                    {
+                        int tmp = actDataSet.A[actDataSet.J];
+                        actDataSet.A[actDataSet.J] = actDataSet.A[actDataSet.J - 1];
+                        actDataSet.A[actDataSet.J - 1] = tmp;
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return Config.OUT_OF_RANGE_ERROR;
+                    }
+                    break;
+                case Config.EXECUTE.SWAP_AMIN_WITH_AI:
+                    if (actDataSet.Min == Config.NOT_USED || actDataSet.I == Config.NOT_USED) return Config.NOT_INIT_ERROR;
+                    try
+                    {
+                        int tmp = actDataSet.A[actDataSet.Min];
+                        actDataSet.A[actDataSet.Min] = actDataSet.A[actDataSet.I];
+                        actDataSet.A[actDataSet.I] = tmp;
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        return Config.OUT_OF_RANGE_ERROR;
+                    }
+                    break;
+                default:
+                    //Nothing
+                    break;
+            }
+            if (buildLog) updateLog();
+            return null;
+
         }
     }
 }
