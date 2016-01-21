@@ -29,24 +29,33 @@ namespace SortAlgGame.ViewModel
         }
 
         //TODO: Methoden zum switchen der View
-        public ICommand changeToHauptmenue
+        public Command changeToHauptmenue
         {
             get
             {
-                return new Command(action => menueChange());
+                return new Command(action => toHauptmenue());
             }
         }
         
-        public void menueChange()
+        public void toHauptmenue()
         {
             if(CurrentView is GameVM)
             {
                 (CurrentView as GameVM).stopTimer();
             }
+            if (CurrentView is ErklaerungVM)
+            {
+                (CurrentView as ErklaerungVM).AnimationVM.logStop();
+            }
+            if (CurrentView is ResultVM)
+            {
+                (CurrentView as ResultVM).P1Animation.logStop();
+                (CurrentView as ResultVM).P2Animation.logStop();
+            }
             CurrentView = new HauptmenueVM();
         }
 
-        public ICommand changeToGame
+        public Command changeToGame
         {
             get
             {
@@ -54,7 +63,7 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public ICommand changeToBubble
+        public Command changeToBubble
         {
             get
             {
@@ -62,7 +71,7 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public ICommand changeToQuick
+        public Command changeToQuick
         {
             get
             {
@@ -70,7 +79,7 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public ICommand changeToSelection
+        public Command changeToSelection
         {
             get
             {
@@ -78,7 +87,7 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public ICommand changeToInsertion
+        public Command changeToInsertion
         {
             get
             {

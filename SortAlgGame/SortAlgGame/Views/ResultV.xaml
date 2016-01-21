@@ -170,7 +170,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header=" Ptkt. ">
+                        <DataGridTemplateColumn Header=" Pkt. ">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Label Content="{Binding Path=Item5}" Style="{StaticResource ResourceKey=Label}" Background="Black"/>
