@@ -5,15 +5,39 @@ using System.Text;
 
 namespace SortAlgGame.Model.Statements
 {
+    /// <summary>
+    /// Die Klasse Statement repraesentiert alle Bausteine, die keine in sich geschachtelten Bausteine enthalten 
+    /// (z.B. einfache Variablenzuweisung).
+    /// </summary>
     class Statement
     {
-        //Var
+        #region Member
+        /// <summary>
+        /// Einrueckung des Bausteintexts.
+        /// </summary>
         protected int indent = 0;
+        /// <summary>
+        /// Bausteintext.
+        /// </summary>
         protected string content;
+        /// <summary>
+        /// Programm Objekt, zu dem der Baustein gehoert.
+        /// </summary>
         protected Programm programm;
+        /// <summary>
+        /// Baustein, in dem sich dieser Baustein befindet.
+        /// </summary>
         protected ListStm parent;
+        /// <summary>
+        /// Enumerator zum Bestimmen der Bausteinart.
+        /// </summary>
         protected Config.EXECUTE brick;
-        //Accessore
+        #endregion
+
+        #region Accessoren
+        /// <summary>
+        /// indent Accessor
+        /// </summary>
         public virtual int Indent
         {
             get { return indent; }
@@ -36,41 +60,66 @@ namespace SortAlgGame.Model.Statements
                 }
             }
         }
-
+        /// <summary>
+        /// content Accessor
+        /// </summary>
         public string Content
         {
             get { return content; }
         }
-
+        /// <summary>
+        /// parrent Accessor
+        /// </summary>
         public ListStm Parent
         {
             get { return parent; }
             set { parent = value; }
         }
-
+        /// <summary>
+        /// programm Accessor
+        /// </summary>
         public Programm Programm
         {
             get { return programm; }
         }
-
+        /// <summary>
+        /// brick Accessor
+        /// </summary>
         public Config.EXECUTE Brick
         {
             get { return brick; }
         }
-        //Konstruktoren
-        public Statement(Programm player, ListStm parent, Config.EXECUTE brick)
+        #endregion
+
+        #region Konstruktoren
+        /// <summary>
+        /// Kontruktor.
+        /// </summary>
+        /// <param name="programm">Die Programm Klasse, zu dem der Baustein gehoert.<</param>
+        /// <param name="parent">Der Baustein, in dem sich dieser Baustein befindet.</param>
+        /// <param name="brick">Art des Bausteins.</param>
+        public Statement(Programm programm, ListStm parent, Config.EXECUTE brick)
         {
-            this.programm = player;
+            this.programm = programm;
             this.parent = parent;
             this.brick = brick;
             this.content = switchContent(brick);
         }
-        //Methods
-        public void updateLog()
+        #endregion
+
+        #region Methoden
+        /// <summary>
+        /// Erstellt aus dem aktuellen DataSet Objekt der Speicherverwaltung einen neuen Logeintrag.
+        /// </summary>
+        protected void updateLog()
         {
             programm.Log.AddLast(new Tuple<Statement, DataSet>(this, new DataSet(programm.Stack.Peek())));
         }
-
+        /// <summary>
+        /// Bestimmt den Bausteintext.
+        /// </summary>
+        /// <param name="brick">Bausteinart.</param>
+        /// <returns>Bausteintext.</returns>
         protected virtual string switchContent(Config.EXECUTE brick)
         {
             switch (brick)
@@ -90,7 +139,7 @@ namespace SortAlgGame.Model.Statements
                 case Config.EXECUTE.ALLOC_RIGHT:
                     return "j = right;";
                 case Config.EXECUTE.CALL_SORT_LEFT:
-                    return "sort(a, left, J);";
+                    return "sort(a, left, j);";
                 case Config.EXECUTE.CALL_SORT_RIGHT:
                     return "sort (a, i, right);";
                 case Config.EXECUTE.DEC_J:
@@ -111,7 +160,11 @@ namespace SortAlgGame.Model.Statements
                     return null;
             }
         }
-
+        /// <summary>
+        /// Führt den zur Bausteinart passenden Programmcode aus.
+        /// </summary>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
         public virtual string execute(bool buildLog)
         {
             DataSet actDataSet = programm.Stack.Peek();
@@ -183,7 +236,7 @@ namespace SortAlgGame.Model.Statements
                         actDataSet.A[actDataSet.I] = actDataSet.A[actDataSet.I + 1];
                         actDataSet.A[actDataSet.I + 1] = tmp;
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -196,7 +249,7 @@ namespace SortAlgGame.Model.Statements
                         actDataSet.A[actDataSet.I] = actDataSet.A[actDataSet.J];
                         actDataSet.A[actDataSet.J] = tmp;
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -209,7 +262,7 @@ namespace SortAlgGame.Model.Statements
                         actDataSet.A[actDataSet.J] = actDataSet.A[actDataSet.J - 1];
                         actDataSet.A[actDataSet.J - 1] = tmp;
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -222,7 +275,7 @@ namespace SortAlgGame.Model.Statements
                         actDataSet.A[actDataSet.Min] = actDataSet.A[actDataSet.I];
                         actDataSet.A[actDataSet.I] = tmp;
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -233,7 +286,7 @@ namespace SortAlgGame.Model.Statements
             }
             if (buildLog) updateLog();
             return null;
-
         }
+        #endregion
     }
 }

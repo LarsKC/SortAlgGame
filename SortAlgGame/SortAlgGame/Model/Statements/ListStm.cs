@@ -5,15 +5,30 @@ using System.Text;
 
 namespace SortAlgGame.Model.Statements
 {
+    /// <summary>
+    /// Diese Klasse ListStm repraesentiert die If-, For- und While-Bausteine.
+    /// </summary>
     class ListStm : Statement
     {
+        #region Member
+        /// <summary>
+        /// Liste der im Block enthaltenen Bausteine
+        /// </summary>
         protected LinkedList<Statement> stmList;
+        #endregion
 
+        #region Accessoren
+        /// <summary>
+        /// stmList Accessor.
+        /// </summary>
         public LinkedList<Statement> StmList
         {
             get { return stmList; }
         }
 
+        /// <summary>
+        /// indent Accessor. Ueberschreibt den indent Accessor der Klasse Statement. Bestimmt die Einrueckung des Bausteins
+        /// </summary>
         public override int Indent
         {
             get { return indent; }
@@ -42,15 +57,29 @@ namespace SortAlgGame.Model.Statements
                 StmList.Last.Value.Indent = this.Indent;
             }
         }
+        #endregion
 
-
-        public ListStm(Programm player, ListStm parent, Config.EXECUTE brick)
-            : base(player, parent, brick)
+        #region Konstruktoren
+        /// <summary>
+        /// Konstruktor. Ruft zusaetzlich den Konstruktor der Klasse Statement auf.
+        /// </summary>
+        /// <param name="programm">Die Programm Klasse, zu dem der Baustein gehoert.</param>
+        /// <param name="parent">Der Baustein, in dem sich dieser Baustein befindet.</param>
+        /// <param name="brick">Art des Bausteins.</param>
+        public ListStm(Programm programm, ListStm parent, Config.EXECUTE brick)
+            : base(programm, parent, brick)
         {
             stmList = new LinkedList<Statement>();
-            stmList.AddLast(new Statement(player, this, Config.EXECUTE.LOOP_END));            
+            stmList.AddLast(new Statement(programm, this, Config.EXECUTE.LOOP_END));            
         }
+        #endregion
 
+        #region Methoden
+        /// <summary>
+        /// Ruft die execute Methode fuer alle in diesem Baustein enthaltenen Statements auf.
+        /// </summary>
+        /// <param name="buildLog">Legt fest oft ein Log erstellt werden soll.</param>
+        /// <returns>Aufgetretene Fehlermeldung. Null wenn kein Fehler festgestellt wurde.</returns>
         public string executeList(bool buildLog)
         {
             string tmpError = null;
@@ -61,6 +90,11 @@ namespace SortAlgGame.Model.Statements
             return tmpError;
         }
 
+        /// <summary>
+        /// Fuegt einen neuen Baustein an der uebergebenen Position ein.
+        /// </summary>
+        /// <param name="pos">Position des neuen Bausteins.</param>
+        /// <param name="stm">Einzufuegender Baustein.</param>
         public void addBeforeStm(Statement pos, Statement stm)
         {
             if (pos == null)
@@ -75,7 +109,10 @@ namespace SortAlgGame.Model.Statements
             stm.Indent = this.Indent + 1;
         }
 
-        //TODO !!!
+        /// <summary>
+        /// Entfernt den uebergebenen Baustein aus der stmList.
+        /// </summary>
+        /// <param name="stm">Zu entfernender Baustein.</param>
         public void removeStm(Statement stm)
         {
             stm.Parent = null;
@@ -93,6 +130,12 @@ namespace SortAlgGame.Model.Statements
             stmList.Remove(stm);
         }
 
+        /// <summary>
+        /// Prueft ob sich der uebergebene Baustein in der stmList befindet.
+        /// </summary>
+        /// <param name="stm">Gesuchter Baustein.</param>
+        /// <param name="listStm">Zu durchsuchende Liste.</param>
+        /// <returns>True, wenn der Baustein gefunden wurde. False, wenn nicht.</returns>
         public bool stmListContains(Statement stm, ListStm listStm)
         {
             if (stm == listStm)
@@ -113,7 +156,10 @@ namespace SortAlgGame.Model.Statements
             return false;
         }
 
-        public void updateDataSets()
+        /// <summary>
+        /// Aktualisiert die Speicherverwaltung des Algorithmus.
+        /// </summary>
+        private void updateDataSets()
         {
             DataSet actDataSet = Programm.Stack.Pop();
             DataSet oldDataSet = Programm.Stack.Pop();
@@ -125,6 +171,11 @@ namespace SortAlgGame.Model.Statements
             programm.Stack.Push(actDataSet);
         }
 
+        /// <summary>
+        /// Bestimmt den anzuzeigenden Text des Bausteins
+        /// </summary>
+        /// <param name="brick">Art des Bausteins</param>
+        /// <returns>Bausteintext.</returns>
         protected override string switchContent(Config.EXECUTE brick)
         {
             switch (brick)
@@ -134,7 +185,7 @@ namespace SortAlgGame.Model.Statements
                 case Config.EXECUTE.FOR_IN_BUBBLE:
                     return "for (int i = left; i < n-1; i++) {";
                 case Config.EXECUTE.FOR_IN_SELECTION:
-                    return "for (int j= i+1; j < n; j++) {";
+                    return "for (int j = i+1; j < n; j++) {";
                 case Config.EXECUTE.FOR_INSERTION:
                     return "for (int i = left+1; i < n; i++) {";
                 case Config.EXECUTE.FOR_OUT_BUBBLE:
@@ -164,6 +215,11 @@ namespace SortAlgGame.Model.Statements
             }
         }
 
+        /// <summary>
+        /// Sorgt für das Ausfuehren des zum Baustein gehoerenden Programmcodes.
+        /// </summary>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
         public override string execute(bool buildLog)
         {
             DataSet actDataSet = programm.Stack.Peek();
@@ -211,6 +267,12 @@ namespace SortAlgGame.Model.Statements
             }
         }
 
+        /// <summary>
+        /// Bestimmt den Programmcode einer For-Schleife.
+        /// </summary>
+        /// <param name="actDataSet">Aktuelle Speicherbelegung in der Speicheverwaltung des Algorithmus.</param>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
         private string switchOnFor(DataSet actDataSet, bool buildLog)
         {
             string tmpError = null;
@@ -263,6 +325,12 @@ namespace SortAlgGame.Model.Statements
             return tmpError;
         }
 
+        /// <summary>
+        /// Bestimmt die aktuelle Laufzeit und ruft die Methode zum Ausfuehren aller, in stmList enthaltenen Bausteine auf.
+        /// </summary>
+        /// <param name="actDataSet">Aktuelle Speicherbelegung in der Speicheverwaltung des Algorithmus.</param>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
         private string runChildStatements(DataSet actDataSet, bool buildLog)
         {
             string tmpError;
@@ -273,6 +341,12 @@ namespace SortAlgGame.Model.Statements
             return tmpError;
         }
 
+        /// <summary>
+        /// Bestimmt den Programmcode einer If-Bedingung.
+        /// </summary>
+        /// <param name="actDataSet">Aktuelle Speicherbelegung in der Speicheverwaltung des Algorithmus.</param>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
         private string switchOnIf(DataSet actDataSet, bool buildLog)
         {
             if (buildLog) updateLog();
@@ -288,7 +362,7 @@ namespace SortAlgGame.Model.Statements
                             tmpError = executeList(buildLog);
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -302,7 +376,7 @@ namespace SortAlgGame.Model.Statements
                             tmpError = executeList(buildLog);
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -342,7 +416,13 @@ namespace SortAlgGame.Model.Statements
             return tmpError;
         }
 
-        public string switchOnWhile(DataSet actDataSet, bool buildLog)
+        /// <summary>
+        /// Bestimmt den Programmcode einer While-Schleife.
+        /// </summary>
+        /// <param name="actDataSet">Aktuelle Speicherbelegung in der Speicheverwaltung des Algorithmus.</param>
+        /// <param name="buildLog">Bestimmt, ob ein Log angelegt werden soll.</param>
+        /// <returns>Aufgetretener Fehler. Null, wenn kein Fehler gefunden wurde.</returns>
+        private string switchOnWhile(DataSet actDataSet, bool buildLog)
         {
             string tmpError = null;
             switch(this.brick)
@@ -358,7 +438,7 @@ namespace SortAlgGame.Model.Statements
                             actDataSet = programm.Stack.Peek();
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -375,7 +455,7 @@ namespace SortAlgGame.Model.Statements
                             actDataSet = programm.Stack.Peek();
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -402,7 +482,7 @@ namespace SortAlgGame.Model.Statements
                             actDataSet = programm.Stack.Peek();
                         }
                     }
-                    catch (IndexOutOfRangeException e)
+                    catch (IndexOutOfRangeException)
                     {
                         return Config.OUT_OF_RANGE_ERROR;
                     }
@@ -414,5 +494,6 @@ namespace SortAlgGame.Model.Statements
             }
             return tmpError;
         }
+        #endregion
     }
 }

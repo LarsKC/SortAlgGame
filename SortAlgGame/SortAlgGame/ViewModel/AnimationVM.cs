@@ -15,49 +15,88 @@ using System.Windows.Threading;
 
 namespace SortAlgGame.ViewModel
 {
+    /// <summary>
+    /// Die Klasse AnimationVM stellt die Daten fuer die Animation zur Verfuegung. Sie erbt von der Klasse NotifyChangeBase, um der GUI
+    /// Aenderungen mitteilen zu koennen.
+    /// </summary>
     class AnimationVM : NotifyChangeBase
     {
+        #region Member
+        /// <summary>
+        /// Daten fuer das Balkendiagramm (3-Tuple): Rechteckhoehe, Zahlenwert des Feldes im Array, Liste von Pointern die auf dieses Feld 
+        /// zeigen.
+        /// </summary>
         private ObservableCollection<Tuple<int, int, ObservableCollection<string>>> _animationData;
+        /// <summary>
+        /// Vom Algorithmus benutze Variablen und deren Belegung. 
+        /// </summary>
         private ObservableCollection<string> _dataSetValues;
+        /// <summary>
+        /// Auflistung der Bausteine und des Bausteinstexts.
+        /// </summary>
         private ObservableCollection<Tuple<Statement, String>> _stms;
+        /// <summary>
+        /// Referenz auf das Programm, was in der Animation dargestellt werden soll.
+        /// </summary>
         private Programm _programm;
+        /// <summary>
+        /// Aktuelle Position im Log des Programms.
+        /// </summary>
         private Tuple<Statement, DataSet> _curLogSet;
+        /// <summary>
+        /// Timer um die Animation automatisch zu durchlaufen.
+        /// </summary>
         private DispatcherTimer _timer;
+        /// <summary>
+        /// Maximale Hoehe der Animation.
+        /// </summary>
         private int _maxAnimationHeight;
+        #endregion
 
-
-        public ICommand animationForward
+        #region Accessoren & Commands
+        /// <summary>
+        /// Befehl zum Vorspulen der Animation.
+        /// </summary>
+        public Command animationForward
         {
             get
             {
-                return new Command(action => logForward());
+                return new Command(action => logForward(false));
             }
         }
-
-        public ICommand animationBackward
+        /// <summary>
+        /// Befehl zum Zurueckspulen der Animation
+        /// </summary>
+        public Command animationBackward
         {
             get
             {
                 return new Command(action => logBackwards());
             }
         }
-
-        public ICommand animationStart
+        /// <summary>
+        /// Befehl zum Starten der Animation
+        /// </summary>
+        public Command animationStart
         {
             get
             {
                 return new Command(action => logPlay());
             }
         }
-
-        public ICommand animationStop
+        /// <summary>
+        /// Befehl zum Stoppen der Animation
+        /// </summary>
+        public Command animationStop
         {
             get
             {
                 return new Command(action => logStop());
             }
         }
-
+        /// <summary>
+        /// _maxAnimationHeight Accessor
+        /// </summary>
         public int MaxAnimationHeight
         {
             get { return _maxAnimationHeight; }
@@ -67,7 +106,9 @@ namespace SortAlgGame.ViewModel
                 NotifyPropertyChanged("MaxAnimationHeight");
             }
         }
-
+        /// <summary>
+        /// _dataSetValues Accessor
+        /// </summary>
         public ObservableCollection<string> DataSetValues
         {
             get { return _dataSetValues; }
@@ -77,7 +118,9 @@ namespace SortAlgGame.ViewModel
                 NotifyPropertyChanged("DataSetValue");
             }
         }
-
+        /// <summary>
+        /// _animationData Accessor
+        /// </summary>
         public ObservableCollection<Tuple<int, int, ObservableCollection<string>>> AnimationData
         {
             get { return _animationData; }
@@ -87,7 +130,9 @@ namespace SortAlgGame.ViewModel
                 NotifyPropertyChanged("AnimationData");
             }
         }
-
+        /// <summary>
+        /// _stms Accessor
+        /// </summary>
         public ObservableCollection<Tuple<Statement, String>> Stms
         {
             get { return _stms; }
@@ -97,12 +142,20 @@ namespace SortAlgGame.ViewModel
                 NotifyPropertyChanged("Stms");
             }
         }
-
+        /// <summary>
+        /// _programm Accessor
+        /// </summary>
         public Programm Programm
         {
             get { return _programm; }
         }
+        #endregion
 
+        #region Konstruktoren
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="prg">Programm, dass die Animation darstellen soll.</param>
         public AnimationVM(Programm prg)
         {
             _maxAnimationHeight = Config.RUNS[0] * Config.RECT_MULTIPLIKATOR + 80;
@@ -118,35 +171,58 @@ namespace SortAlgGame.ViewModel
             initStms();
 
         }
+        #endregion
 
-        public void logForward()
+        #region Method
+        /// <summary>
+        /// Laed den naechsten Schritt des Sortierablaufs.
+        /// </summary>
+        /// <param name="autom"></param>
+        private void logForward(bool autom)
         {
+            if (!autom)
+            {
+                _timer.Stop();
+            }
             _curLogSet = (_programm.Log.Find(_curLogSet).Next != null) ? _programm.Log.Find(_curLogSet).Next.Value: _programm.Log.First.Value;
             update();
         }
-
-        public void logBackwards()
+        /// <summary>
+        /// Laed den vorherigen Schritt des Sortierablaufs.
+        /// </summary>
+        private void logBackwards()
         {
+            _timer.Stop();
             _curLogSet = (_programm.Log.Find(_curLogSet).Previous != null) ? _programm.Log.Find(_curLogSet).Previous.Value : _programm.Log.Last.Value;
             update();
         }
-
-        public void logPlay()
+        /// <summary>
+        /// Startet den automatisierten Ablauf der Animation.
+        /// </summary>
+        private void logPlay()
         {
             _timer.Start();
         }
-
+        /// <summary>
+        /// Stoppt den automatisierten Ablauf der Animation
+        /// </summary>
         public void logStop()
         {
             _timer.Stop();
         }
-
+        /// <summary>
+        /// Wird durch den _timer ausgeloest. Laed den naechsten Schritt der Animation.
+        /// </summary>
+        /// <param name="sender">Ausloeser des Events</param>
+        /// <param name="e">Event</param>
         private void animationEvent(object sender, EventArgs e)
         {
-            logForward();
+            logForward(true);
         }
-
-        public void updateAnimationData()
+        /// <summary>
+        /// Fuehrt die Aktualisierung der Animationsdaten durch.
+        /// </summary>
+        private void updateAnimationData()
         {
             int rectHeight;
             int fieldValue;
@@ -162,8 +238,10 @@ namespace SortAlgGame.ViewModel
                 AnimationData.Add(new Tuple<int,int,ObservableCollection<string>>(fieldValue, rectHeight, pointer));
             }
         }
-
-        public void initStms()
+        /// <summary>
+        /// Initialisiert den Pseudocode
+        /// </summary>
+        private void initStms()
         {
             ObservableCollection<Statement> tmpCol = new ObservableCollection<Statement>(_programm.getActualStmNesting());
             _stms = new ObservableCollection<Tuple<Statement, string>>();
@@ -174,7 +252,11 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public void updateFontStyle(Statement s)
+        /// <summary>
+        /// Aktualisiert die Schriftfarbe des Pseudocodes.
+        /// </summary>
+        /// <param name="s"></param>
+        private void updateFontStyle(Statement s)
         {
             bool foundOldStm = false;
             bool foundNewStm = false;
@@ -212,14 +294,19 @@ namespace SortAlgGame.ViewModel
             }
         }
 
-        public void update()
+        /// <summary>
+        /// Methode zum gebuendelten Aufrufen der Updatemethoden.
+        /// </summary>
+        private void update()
         {
             updateAnimationData();
             updateFontStyle(_curLogSet.Item1);
             updateDataSetValues();
         }
-
-        public void updateDataSetValues()
+        /// <summary>
+        /// Aktualisiert die ObservableCollection _dataSetValues.
+        /// </summary>
+        private void updateDataSetValues()
         {
             DataSetValues.Clear();
             if (_curLogSet.Item2.I != Config.NOT_USED) DataSetValues.Add("i = " + _curLogSet.Item2.I);
@@ -230,30 +317,6 @@ namespace SortAlgGame.ViewModel
             if (_curLogSet.Item2.Min != Config.NOT_USED) DataSetValues.Add("min = " + _curLogSet.Item2.Min);
             if (_curLogSet.Item2.Pivot != Config.NOT_USED) DataSetValues.Add("pivot = " + _curLogSet.Item2.Pivot);
         }
-
-        public void printExecute()
-        {
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Lars\Desktop\executePrint.txt");
-            file.WriteLine(_programm.Stm.Content);
-            rekursivePrint((_programm.Stm as ListStm).StmList, file);
-            file.WriteLine("---------------------------------------------------------------------------------");
-            foreach (int x in _programm.Stack.Peek().A)
-            {
-                file.Write(x);
-            }
-            file.Close();
-        }
-
-        public void rekursivePrint(LinkedList<Statement> stmList, System.IO.StreamWriter file)
-        {
-            foreach (Statement x in stmList)
-            {
-                file.WriteLine(x.Content);
-                if (x is ListStm)
-                {
-                    rekursivePrint((x as ListStm).StmList, file);
-                }
-            }
-        }
+        #endregion
     }
 }

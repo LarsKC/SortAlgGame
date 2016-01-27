@@ -15,15 +15,43 @@ using System.Windows.Threading;
 
 namespace SortAlgGame.ViewModel
 {
+    /// <summary>
+    /// Stellt die Daten fuer die Algorithmus Erklaerungen zur Verfuegung. Sie erbt von der Klasse NotifyChangeBase, um der GUI 
+    /// Aenderungen mitteilen zu koennen.
+    /// </summary>
     class ErklaerungVM : NotifyChangeBase
     {
+        #region Member
+        /// <summary>
+        /// Referenz auf ein AnimationVM Objekt, ueber welches die Daten fuer die Animation bereitgestellt werden.
+        /// </summary>
         protected AnimationVM _animationVM;
+        /// <summary>
+        /// Referenz auf ein ArrayGen Objekt zum erzeugen von Zahlenfolgen.
+        /// </summary>
         private ArrayGen _arrayGen;
+        /// <summary>
+        /// Die auf den Algorithmus anzuwendene Zahlenfolge.
+        /// </summary>
         private int[] _testArray;
+        /// <summary>
+        /// Informationstext des Algorithmus.
+        /// </summary>
         private string _infoText;
+        /// <summary>
+        /// Algorithmus Bezeichnung.
+        /// </summary>
         private string _sortName;
+        /// <summary>
+        /// Der Algorithmus und seine Speicherverwaltung.
+        /// </summary>
         protected Programm _programm;
+        #endregion
 
+        #region Accessoren
+        /// <summary>
+        /// _sortName Accessor
+        /// </summary>
         public string SortName
         {
             get { return _sortName; }
@@ -33,17 +61,27 @@ namespace SortAlgGame.ViewModel
                 NotifyPropertyChanged("SortName");
             }
         }
-
+        /// <summary>
+        /// _animationVM Accessor
+        /// </summary>
         public AnimationVM AnimationVM
         {
             get { return _animationVM; }
         }
-
+        /// <summary>
+        /// _infoText Accessor
+        /// </summary>
         public string InfoText
         {
             get { return _infoText; }
         }
+        #endregion
 
+        #region Konstruktoren
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="sortAlg">Der anzuzeigende Algorithmus</param>
         public ErklaerungVM(string sortAlg)
         {
             _arrayGen = new ArrayGen();
@@ -52,7 +90,13 @@ namespace SortAlgGame.ViewModel
             switchOnAlg(sortAlg);
             runAnimation();
         }
+        #endregion
 
+        #region Methoden
+        /// <summary>
+        /// Bestimmt die anzuzeigenden Daten, die Algorithmus spezifisch sind: Infotext, Algorithmus Bezeichnung, Algorithmus im Objekt _programm.
+        /// </summary>
+        /// <param name="sortAlg">Algorithmus Bezeichnung</param>
         private void switchOnAlg(string sortAlg)
         {
             switch (sortAlg)
@@ -82,11 +126,14 @@ namespace SortAlgGame.ViewModel
                     break;
             }
         }
-
-        public void runAnimation()
+        /// <summary>
+        /// Initialisiert die Animation der Erklaerung.
+        /// </summary>
+        private void runAnimation()
         {
             _programm.execute(_testArray, true);
             _animationVM = new AnimationVM(_programm);
         }
+        #endregion
     }
 }

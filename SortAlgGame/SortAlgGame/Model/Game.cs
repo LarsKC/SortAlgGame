@@ -7,42 +7,73 @@ using System.Windows.Threading;
 
 namespace SortAlgGame.Model
 {
+    /// <summary>
+    /// Die Game Klasse repraesentiert die Geschaeftslogik fuer das Spiel
+    /// </summary>
     class Game
     {
-        #region Variablen
+        #region Member
+        /// <summary>
+        /// Referenz auf den Gewinner. Null wenn unentschieden.
+        /// </summary>
         private Player _winner;
+        /// <summary>
+        /// ArrayGen Objekt. Zum Erstellen von Zahlenfolgen.
+        /// </summary>
         private ArrayGen _arrayGen;
+        /// <summary>
+        /// Zahlenfolgen, auf die der Algorithmus angewandt werden soll.
+        /// </summary>
         private int[][] _testArrays;
+        /// <summary>
+        /// Referenz auf den schnelleren Spieler. Null wenn beide gleich schnell sind.
+        /// </summary>
         private Player _fastestPlayer;
+        /// <summary>
+        /// Referenz auf den Spieler 1
+        /// </summary>
         private Player _p1;
+        /// <summary>
+        /// Referenz auf dne Spieler 2
+        /// </summary>
         private Player _p2;
-
         #endregion
 
         #region Accessoren
+        /// <summary>
+        /// _winner Accessor
+        /// </summary>
         public Player Winner
         {
             get { return _winner; }
         }
-
+        /// <summary>
+        /// _fastestPlayer Accessor
+        /// </summary>
         public Player FastestPlayer
         {
             get { return _fastestPlayer; }
         }
-
+        /// <summary>
+        /// _p1 Accessor
+        /// </summary>
         public Player P1
         {
             get { return _p1; }
         }
-
+        /// <summary>
+        /// _p2 Accessor
+        /// </summary>
         public Player P2
         {
             get { return _p2; }
         }
-
         #endregion
 
         #region Konstruktoren
+        /// <summary>
+        /// Standard Konstruktor
+        /// </summary>
         public Game()
         {
             _arrayGen = new ArrayGen();
@@ -55,7 +86,9 @@ namespace SortAlgGame.Model
         #endregion
 
         #region Methods
-
+        /// <summary>
+        /// Auswertung des Spiels.
+        /// </summary>
         public void evaluate()
         {
             _p1.Programm.execute(_testArrays[0], true);
@@ -86,8 +119,10 @@ namespace SortAlgGame.Model
                 _winner = _p2;
             }
         }
-
-        public void updateProgrammStats()
+        /// <summary>
+        /// Speichert das Ergebnis des aktuellen Testfalls, der auf den Algorithmus angewandt wird.
+        /// </summary>
+        private void updateProgrammStats()
         {
             int p1RoundWin = 0;
             int p2RoundWin = 0;

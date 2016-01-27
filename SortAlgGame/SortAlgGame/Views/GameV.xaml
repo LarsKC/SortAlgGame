@@ -69,7 +69,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type s:SurfaceListBoxItem}">
-                        <Grid x:Name="Grid" Background="Black" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <Grid x:Name="Grid" Background="Black" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" >
                             <Border x:Name="ButtonBody" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                             <Border x:Name="PressOverlay" Background="Black" Opacity="0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             <ContentPresenter x:Name="Content" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
@@ -188,6 +188,9 @@
                 Tag="sourceListP1"
                 Name="surfaceListBox4"
                 AllowDrop="True"
+                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                s:SurfaceScrollViewer.CanContentScroll="True"
                 Style="{StaticResource ResourceKey=SurfaceListBoxGameStyle}"
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 ItemContainerStyle="{StaticResource ResourceKey=GameListItem}"
@@ -203,6 +206,9 @@
                 Name="surfaceListBox2"
                 Tag="sourceListP2"
                 AllowDrop="True"
+                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                s:SurfaceScrollViewer.CanContentScroll="True"
                 Style="{StaticResource ResourceKey=SurfaceListBoxGameStyle}"
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 ItemContainerStyle="{StaticResource ResourceKey=GameListItem}"
@@ -218,6 +224,9 @@
                 Name="surfaceListBox3"
                 Tag="targetListP1"
                 AllowDrop="False"
+                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                s:SurfaceScrollViewer.CanContentScroll="True"
                 Style="{StaticResource ResourceKey=SurfaceListBoxGameStyle}"
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 ItemContainerStyle="{StaticResource ResourceKey=GameListItem}"
@@ -233,6 +242,9 @@
                 Name="surfaceListBox1"
                 Tag="targetListP2"
                 AllowDrop="False"
+                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling"
+                s:SurfaceScrollViewer.CanContentScroll="True"
                 Style="{StaticResource ResourceKey=SurfaceListBoxGameStyle}"
                 ItemTemplate="{StaticResource SurfaceListBoxItemDataTemplate}"
                 ItemContainerStyle="{StaticResource ResourceKey=GameListItem}"

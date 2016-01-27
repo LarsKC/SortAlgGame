@@ -6,44 +6,68 @@ using SortAlgGame.Model.Statements;
 
 namespace SortAlgGame.Model
 {
+    /// <summary>
+    /// Die Klasse Programm repraesentiert den aus Bausteinen bestehenden Algorithmus und dessen Speicherverwaltung.
+    /// </summary>
     class Programm
     {
-        #region Variablen
+        #region Member
+        /// <summary>
+        /// 3-Tuple, welches die aktuellen Daten, des auf einen Testfall angewandten Algorihmus enthaelt: Laenge der zu sortierenden 
+        /// Zahlenfolge, Fehlerbericht, Laufzeit.
+        /// </summary>
         private Tuple<int, string, string> _actStats;
+        /// <summary>
+        /// Enthaelt die Laufzeit des Algorithmus, die beim letzten Testfall ermittelt wurde.
+        /// </summary>
         private int _actRuntime;
-        private DateTime _endTime;
+        /// <summary>
+        /// Stellt den Log des Algorithmus dar. In ihm sind alle Datenbewegungen bzw. Variablenveraenderungen die in der 
+        /// Speicherverwaltung des Algorithmus stattgefunden haben vermerkt. 
+        /// </summary>
         private LinkedList<Tuple<Statement, DataSet>> _log;
+        /// <summary>
+        /// Stellt die Speicherverwaltung des Algorithmus in Form eines Stacks dar.
+        /// </summary>
         private Stack<DataSet> _stack;
+        /// <summary>
+        /// Referenz auf den Startbaustein des Algorithmus.
+        /// </summary>
         private ListStm _stm;
-
         #endregion
 
-        #region Accessor
+        #region Accessoren
+        /// <summary>
+        /// _actStats Accessor
+        /// </summary>
         public Tuple<int, string, string> ProgrammStats
         {
             get { return _actStats; }
         }
-
-        public DateTime EndTime
-        {
-            set { _endTime = value; }
-        }
-
+        /// <summary>
+        /// _stack Accessor
+        /// </summary>
         public Stack<DataSet> Stack
         {
             get { return _stack; }
         }
-
+        /// <summary>
+        /// _stm Accessor
+        /// </summary>
         public Statement Stm
         {
             get { return _stm; }
         }
-
+        /// <summary>
+        /// _log Accessor
+        /// </summary>
         public LinkedList<Tuple<Statement, DataSet>> Log
         {
             get { return _log; }
         }
-
+        /// <summary>
+        /// _actRuntime Accessor
+        /// </summary>
         public int ActRuntime
         {
             get { return _actRuntime; }
@@ -51,7 +75,10 @@ namespace SortAlgGame.Model
         }
         #endregion
 
-        #region Konstruktor
+        #region Konstruktoren
+        /// <summary>
+        /// Standard Konstruktor
+        /// </summary>
         public Programm()
         {
             _actStats = null;
@@ -62,7 +89,12 @@ namespace SortAlgGame.Model
         }
         #endregion
 
-        #region Methods
+        #region Methoden
+        /// <summary>
+        /// Ruft die execute Methode des _stm auf und legt nach dessen Ausfaehrung die _actStats des Algorithmus fest.
+        /// </summary>
+        /// <param name="a">Zu sortierende Zahlenfolge.</param>
+        /// <param name="genLog">Bestimmt ob ein Log angelegt werden soll.</param>
         public void execute(int[] a, bool genLog)
         {
             _actRuntime = 0;
@@ -80,18 +112,20 @@ namespace SortAlgGame.Model
                 _actStats = new Tuple<int, string, string>(a.Length, "keine", _actRuntime.ToString());
             }
         }
-
-        public TimeSpan calcTimeSpan(DateTime startTime)
-        {
-            return _endTime - startTime;
-        }
-
+        /// <summary>
+        /// Erstellt aus der rekursiven Schachtelung der Statement und ListStm Klassen eine Listenstruktur. Erwartet keinen Uebergabeparamter.
+        /// </summary>
+        /// <returns>Algorithmus Bausteine in Listenstruktur.</returns>
         public LinkedList<Statement> getActualStmNesting()
         {
             return getActualStmNesting(_stm);
         }
-
-        public LinkedList<Statement> getActualStmNesting(ListStm baseStm)
+        /// <summary>
+        /// Erstellt aus der rekursiven Schachtelung der Statement und ListStm Klassen eine Listenstruktur.
+        /// </summary>
+        /// <param name="baseStm">Referenz auf ein ListStm.</param>
+        /// <returns>Algorithmus Bausteine in Form einer Liste.</returns>
+        private LinkedList<Statement> getActualStmNesting(ListStm baseStm)
         {
             LinkedList<Statement> itemList = new LinkedList<Statement>();
             itemList.AddLast(baseStm);
@@ -108,8 +142,13 @@ namespace SortAlgGame.Model
             }
             return itemList;
         }
-
-        public LinkedList<Statement> concatList(LinkedList<Statement> first, LinkedList<Statement> second)
+        /// <summary>
+        /// Konkateniert zwei Listen die Statements beinhalten.
+        /// </summary>
+        /// <param name="first">Liste 1</param>
+        /// <param name="second">Liste 2</param>
+        /// <returns>Konkatenation der beiden uebergebenen Listen.</returns>
+        private LinkedList<Statement> concatList(LinkedList<Statement> first, LinkedList<Statement> second)
         {
             LinkedList<Statement> newList = new LinkedList<Statement>(first);
             foreach (Statement x in second)
@@ -118,7 +157,9 @@ namespace SortAlgGame.Model
             }
             return newList;
         }
-
+        /// <summary>
+        /// Erstellt die Statement und ListStm Schachtelung, die den Algorithmus Bubblesort repraesentiert.
+        /// </summary>
         public void buildBubblesort()
         {
             _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.FOR_OUT_BUBBLE));
@@ -130,7 +171,9 @@ namespace SortAlgGame.Model
             tmp.addBeforeStm(null, new Statement(this, tmp, Config.EXECUTE.SWAP_AI_WITH_AI_INC));
         }
 
-
+        /// <summary>
+        /// Erstellt die Statement und ListStm Schachtelung, die den Algorithmus Quicksort repraesentiert.
+        /// </summary>
         public void buildQuicksort()
         {
             _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_LEFT));
@@ -155,9 +198,10 @@ namespace SortAlgGame.Model
             _stm.addBeforeStm(null, new ListStm(this, _stm, Config.EXECUTE.IF_I_LESS_RIGHT));
             tmp1 = _stm.StmList.Last.Previous.Value as ListStm;
             tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.CALL_SORT_RIGHT));
-            printExecute();
         }
-
+        /// <summary>
+        /// Erstellt die Statement und ListStm Schachtelung, die den Algorithmus Selectionsort repraesentiert.
+        /// </summary>
         public void buildSelectionsort()
         {
             _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_ALENGHT));
@@ -173,7 +217,9 @@ namespace SortAlgGame.Model
             tmp2 = tmp1.StmList.Last.Previous.Value as ListStm;
             tmp2.addBeforeStm(null, new Statement(this, tmp2, Config.EXECUTE.SWAP_AMIN_WITH_AI));
         }
-
+        /// <summary>
+        /// Erstellt die Statement und ListStm Schachtelung, die den Algorithmus Insertionsort repraesentiert.
+        /// </summary>
         public void buildInsertionsort()
         {
             _stm.addBeforeStm(null, new Statement(this, _stm, Config.EXECUTE.ALLOC_ALENGHT));
@@ -184,31 +230,6 @@ namespace SortAlgGame.Model
             tmp1 = tmp1.StmList.Last.Previous.Value as ListStm;
             tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.SWAP_AJ_WITH_AJ_DEC));
             tmp1.addBeforeStm(null, new Statement(this, tmp1, Config.EXECUTE.DEC_J));
-        }
-
-        public void printExecute()
-        {
-            System.IO.StreamWriter file = new System.IO.StreamWriter(@"C:\Users\Lars\Desktop\executePrint.txt");
-            file.WriteLine(_stm.Content);
-            rekursivePrint((_stm as ListStm).StmList, file);
-            file.WriteLine("---------------------------------------------------------------------------------");
-            /*foreach (int x in _stack.Peek().A)
-            {
-                file.Write(x);
-            }*/
-            file.Close();
-        }
-
-        public void rekursivePrint(LinkedList<Statement> stmList, System.IO.StreamWriter file)
-        {
-            foreach (Statement x in stmList)
-            {
-                file.WriteLine(x.Content);
-                if (x is ListStm)
-                {
-                    rekursivePrint((x as ListStm).StmList, file);
-                }
-            }
         }
         #endregion
     }

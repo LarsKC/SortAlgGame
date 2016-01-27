@@ -5,9 +5,12 @@ using System.Text;
 
 namespace SortAlgGame.Model
 {
+    /// <summary>
+    /// Die Klasse DataSet ist ein Teil der Speicherverwaltung des Algorithmus. In ihr befinden sich alle vom Algorithmus benoetigten Variablen.
+    /// </summary>
     class DataSet
     {
-        //Variablen
+        #region Member
         private int i;
         private int j;
         private int n;
@@ -16,57 +19,79 @@ namespace SortAlgGame.Model
         private int pivot;
         private int left;
         private int right;
+        #endregion
 
-        //Accessor
+        #region Accessoren
+        /// <summary>
+        /// i Accessor
+        /// </summary>
         public int I
         {
             get { return i; }
             set { i = value; }
         }
-
+        /// <summary>
+        /// j Accessor
+        /// </summary>
         public int J
         {
             get { return j; }
             set { j = value; }
         }
-
+        /// <summary>
+        /// n Accessor
+        /// </summary>
         public int N
         {
             get { return n; }
             set { n = value; }
         }
-
+        /// <summary>
+        /// Array a Accessor
+        /// </summary>
         public int[] A
         {
             get { return a; }
             set { a = value; }
         }
-
+        /// <summary>
+        /// min Accessor
+        /// </summary>
         public int Min
         {
             get { return min; }
             set { min = value; }
         }
-
+        /// <summary>
+        /// pivot Accessor
+        /// </summary>
         public int Pivot
         {
             get { return pivot; }
             set { pivot = value; }
         }
-
+        /// <summary>
+        /// left Accessor
+        /// </summary>
         public int Left
         {
             get { return left; }
             set { left = value; }
         }
-
+        /// <summary>
+        /// right Accessor
+        /// </summary>
         public int Right
         {
             get { return right; }
             set { right = value; }
         }
+        #endregion
 
-        //Konstruktoren
+        #region Konstruktoren
+        /// <summary>
+        /// Standard Konstruktor
+        /// </summary>
         public DataSet()
         {
             this.i = Config.NOT_USED;
@@ -78,6 +103,10 @@ namespace SortAlgGame.Model
             this.left = Config.NOT_USED;
             this.right = Config.NOT_USED;
         }
+        /// <summary>
+        /// Konstruktor mit Array Uebergabe. Dabei wird eine echte Kopie des uebergebenen Array erstellt.
+        /// </summary>
+        /// <param name="array">Zahlenfolge</param>
         public DataSet(int[] array)
         {
             this.i = Config.NOT_USED;
@@ -90,19 +119,10 @@ namespace SortAlgGame.Model
             this.left = Config.NOT_USED;
             this.right = Config.NOT_USED;
         }
-
-        public DataSet(int i, int j, int n, int[] a, int min, int pivot, int left, int right)
-        {
-            this.i = i;
-            this.j = j;
-            this.n = n;
-            this.a = a;
-            this.min = min;
-            this.pivot = pivot;
-            this.left = left;
-            this.right = right;
-        }
-
+        /// <summary>
+        /// Konstruktor mit DataSet Objekt als Uebergabe. Dabei wird eine echte Kopie des Array a erstellt.
+        /// </summary>
+        /// <param name="dataSet">Zu kopierendes DataSet Objekt.</param>
         public DataSet(DataSet dataSet)
         {
             this.i = dataSet.I;
@@ -115,5 +135,6 @@ namespace SortAlgGame.Model
             this.left = dataSet.Left;
             this.right = dataSet.Right;
         }
+        #endregion
     }
 }

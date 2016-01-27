@@ -6,22 +6,37 @@ using System.Windows.Input;
 
 namespace SortAlgGame.ViewModel
 {
+    /// <summary>
+    /// Ermoeglicht eine einfache Erstellung der Commands
+    /// Basierend auf [Micd] Microsoft Corporation, Patterns - WPF Apps With The Model-View-ViewModel Design Pattern, https://msdn.microsoft.com/en-us/magazine/dd419663.aspx#id0090030 
+    /// </summary>
     public class Command : ICommand
     {
-
-        // The action to execute.
+        #region Member
+        /// <summary>
+        /// Auszufuehrende Aktion.
+        /// </summary>
         private readonly Action<object> execute;
-
-        // The Predicate to indicate wether this command can execure or not.
+        /// <summary>
+        /// Praedikat zum pruefen, ob die Ausfuehrung moeglich ist.
+        /// </summary>
         private readonly Predicate<object> canExecute;
+        #endregion
 
-        /// Initializes a new instance of the <see cref="Command"/> class.
+        #region Konstruktoren
+        /// <summary>
+        /// Konstruktor
+        /// </summary>
+        /// <param name="execute">Auszufuehrende Aktion</param>
         public Command(Action<object> execute)
             : this(execute, null)
         {
         }
-
-        // Initializes a new instance of the <see cref="RelayCommand"/> class.
+        /// <summary>
+        /// Konstruktor mit Praedikat
+        /// </summary>
+        /// <param name="execute">Auszufuehrende Aktion</param>
+        /// <param name="canExecute">Praedikat. Bestimmt ob die Aktion ausgefuehrt werden kann.</param>
         public Command(Action<object> execute, Predicate<object> canExecute)
         {
             if (execute == null)
@@ -32,10 +47,14 @@ namespace SortAlgGame.ViewModel
             this.execute = execute;
             this.canExecute = canExecute;
         }
+        #endregion
 
-        // Defines the method that determines whether the command can execute in its current state.
-        // <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
-        // <returns>true if this command can be executed; otherwise, false.</returns>
+        #region Methoden
+        /// <summary>
+        /// Bestimmt ob die Aktion des Commands ausgefuehrt werden kann/darf.
+        /// </summary>
+        /// <param name="parameter">Vom Command genutzte Parameter.</param>
+        /// <returns>True, wenn die Ausfuehrung des Commands moeglich ist. False, wenn nicht.</returns>
         public bool CanExecute(object parameter)
         {
             if (canExecute == null)
@@ -45,19 +64,22 @@ namespace SortAlgGame.ViewModel
 
             return canExecute(parameter);
         }
-
-        // Occurs when changes occur that affect whether or not the command should execute.
+        /// <summary>
+        /// Event das immer ausgeloest wird, wenn eine Aenderung stattfindet, die die Ausfuehrbarkeit des Commands beeinflusst.
+        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
-        // Defines the method to be called when the command is invoked.
-        // <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
+        /// <summary>
+        /// Die Methode wird immer dann ausgefuehrt, wenn das Command aufgerufen wird.
+        /// </summary>
+        /// <param name="parameter">Die vom Command benutzen Parameter.</param>
         public void Execute(object parameter)
         {
             execute(parameter);
         }
+        #endregion
     }
 }

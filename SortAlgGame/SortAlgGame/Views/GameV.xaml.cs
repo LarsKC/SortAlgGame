@@ -19,7 +19,7 @@ using SortAlgGame.ViewModel;
 namespace SortAlgGame.Views
 {
     /// <summary>
-    /// Interaktionslogik für Game.xaml
+    /// Drag & Drop Event Handling
     /// </summary>
     public partial class GameV : UserControl
     {
@@ -27,7 +27,12 @@ namespace SortAlgGame.Views
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Sucht nach einem FrameworkElement im VisualTreeHelper
+        /// </summary>
+        /// <typeparam name="T">Type des gesuchten FrameworkElements</typeparam>
+        /// <param name="source">Quelle</param>
+        /// <returns></returns>
         public FrameworkElement getFrameworkElement<T>(FrameworkElement source)
         {
             FrameworkElement frame = source;
@@ -37,7 +42,14 @@ namespace SortAlgGame.Views
             }
             return frame;
         }
-
+        /// <summary>
+        /// Ruft die Methode canDrop(..) der GameVM auf und ermittelt so, ob ein Drop möglich ist.
+        /// </summary>
+        /// <param name="target">Drop Ziel SurfaceListBoxItem</param>
+        /// <param name="targetList">SurfaceListBox in dem sich das Drop Ziel befindet</param>
+        /// <param name="sourceList">SurfaceListBox aus der der Cursor stammt</param>
+        /// <param name="cursor">Cursor</param>
+        /// <returns></returns>
         public bool dropable(SurfaceListBoxItem target, SurfaceListBox targetList, SurfaceListBox sourceList, SurfaceDragCursor cursor)
         {
             if (targetList != null && sourceList != null && targetList.Tag != null && sourceList.Tag != null)
@@ -54,21 +66,26 @@ namespace SortAlgGame.Views
             }
             return false;
         }
-
+        /// <summary>
+        /// Dieser Event Handler wird von den SurfaceListBox Elementen aufgerufen, wenn ein TouchDown Event ausgeloest wird. 
+        /// Erstellt wenn moeglich einen Cursor. 
+        /// </summary>
+        /// <param name="sender">Sender des Events</param>
+        /// <param name="e">Event</param>
         private void OnTouchDown(object sender, TouchEventArgs e)
         {
             FrameworkElement source = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
             //Wurde kein Ziehbares Obeject gefunden -> return
             if (source == null || !(this.DataContext as GameVM).dragableObject(source.DataContext)) return;
-            //Cursor Darstellung
+            //Cursor Darstellung bestimmen.
             ContentControl cursor = new ContentControl()
             {
                 Content = source.DataContext,
                 Style = FindResource("CursorStyle") as Style
             };
-            //EventHandler um die Darstellung zu ändern
+            //Event Handler um die Darstellung zu aendern
             SurfaceDragDrop.AddTargetChangedHandler(cursor, OnTargetChanged);
-            //Erstellt eine Liste von alle registrierten Touch Punkten, die sich im ausgewaehlten Element befinden
+            //Erstellt eine Liste von allen registrierten Touch Punkten, die sich im ausgewaehlten Element befinden
             List<InputDevice> devices = new List<InputDevice>();
             devices.Add(e.TouchDevice);
             foreach (TouchDevice touch in source.TouchesCapturedWithin)
@@ -88,15 +105,19 @@ namespace SortAlgGame.Views
                 source.DataContext,
                 devices,
                 DragDropEffects.Move);
-            //Wurde mit dem Drag Ablauf erfolgreich begonnen, ist dieses Event erfolgreich beendet. Dadurch wird das feuern der Eltern Events verhindert.
+            //Wurde mit dem Drag Ablauf erfolgreich begonnen, ist dieses Event erfolgreich beendet.
             if (startDragOkay != null)
             {
                 startDragOkay.CanRotate = false;
                 e.Handled = (startDragOkay != null);
             }
         }
-
-        //Wird immer dann ausgelöst, wenn das Drag Object über ein Element gezogen wird, welches ein DragEnterEvent auslösen kann.
+        /// <summary>
+        /// Dieser Event Handler wird immer dann aufgerufen, wenn der Cursor ueber ein Element gezogen wird, welches 
+        /// ein DragEnterEvent ausloesen kann. Weist dem Cursor die erlaubten Effekte zu.
+        /// </summary>
+        /// <param name="sender">Sender des Events</param>
+        /// <param name="e">Event</param>
         private void OnDragEnter(object sender, SurfaceDragDropEventArgs e)
         {
             FrameworkElement target = getFrameworkElement<SurfaceListBoxItem>(e.OriginalSource as FrameworkElement);
@@ -108,12 +129,22 @@ namespace SortAlgGame.Views
                 e.Effects = DragDropEffects.None;
             }
         }
-
+        /// <summary>
+        /// Dieser Event Handler wird immer dann aufgerufen, wenn der Cursor aus dem Bereich eines Elements herausgezogen 
+        /// wird, das ein DragLeave Event ausloesen kann. Weist dem Cursor die erlaubten Effekte zu.
+        /// </summary>
+        /// <param name="sender">Sender des Events</param>
+        /// <param name="e">Event</param>
         private void OnDragLeave(object sender, SurfaceDragDropEventArgs e)
         {
             e.Effects = e.Cursor.AllowedEffects;
         }
-
+        /// <summary>
+        /// Dieser Event Handler wird immer dann aufgerufen, wenn sich das Ziel des Cursors aendert. Es aendert je nachdem 
+        /// ob ein Drop möglich ist, die Darstellung des Cursors.
+        /// </summary>
+        /// <param name="sender">Sender des Events</param>
+        /// <param name="e">Event</param>
         private void OnTargetChanged(object sender, TargetChangedEventArgs e)
         {
             FrameworkElement sourceList = getFrameworkElement<SurfaceListBox>(e.Cursor.DragSource);
@@ -122,7 +153,13 @@ namespace SortAlgGame.Views
 
             e.Cursor.Visual.Tag = (dropable(target as SurfaceListBoxItem, targetList as SurfaceListBox, sourceList as SurfaceListBox, e.Cursor)) ? "CanDrop" : "CannotDrop";
         }
-
+        /// <summary>
+        /// Dieser Event Handler wird immer dann aufgerufen wenn ein Cursor auf einem Element losgelassen wird, auf dem 
+        /// ein Drop erlaubt ist. Der Event Handler bestimmt um welche Art von Drag & Drop Bewegung es sich handelt und 
+        /// ruft die entsprechenden Methoden zur Verarbeitung in der GameVM auf. 
+        /// </summary>
+        /// <param name="sender">Sender des Events</param>
+        /// <param name="e">Event</param>
         private void OnDrop(object sender, SurfaceDragDropEventArgs e)
         {
             if (sender is SurfaceListBox && (sender as SurfaceListBox).Tag != null)
